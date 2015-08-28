@@ -1,0 +1,2 @@
+sked = angular.module('sked',[
+])
