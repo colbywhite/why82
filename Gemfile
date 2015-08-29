@@ -21,8 +21,8 @@ gem 'foreman', '~> 0.78.0'
 # gem 'capistrano-rails', group: :development
 
 
+gem 'sqlite3', group: [:development, :test]
 group :development, :test do
-  gem 'sqlite3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'web-console', '~> 2.0'
