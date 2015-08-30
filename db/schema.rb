@@ -11,18 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830005722) do
+ActiveRecord::Schema.define(version: 20150830005729) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
     t.datetime "time"
-    t.integer  "home_id"
     t.integer  "away_id"
+    t.integer  "home_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "games", ["away_id"], name: "index_games_on_away_id"
-  add_index "games", ["home_id"], name: "index_games_on_home_id"
+  add_index "games", ["away_id"], name: "index_games_on_away_id", using: :btree
+  add_index "games", ["home_id"], name: "index_games_on_home_id", using: :btree
 
   create_table "seed_migration_data_migrations", force: :cascade do |t|
     t.string   "version"
@@ -38,8 +41,10 @@ ActiveRecord::Schema.define(version: 20150830005722) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "teams", ["abbr"], name: "index_teams_on_abbr"
-  add_index "teams", ["logo"], name: "index_teams_on_logo"
-  add_index "teams", ["name"], name: "index_teams_on_name"
+  add_index "teams", ["abbr"], name: "index_teams_on_abbr", using: :btree
+  add_index "teams", ["logo"], name: "index_teams_on_logo", using: :btree
+  add_index "teams", ["name"], name: "index_teams_on_name", using: :btree
 
+  add_foreign_key "games", "teams", column: "away_id"
+  add_foreign_key "games", "teams", column: "home_id"
 end
