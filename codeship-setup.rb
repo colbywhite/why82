@@ -8,4 +8,5 @@ sh 'bundle install --without production'
 # See: https://codeship.com/documentation/databases/postgresql/#ruby-on-rails
 sh 'git checkout config/database.yml'
 
-sh({'RAILS_ENV'=>'test'}, 'bundle exec rake bower:install')
+sh 'npm install bower -g'
+sh 'bundle exec rake bower:install'
