@@ -11,6 +11,9 @@ gem 'bower-rails', '~> 0.10.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'foreman', '~> 0.78.0'
 gem 'seed_migration'
+gem 'squeel'
+gem 'angular-rails-templates'
+gem 'jquery-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

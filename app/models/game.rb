@@ -1,6 +1,6 @@
 class Game < ActiveRecord::Base
-  belongs_to :home, :class_name => 'Team', :foreign_key=>:home_id
-  belongs_to :away, :class_name => 'Team', :foreign_key=>:away_id
+  belongs_to :home, :class_name => 'Team', :foreign_key => :home_id
+  belongs_to :away, :class_name => 'Team', :foreign_key => :away_id
 
   def self.by_team(team_id)
     where('home_id = :team_id OR away_id = :team_id', team_id: team_id)
@@ -8,5 +8,9 @@ class Game < ActiveRecord::Base
 
   def self.eager_load_teams
     self.eager_load(:home).eager_load(:away)
+  end
+
+  def as_json(options = {})
+    super.merge(time: I18n.l(time.localtime))
   end
 end

@@ -7,3 +7,6 @@ sh 'bundle install --without production'
 # This will set it back to the one in git
 # See: https://codeship.com/documentation/databases/postgresql/#ruby-on-rails
 sh 'git checkout config/database.yml'
+
+sh 'npm install bower -g'
+sh 'bundle exec rake bower:install'
