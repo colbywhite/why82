@@ -5,4 +5,8 @@ class Game < ActiveRecord::Base
   def self.by_team(team_id)
     where('home_id = :team_id OR away_id = :team_id', team_id: team_id)
   end
+
+  def self.eager_load_teams
+    self.eager_load(:home).eager_load(:away)
+  end
 end
