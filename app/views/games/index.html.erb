@@ -1,0 +1,19 @@
+<%= debug(params) if Rails.env.development? %>
+
+<h1><%=@all.count %> Game(s) Found</h1>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Away</th>
+        <th></th>
+        <th>Home</th>
+    </tr>
+    <% @all.each do |g|%>
+    <tr>
+        <td><%= l g.time.localtime %></td>
+        <td><img width="25" src="<%=g.away.logo%>" /><%= g.away.name %></td>
+        <td>at</td>
+        <td><img width="25" src="<%=g.home.logo%>" /><%= g.home.name %></td>
+    </tr>
+    <% end %>
+</table>
