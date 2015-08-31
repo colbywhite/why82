@@ -26,4 +26,20 @@ services.factory('Team', ['$resource',
     $resource('/teams.json')
 ])
 
+services.factory('ParamParser',
+  () ->
+    parseHome:  (params) ->
+      params.h = params.h || ''
+      if params.h.length>1
+        params.h.split(',')
+      else
+        []
+    parseAway:  (params) ->
+      params.a = params.a || ''
+      if params.a.length>1
+        params.a.split(',')
+      else
+        []
+)
+
 controllers = angular.module('controllers', [])
