@@ -14,6 +14,7 @@ gem 'seed_migration'
 gem 'squeel'
 gem 'angular-rails-templates'
 gem 'jquery-rails'
+gem 'font-awesome-sass'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

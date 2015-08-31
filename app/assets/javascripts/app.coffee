@@ -2,8 +2,11 @@ receta = angular.module('receta', [
   'templates',
   'ngRoute',
   'ngResource',
-  'controllers',
+  'services',
+  'controllers'
 ])
+
+services = angular.module('services', ['ngResource']);
 
 receta.config(['$routeProvider',
   ($routeProvider)->
@@ -12,6 +15,11 @@ receta.config(['$routeProvider',
       templateUrl: "templates/index.html"
       controller: 'GamesController'
     )
+])
+
+services.factory('Game', ['$resource',
+  ($resource) ->
+    $resource('/games.json')
 ])
 
 controllers = angular.module('controllers', [])
