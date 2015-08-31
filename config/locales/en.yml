@@ -22,4 +22,4 @@
 en:
   time:
     formats:
-      default: '%b %-d %l:%M %p %Z'
+      default: '%a %b %-d %l:%M %p %Z'
