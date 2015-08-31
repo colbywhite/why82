@@ -13,13 +13,17 @@ receta.config(['$routeProvider',
     $routeProvider
     .when('/',
       templateUrl: "templates/index.html"
-      controller: 'GamesController'
     )
 ])
 
 services.factory('Game', ['$resource',
   ($resource) ->
     $resource('/games.json')
+])
+
+services.factory('Team', ['$resource',
+  ($resource) ->
+    $resource('/teams.json')
 ])
 
 controllers = angular.module('controllers', [])

@@ -1,19 +1,31 @@
-
 <div>
-    <section class="col-md-4">
-        <form>
-            <div class="form-group col-md-12">
-                <input ng-model="home_teams" name="home_teams" type="text" autofocus class="form-control"
-                       placeholder="Team ID">
-            </div>
-            <div class="form-group col-md-12 text-center">
-                <button ng-click="query(home_teams)" class="btn btn-primary btn-sm">Search</button>
+    <section class="col-md-4" ng-controller="TeamsController">
+        <form name="teamform" class="form-inline col-md-12" ng-if="teams.length>0">
+            <div class="form-group checkbox col-md-6" ng-repeat="team in teams">
+                <div class="col-md-12">
+                    <input class="col-md-2"
+                           type="checkbox"
+                           name="awayTeams[]"
+                           value="{{team.id}}"
+                           ng-checked="away_teams.indexOf(team.id.toString()) > -1"
+                           ng-click="addAway(team.id)"
+                            >
+                    <input class="col-md-2"
+                           type="checkbox"
+                           name="homeTeams[]"
+                           value="{{team.id}}"
+                           ng-checked="home_teams.indexOf(team.id.toString()) > -1"
+                           ng-click="addHome(team.id)"
+                            >
+                    <label class="col-md-8">{{team.abbr}}</label>
+                </div>
+                <div style="margin-bottom:35px" ng-if="!$first && (($index+1)%10)==0"></div>
             </div>
         </form>
     </section>
 
 
-    <section class="table-responsive col-md-8" >
+    <section class="table-responsive col-md-8" ng-controller="GamesController">
         <i class="fa fa-spinner fa-spin center" ng-hide="count>0"></i>
         <table class="table table-striped table-condensed" ng-if="count>0">
             <caption class="text-center h3">{{count}} games found</caption>
