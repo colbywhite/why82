@@ -5,9 +5,6 @@ controllers.controller("TeamsController", ['$scope', '$routeParams', '$location'
     $scope.away_teams = ParamParser.parseAway($routeParams)
     $scope.home_teams = ParamParser.parseHome($routeParams)
 
-#    console.log($scope.home_teams)
-#    console.log($scope.away_teams)
-
     $scope.addId = (id, arr) ->
       idx = arr.indexOf(id)
       if idx > -1
@@ -23,7 +20,6 @@ controllers.controller("TeamsController", ['$scope', '$routeParams', '$location'
       $scope.addId(id.toString(), $scope.away_teams)
 
     $scope.redirect = () ->
-#      console.log('redirecting with '+ $scope.home_teams.toString())
       $location.path("/").search({
         h: $scope.home_teams.join(),
         a: $scope.away_teams.join()
