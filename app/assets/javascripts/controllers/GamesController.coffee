@@ -7,6 +7,9 @@ controllers.controller("GamesController", ['$scope', '$routeParams', 'Game', 'Pa
     $scope.games = []
     $scope.count = 0
 
+    $scope.convertTime= (timeStr) ->
+      LocalTime.strftime(new Date(timeStr), '%a %b %d %l:%M %p %Z')
+
     resultCallback = (results) ->
       $scope.count = results.length
       $scope.games = results

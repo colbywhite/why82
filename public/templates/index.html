@@ -37,7 +37,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="game in games">
-                <td>{{game.time}}</td>
+                <td>{{convertTime(game.time)}}</td>
                 <td>{{game.away.name}}</td>
                 <td>{{game.home.name}}</td>
             </tr>
