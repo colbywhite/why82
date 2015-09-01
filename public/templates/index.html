@@ -37,9 +37,17 @@
             </thead>
             <tbody>
             <tr ng-repeat="game in games">
-                <td>{{convertTime(game.time)}}</td>
-                <td>{{game.away.name}}</td>
-                <td>{{game.home.name}}</td>
+                <!--time-->
+                <td class="hidden-md hidden-lg">{{convertTime(game.time, true)}}</td>
+                <td class="hidden-sm hidden-xs">{{convertTime(game.time, false)}}</td>
+
+                <!--away-->
+                <td class="hidden-md hidden-lg">{{game.away.abbr}}</td>
+                <td class="hidden-sm hidden-xs">{{game.away.name}}</td>
+
+                <!--home-->
+                <td class="hidden-md hidden-lg">{{game.home.abbr}}</td>
+                <td class="hidden-sm hidden-xs">{{game.home.name}}</td>
             </tr>
             </tbody>
         </table>
