@@ -29,15 +29,15 @@ services.factory('Team', ['$resource',
 services.factory('ParamParser',
   () ->
     parseHome:  (params) ->
-      params.h = params.h || ''
-      if params.h.length>1
-        params.h.split(',')
+      h = params.h || ''
+      if h.length>=1
+        h.split(',')
       else
         []
     parseAway:  (params) ->
-      params.a = params.a || ''
-      if params.a.length>1
-        params.a.split(',')
+      a = params.a || ''
+      if a.length>=1
+        a.split(',')
       else
         []
 )
