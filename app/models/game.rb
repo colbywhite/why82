@@ -9,8 +9,4 @@ class Game < ActiveRecord::Base
   def self.eager_load_teams
     self.eager_load(:home).eager_load(:away)
   end
-
-  def as_json(options = {})
-    super.merge(time: I18n.l(time.in_time_zone('Central Time (US & Canada)')))
-  end
 end

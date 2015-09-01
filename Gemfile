@@ -15,6 +15,7 @@ gem 'squeel'
 gem 'angular-rails-templates'
 gem 'jquery-rails'
 gem 'font-awesome-sass'
+gem 'local_time'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
