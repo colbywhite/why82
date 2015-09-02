@@ -8,12 +8,12 @@ receta = angular.module('receta', [
 
 services = angular.module('services', ['ngResource']);
 
-receta.config(['$routeProvider',
-  ($routeProvider)->
-    $routeProvider
-    .when('/',
+receta.config(['$routeProvider', '$locationProvider',
+  ($routeProvider, $locationProvider)->
+    $routeProvider.when('/',
       templateUrl: "templates/index.html"
     )
+    $locationProvider.html5Mode(true)
 ])
 
 services.factory('Game', ['$resource',
@@ -28,15 +28,15 @@ services.factory('Team', ['$resource',
 
 services.factory('ParamParser',
   () ->
-    parseHome:  (params) ->
+    parseHome: (params) ->
       h = params.h || ''
-      if h.length>=1
+      if h.length >= 1
         h.split(',')
       else
         []
-    parseAway:  (params) ->
+    parseAway: (params) ->
       a = params.a || ''
-      if a.length>=1
+      if a.length >= 1
         a.split(',')
       else
         []

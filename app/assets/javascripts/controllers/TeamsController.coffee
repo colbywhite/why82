@@ -1,30 +1,20 @@
 controllers = angular.module('controllers')
 
-controllers.controller("TeamsController", ['$scope', '$routeParams', '$location', 'Team', 'ParamParser'
-  ($scope, $routeParams, $location, Team, ParamParser)->
-    $scope.away_teams = ParamParser.parseAway($routeParams)
-    $scope.home_teams = ParamParser.parseHome($routeParams)
-
-    $scope.addId = (id, arr) ->
+controllers.controller("TeamsController", ['$scope', '$rootScope', '$location', 'Team'
+  ($scope, $rootScope, $location, Team)->
+    $scope.toggleId = (id, arr) ->
       idx = arr.indexOf(id)
       if idx > -1
         arr.splice(idx, 1) # remove
       else
         arr.push(id)
-      $scope.redirect()
+      $rootScope.refreshGames()
 
     $scope.addHome = (id) ->
-      $scope.addId(id.toString(), $scope.home_teams)
+      $scope.toggleId(id.toString(), $rootScope.home_teams)
 
     $scope.addAway = (id) ->
-      $scope.addId(id.toString(), $scope.away_teams)
-
-    $scope.redirect = () ->
-      $location.path("/").search({
-        h: $scope.home_teams.join(),
-        a: $scope.away_teams.join()
-      })
-
+      $scope.toggleId(id.toString(), $rootScope.away_teams)
 
     resultCallback = (results) ->
       $scope.teams = results
