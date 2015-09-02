@@ -8,7 +8,7 @@ controllers.controller("GamesController", ['$scope', '$routeParams', 'Game', 'Pa
     $scope.count = 0
 
     $scope.convertTime= (timeStr, shortFormat = true) ->
-      format = if shortFormat then '%m/%d %l:%M %p' else '%a %b %d %l:%M %p %Z'
+      format = if shortFormat then '%a %m/%d %l:%M %p' else '%a %b %d %l:%M %p %Z'
       LocalTime.strftime(new Date(timeStr), format)
 
     resultCallback = (results) ->
