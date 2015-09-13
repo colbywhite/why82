@@ -2,48 +2,65 @@
     <section class="col-md-4 col-xs-12 " ng-controller="TeamsController">
         <h3 class="h3 text-center col-xs-12 col-md-12">Team Filters</h3>
 
-        <p class="text-center">
-            Check <b>H</b> for Home Team
-            <br/>
-            Check <b>A</b> for Away Team
-        </p>
-
         <div class="row">
-            <form name="teamform" class="col-md-12 col-xs-12" ng-if="teams.length>0">
+            <form name="teamform" class="col-md-12 col-xs-12" ng-if="teams.length>0" style="margin-bottom: 2em;">
                 <div ng-repeat="team in teams">
-                    <div class="row" ng-if="$index%10==0">
-                        <div class="col-md-12 col-xs-12">
-                            <h3 class="col-md-1 col-xs-1 text-center">
-                                <small>A</small>
-                            </h3>
-                            <h3 class="col-md-1 col-xs-1 text-center">
-                                <small>H</small>
-                            </h3>
-                            <div class="col-md-4 col-xs-4"/>
-                            <h3 class="col-md-1 col-xs-1 text-center">
-                                <small>A</small>
-                            </h3>
-                            <h3 class="col-md-1 col-xs-1 text-center">
-                                <small>H</small>
-                            </h3>
-                            <h3 class="col-md-4 col-xs-4"></h3>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6 col-xs-6">
-                        <input class="col-md-2 col-xs-2"
-                               type="checkbox"
-                               name="awayTeams[]"
-                               value="{{team.id}}"
-                               ng-checked="away_teams.indexOf(team.id.toString()) > -1"
-                               ng-click="addAway(team.id)">
-                        <input class="col-md-2 col-xs-2"
-                               type="checkbox"
-                               name="homeTeams[]"
-                               value="{{team.id}}"
-                               ng-checked="home_teams.indexOf(team.id.toString()) > -1"
-                               ng-click="addHome(team.id)">
-                        <label class="col-md-8 col-xs-8">{{team.abbr}}</label>
+                    <div class="col-md-6 col-xs-6">
+                        <div class="row" style="margin-top: 2px; margin-bottom: 2px;">
+                            <div class="col-md-5 col-xs-6 btn-group"
+                                 data-toggle="buttons"
+                                 >
+                                <!-- Home labels-->
+                                <!-- add class active if it's in home_teams-->
+                                <!-- TODO use ng-class for this ... DRY-->
+                                <label
+                                        ng-if="!contains(home_teams, team.id)"
+                                        class="btn btn-default btn-xs col-xs-6 col-md-6"
+                                        ng-click="addHome(team.id)"
+                                        >
+                                    <input type="checkbox"
+                                           autocomplete="off"
+                                            />
+                                    <i class="fa fa-home"></i>
+                                </label>
+                                <label
+                                        ng-if="contains(home_teams, team.id)"
+                                        class="btn btn-default btn-xs col-xs-6 col-md-6 active"
+                                        ng-click="addHome(team.id)"
+                                        >
+                                    <input type="checkbox"
+                                           autocomplete="off"
+                                            />
+                                    <i class="fa fa-home"></i>
+                                </label>
 
+                                <!-- Away labels-->
+                                <!-- add class active if it's in away_teams-->
+                                <!-- TODO use ng-class for this ... DRY-->
+                                <label
+                                        ng-if="!contains(away_teams, team.id)"
+                                        class="btn btn-default btn-xs col-xs-6 col-md-6"
+                                        ng-click="addAway(team.id)"
+                                        >
+                                    <input type="checkbox"
+                                           autocomplete="off"
+                                            />
+                                    <i class="fa fa-road"></i>
+                                </label>
+                                <label
+                                        ng-if="contains(away_teams, team.id)"
+                                        class="btn btn-default btn-xs col-xs-6 col-md-6 active"
+                                        ng-click="addAway(team.id)"
+                                        >
+                                    <input type="checkbox"
+                                           autocomplete="off"
+                                            />
+                                    <i class="fa fa-road"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-6 col-xs-6">{{team.abbr}}</div>
+
+                        </div>
                     </div>
                 </div>
             </form>

@@ -16,6 +16,10 @@ controllers.controller("TeamsController", ['$scope', '$rootScope', '$location', 
     $scope.addAway = (id) ->
       $scope.toggleId(id.toString(), $rootScope.away_teams)
 
+
+    $scope.contains = (arr, id) ->
+      arr.indexOf(id.toString()) > -1
+
     resultCallback = (results) ->
       $scope.teams = results
 
