@@ -25,6 +25,9 @@ controllers.controller("GamesController", ['$scope', '$rootScope', '$location', 
       $scope.games = results
 
     $rootScope.refreshGames = () ->
+      params = {}
+      params['home_teams[]'] = $scope.home_teams if $scope.home_teams
+      params['away_teams[]'] = $scope.away_teams if $scope.away_teams
       Game.query(params, resultCallback)
 
     $scope.games = []
@@ -34,8 +37,5 @@ controllers.controller("GamesController", ['$scope', '$rootScope', '$location', 
       format = if shortFormat then '%a %m/%d %l:%M %p' else '%a %b %d %l:%M %p %Z'
       LocalTime.strftime(new Date(timeStr), format)
 
-    params = {}
-    params['home_teams[]'] = $scope.home_teams if $scope.home_teams
-    params['away_teams[]'] = $scope.away_teams if $scope.away_teams
-    Game.query(params, resultCallback)
+    $rootScope.refreshGames()
 ])

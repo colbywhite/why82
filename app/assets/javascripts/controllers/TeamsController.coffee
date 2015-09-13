@@ -20,6 +20,12 @@ controllers.controller("TeamsController", ['$scope', '$rootScope', '$location', 
     $scope.contains = (arr, id) ->
       arr.indexOf(id.toString()) > -1
 
+    $scope.clearAll = () ->
+      console.log('clearing')
+      $rootScope.home_teams = []
+      $rootScope.away_teams = []
+      $rootScope.refreshGames()
+
     resultCallback = (results) ->
       $scope.teams = results
 

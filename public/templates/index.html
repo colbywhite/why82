@@ -2,6 +2,14 @@
     <section class="col-md-4 col-xs-12 " ng-controller="TeamsController">
         <h3 class="h3 text-center col-xs-12 col-md-12">Team Filters</h3>
 
+        <p class="text-center">
+            <button class="btn btn-default btn-xs"
+                    ng-click="clearAll()">
+                <i class="fa fa-close"></i>
+                clear all
+            </button>
+        </p>
+
         <div class="row">
             <form name="teamform" class="col-md-12 col-xs-12" ng-if="teams.length>0" style="margin-bottom: 2em;">
                 <div ng-repeat="team in teams">
