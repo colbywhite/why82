@@ -5,4 +5,8 @@ class Team < ActiveRecord::Base
   def games
     Game.by_team self.id
   end
+
+  def logo
+    ActionController::Base.helpers.asset_path("logos/#{self.abbr.downcase}.png")
+  end
 end

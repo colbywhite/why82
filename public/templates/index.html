@@ -81,8 +81,15 @@
                                     <i class="fa fa-road"></i>
                                 </label>
                             </div>
-                            <div class="col-md-6 col-xs-6">{{team.abbr}}</div>
+                            <div class="col-md-6 col-xs-6 text-center">
 
+                                <div class="col-md-6 col-xs-6">
+                                    <img class="logo text-center" ng-src="{{team.logo}}"/>
+                                </div>
+                                <div class="col-md-6 col-xs-6 text-center">
+                                    {{team.abbr}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,12 +118,24 @@
                 <td class="hidden-sm hidden-xs">{{convertTime(game.time, false)}}</td>
 
                 <!--away-->
-                <td class="hidden-md hidden-lg">{{game.away.abbr}}</td>
-                <td class="hidden-sm hidden-xs">{{game.away.name}}</td>
+                <td class="hidden-md hidden-lg">
+                    <img class="logo" ng-src="{{game.away.logo}}"/>
+                    {{game.away.abbr}}
+                </td>
+                <td class="hidden-sm hidden-xs">
+                    <img class="logo" ng-src="{{game.away.logo}}"/>
+                    {{game.away.name}}
+                </td>
 
                 <!--home-->
-                <td class="hidden-md hidden-lg">{{game.home.abbr}}</td>
-                <td class="hidden-sm hidden-xs">{{game.home.name}}</td>
+                <td class="hidden-md hidden-lg">
+                    <img class="logo" ng-src="{{game.home.logo}}"/>
+                    {{game.home.abbr}}
+                </td>
+                <td class="hidden-sm hidden-xs">
+                    <img class="logo" ng-src="{{game.home.logo}}"/>
+                    {{game.home.name}}
+                </td>
             </tr>
             </tbody>
         </table>
