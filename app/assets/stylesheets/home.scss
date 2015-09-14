@@ -1,3 +1,19 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap-sprockets";
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap";
+
+.mobile-collapse {
+  @extend .collapse
+}
+
+@media(min-width: $screen-md) {
+    .mobile-collapse{
+      display: block;
+    }
+}
+
+.collapse.in {
+  display: inline-block;
+}

@@ -2,22 +2,37 @@
     <section class="col-md-4 col-xs-12 " ng-controller="TeamsController">
         <h3 class="h3 text-center col-xs-12 col-md-12">Team Filters</h3>
 
-        <p class="text-center">
+        <div class="text-center row" style="margin-bottom: 2em">
             <button class="btn btn-default btn-xs"
                     ng-click="clearAll()">
                 <i class="fa fa-close"></i>
                 clear all
             </button>
-        </p>
+            <button class="btn btn-default btn-xs hidden-md hidden-lg teamToggles collapse"
+                    data-toggle="collapse" data-target=".teamToggles"
+                    >
+                <i class="fa fa-eye-slash"></i>
+                hide filters
+            </button>
+            <button class="btn btn-default btn-xs hidden-md hidden-lg teamToggles collapse in"
+                    data-toggle="collapse" data-target=".teamToggles"
+                    >
+                <i class="fa fa-eye"></i>
+                show filters
+            </button>
+        </div>
 
         <div class="row">
-            <form name="teamform" class="col-md-12 col-xs-12" ng-if="teams.length>0" style="margin-bottom: 2em;">
+            <form name="teamform" id="teamform"
+                  class="col-md-12 col-xs-12 mobile-collapse teamToggles"
+                  ng-if="teams.length>0"
+                  style="margin-bottom: 2em;">
                 <div ng-repeat="team in teams">
                     <div class="col-md-6 col-xs-6">
                         <div class="row" style="margin-top: 2px; margin-bottom: 2px;">
                             <div class="col-md-5 col-xs-6 btn-group"
                                  data-toggle="buttons"
-                                 >
+                                    >
                                 <!-- Home labels-->
                                 <!-- add class active if it's in home_teams-->
                                 <!-- TODO use ng-class for this ... DRY-->
