@@ -17,28 +17,19 @@ gem 'jquery-rails'
 gem 'font-awesome-sass'
 gem 'local_time'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # Call 'byebug' anywhere in the code to stop
+  #   execution and get a debugger console
   gem 'byebug'
   gem 'web-console', '~> 2.0'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Spring speeds up development by keeping your application
+  #   running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'rubocop', :require=>false
+  gem 'rubocop', require: false
 end
 
 group :production do
   gem 'rails_12factor'
   gem 'pg'
 end
-
