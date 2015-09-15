@@ -1,0 +1,11 @@
+AllCops:
+  RunRailsCops: true
+  Include:
+    - 'Rakefile'
+    - 'codeship-*.rb'
+    - 'config.ru'
+    - 'Gemfile'
+  Exclude:
+    - 'bin/*'
+Documentation:
+  Enabled: false
