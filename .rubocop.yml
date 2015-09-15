@@ -7,5 +7,8 @@ AllCops:
     - 'Gemfile'
   Exclude:
     - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/seeds.rb'
+    - 'db/data/20150829160525_nba2016.rb'
 Documentation:
   Enabled: false
