@@ -11,7 +11,7 @@ services = angular.module('services', ['ngResource']);
 receta.config(['$routeProvider', '$locationProvider',
   ($routeProvider, $locationProvider)->
     $routeProvider.when('/',
-      templateUrl: "templates/index.html"
+      templateUrl: "<%= ActionController::Base.helpers.asset_path("index.html") %>"
     )
     $locationProvider.html5Mode(true)
 ])
