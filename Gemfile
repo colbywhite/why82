@@ -16,6 +16,7 @@ gem 'angular-rails-templates'
 gem 'jquery-rails'
 gem 'font-awesome-sass'
 gem 'local_time'
+gem 'will_paginate'
 
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do

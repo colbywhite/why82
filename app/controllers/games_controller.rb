@@ -3,11 +3,20 @@ class GamesController < ApplicationController
 
   def index
     home_teams, away_teams = parse_teams_from_params
-    @all = fetch_games home_teams, away_teams
+    @all = fetch_games home_teams, away_teams, params[:page]
+    paging = build_paging_metadata @all
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @all.as_json(game_json_options) }
+      format.json do
+        render json: { paging: paging, data: @all.as_json(game_json_options) }
+      end
     end
+  end
+
+  def build_paging_metadata(collection)
+    { current: collection.current_page, per_page: collection.per_page,
+      total: collection.total_entries
+    }
   end
 
   def parse_teams_from_params
@@ -28,8 +37,8 @@ class GamesController < ApplicationController
     collection.collect(&:to_i)
   end
 
-  def fetch_games(home_teams, away_teams)
-    games = Game.eager_load_teams.order(:time)
+  def fetch_games(home_teams, away_teams, page_num)
+    games = Game.eager_load_teams.paginate(page: page_num).order(:time)
     games = games.where { home_id >> home_teams } if home_teams.count > 0
     games = games.where { away_id >> away_teams } if away_teams.count > 0
     games

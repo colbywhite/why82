@@ -3,6 +3,7 @@ receta = angular.module('receta', [
   'ngRoute',
   'ngResource',
   'services',
+  'bw.paging',
   'controllers'
 ])
 
@@ -11,14 +12,16 @@ services = angular.module('services', ['ngResource']);
 receta.config(['$routeProvider', '$locationProvider',
   ($routeProvider, $locationProvider)->
     $routeProvider.when('/',
-      templateUrl: "<%= ActionController::Base.helpers.asset_path("index.html") %>"
+      templateUrl: "<%= ActionController::Base.helpers.asset_path('index.html') %>"
     )
     $locationProvider.html5Mode(true)
 ])
 
 services.factory('Game', ['$resource',
   ($resource) ->
-    $resource('/games.json')
+    $resource('/games.json', {page: 1}, {
+        query: { method: 'GET', isArray: false }
+    })
 ])
 
 services.factory('Team', ['$resource',
