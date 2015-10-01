@@ -35,5 +35,6 @@ module Sked
     # rubocop:enable Metrics/LineLength
 
     config.assets.precompile << /.*.(?:eot|svg|ttf|woff)$/
+    config.games_per_page = 100
   end
 end

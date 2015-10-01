@@ -6,7 +6,8 @@ class GamesController < ApplicationController
     @all = fetch_games home_teams, away_teams, params[:page]
     paging = build_paging_metadata @all
     respond_to do |format|
-      format.html # index.html.erb
+      # return 200 to prevent loading nonexistent html file
+      format.html { render nothing: true }
       format.json do
         render json: { paging: paging, data: @all.as_json(game_json_options) }
       end
