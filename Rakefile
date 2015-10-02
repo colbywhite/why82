@@ -14,3 +14,11 @@ namespace :db do
     puts "There are #{Game.count} games in the DB"
   end
 end
+
+task :test_db_setup do
+  Rails.env = ENV['RAILS_ENV'] = 'test'
+  puts 'Dropping test DB'
+  Rake::Task['db:drop'].invoke
+end
+
+task spec: :test_db_setup

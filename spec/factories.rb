@@ -7,6 +7,6 @@ FactoryGirl.define do
   factory :game do
     home
     away
-    time '2015-08-29 13:05:01'
+    time { Time.zone.now }
   end
 end
