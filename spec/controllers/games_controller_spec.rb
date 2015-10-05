@@ -7,7 +7,7 @@ RSpec.describe GamesController do
   end
 
   describe 'GET index paging' do
-    before :all do
+    before :each do
       # create two full pages worth of games and a third page with only one game
       @page_size = Sked::Application.config.games_per_page
       @games = (0..@page_size * 2).collect { create(:game) }
@@ -36,7 +36,7 @@ RSpec.describe GamesController do
   end
 
   describe 'GET index filtering' do
-    before :all do
+    before :each do
       # create eight teams
       @teams = (0..7).collect do |team_name|
         create(:team, name: team_name.to_s)
