@@ -5,11 +5,7 @@ RSpec.describe Team do
     before :each do
       # create 15 games, 10 of which involve the Spurs
       @spurs = create(:team, name: 'Spurs')
-      # create five random games that do not contain the Spurs
-      @games = (0..4).collect { create(:game) }
-      # create five home games for the Spurs, then five away
-      @games += (0..4).collect { create(:game, home: @spurs) }
-      @games += (0..4).collect { create(:game, away: @spurs) }
+      @games = create_games_for_team @spurs
     end
 
     it 'returns all of a team\'s games' do
