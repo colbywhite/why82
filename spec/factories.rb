@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :team, aliases: [:home, :away] do
-    name 'San Antonio Spurs'
-    abbr 'SA'
+    name 'Default Test Team'
+    abbr 'DTT'
   end
 
   factory :game do
