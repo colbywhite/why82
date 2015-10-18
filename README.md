@@ -21,6 +21,12 @@ bundle install      # add "--without production" if you're building for dev
 bundle exec rake db:reseed 
 ```
 
+## Tests
+
+```bash
+bundle exec rake spec
+```
+
 ## Running locally
 
 ```bash
