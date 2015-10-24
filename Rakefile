@@ -19,4 +19,8 @@ task :test_db_setup do
   Rake::Task['db:drop'].invoke
 end
 
-task spec: :test_db_setup
+task spec: [:test_db_setup, 'db:create']
+
+task log: :environment do
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+end

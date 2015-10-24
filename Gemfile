@@ -19,6 +19,7 @@ gem 'local_time'
 gem 'will_paginate'
 gem 'version'
 gem 'simplecov', require: false, group: :test
+gem 'pg'
 
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do
@@ -36,5 +37,4 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'pg'
 end
