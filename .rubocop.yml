@@ -10,5 +10,7 @@ AllCops:
     - 'db/schema.rb'
     - 'db/seeds.rb'
     - 'db/data/20150829160525_nba2016.rb'
+Rails/HasAndBelongsToMany:
+  Enabled: false
 Documentation:
   Enabled: false
