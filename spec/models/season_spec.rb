@@ -4,10 +4,11 @@ describe Season do
   before :each do
     # create 2 games, 2 teams for the season
     @season = create(:season, name: '2016')
-    @spurs = create(:team, name: 'Spurs', season: @season)
-    @rockets = create(:team, name: 'Rockets', season: @season)
-    @gameone = create(:game, home: @spurs, away: @rockets, season: @season)
-    @gametwo = create(:game, away: @spurs, home: @rockets, season: @season)
+    @game_table = season_to_game_sym @season
+    @spurs = create(:team, name: 'Spurs')
+    @rockets = create(:team, name: 'Rockets')
+    @gameone = create(@game_table, home: @spurs, away: @rockets)
+    @gametwo = create(@game_table, away: @spurs, home: @rockets)
   end
 
   it 'should pick up teams relation' do
@@ -18,9 +19,9 @@ describe Season do
     expect(@season.games.count).to eq(2)
   end
 
-  it 'should not allow null season for game' do
+  it 'should not allow games in generic games table' do
     null_create =
-        -> { create(:game, away: @spurs, home: @rockets, season: nil) }
-    expect(null_create).to(raise_error(ActiveRecord::StatementInvalid))
+        -> { create(:game, away: @spurs, home: @rockets) }
+    expect(null_create).to(raise_error(ArgumentError))
   end
 end

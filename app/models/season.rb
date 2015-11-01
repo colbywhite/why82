@@ -19,4 +19,11 @@ class Season < ActiveRecord::Base
   def records
     record_class.all
   end
+
+  def teams
+    homes = game_class.select('home_id as id').group(:home_id)
+    aways = game_class.select('away_id as id' ).group(:away_id)
+    unique_ids = (homes | aways).collect(&:id)
+    Team.find(unique_ids)
+  end
 end
