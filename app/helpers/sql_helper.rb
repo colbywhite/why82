@@ -66,19 +66,19 @@ module SqlHelper
       CREATE VIEW #{games_table_prefix}_records
       AS
       SELECT
-        #{games_table_prefix}_home_records.home_id AS team_id,
-        (#{games_table_prefix}_home_records.wins + #{games_table_prefix}_away_records.wins) AS wins,
-        (#{games_table_prefix}_home_records.losses + #{games_table_prefix}_away_records.losses) AS losses,
-        (#{games_table_prefix}_home_records.ties + #{games_table_prefix}_away_records.ties) AS ties,
+        COALESCE(home.home_id, away.away_id) AS team_id,
+        (COALESCE(home.wins, 0) + COALESCE(away.wins, 0)) AS wins,
+        (COALESCE(home.losses, 0) + COALESCE(away.losses, 0)) AS losses,
+        (COALESCE(home.ties, 0) + COALESCE(away.ties, 0)) AS ties,
         ROUND((
-        (#{games_table_prefix}_home_records.wins + #{games_table_prefix}_away_records.wins +
-        ((#{games_table_prefix}_home_records.ties + #{games_table_prefix}_away_records.ties) * 0.5))
+        (COALESCE(home.wins, 0) + COALESCE(away.wins, 0) +
+        ((COALESCE(home.ties, 0) + COALESCE(away.ties, 0)) * 0.5))
         /
-        (#{games_table_prefix}_home_records.wins + #{games_table_prefix}_away_records.wins + #{games_table_prefix}_home_records.losses + #{games_table_prefix}_away_records.losses + #{games_table_prefix}_home_records.ties + #{games_table_prefix}_away_records.ties)
+        (COALESCE(home.wins, 0) + COALESCE(away.wins, 0) + COALESCE(home.losses, 0) + COALESCE(away.losses, 0) + COALESCE(home.ties, 0) + COALESCE(away.ties, 0))
         ), 3) AS percentage
-      FROM #{games_table_prefix}_home_records
-      FULL OUTER JOIN #{games_table_prefix}_away_records
-        ON #{games_table_prefix}_home_records.home_id = #{games_table_prefix}_away_records.away_id
+      FROM #{games_table_prefix}_home_records AS home
+      FULL OUTER JOIN #{games_table_prefix}_away_records AS away
+        ON home.home_id = away.away_id
       ORDER BY percentage DESC, wins DESC;
     SQL
   end

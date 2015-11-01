@@ -32,6 +32,8 @@ group :development, :test do
   #   running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'rubocop', require: false
+  gem 'pry'
+  gem 'pry-doc'
 end
 
 group :production do

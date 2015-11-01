@@ -6,7 +6,10 @@ class Team < ActiveRecord::Base
   end
 
   def record(season)
-    season.record_class.find_by(team_id: id)
+    record_class = season.record_class
+    record = record_class.find_by(team_id: id)
+    record = record_class.empty_record id if record.nil?
+    record
   end
 
   def logo

@@ -197,14 +197,14 @@ CREATE VIEW nba2016_home_records AS
 --
 
 CREATE VIEW nba2016_records AS
- SELECT nba2016_home_records.home_id AS team_id,
-    (nba2016_home_records.wins + nba2016_away_records.wins) AS wins,
-    (nba2016_home_records.losses + nba2016_away_records.losses) AS losses,
-    (nba2016_home_records.ties + nba2016_away_records.ties) AS ties,
-    round(((((nba2016_home_records.wins + nba2016_away_records.wins))::numeric + (((nba2016_home_records.ties + nba2016_away_records.ties))::numeric * 0.5)) / ((((((nba2016_home_records.wins + nba2016_away_records.wins) + nba2016_home_records.losses) + nba2016_away_records.losses) + nba2016_home_records.ties) + nba2016_away_records.ties))::numeric), 3) AS percentage
-   FROM (nba2016_home_records
-     FULL JOIN nba2016_away_records ON ((nba2016_home_records.home_id = nba2016_away_records.away_id)))
-  ORDER BY round(((((nba2016_home_records.wins + nba2016_away_records.wins))::numeric + (((nba2016_home_records.ties + nba2016_away_records.ties))::numeric * 0.5)) / ((((((nba2016_home_records.wins + nba2016_away_records.wins) + nba2016_home_records.losses) + nba2016_away_records.losses) + nba2016_home_records.ties) + nba2016_away_records.ties))::numeric), 3) DESC, (nba2016_home_records.wins + nba2016_away_records.wins) DESC;
+ SELECT COALESCE(home.home_id, away.away_id) AS team_id,
+    (COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)) AS wins,
+    (COALESCE(home.losses, (0)::bigint) + COALESCE(away.losses, (0)::bigint)) AS losses,
+    (COALESCE(home.ties, (0)::bigint) + COALESCE(away.ties, (0)::bigint)) AS ties,
+    round(((((COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)))::numeric + (((COALESCE(home.ties, (0)::bigint) + COALESCE(away.ties, (0)::bigint)))::numeric * 0.5)) / ((((((COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)) + COALESCE(home.losses, (0)::bigint)) + COALESCE(away.losses, (0)::bigint)) + COALESCE(home.ties, (0)::bigint)) + COALESCE(away.ties, (0)::bigint)))::numeric), 3) AS percentage
+   FROM (nba2016_home_records home
+     FULL JOIN nba2016_away_records away ON ((home.home_id = away.away_id)))
+  ORDER BY round(((((COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)))::numeric + (((COALESCE(home.ties, (0)::bigint) + COALESCE(away.ties, (0)::bigint)))::numeric * 0.5)) / ((((((COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)) + COALESCE(home.losses, (0)::bigint)) + COALESCE(away.losses, (0)::bigint)) + COALESCE(home.ties, (0)::bigint)) + COALESCE(away.ties, (0)::bigint)))::numeric), 3) DESC, (COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)) DESC;
 
 
 --
