@@ -7,8 +7,8 @@ RSpec.describe GamesController do
   end
 
   before :each do
-      @season = create(:season)
-      @game_table = season_to_game_sym @season
+    @season = create(:season)
+    @game_table = season_to_game_sym @season
   end
 
   describe 'GET index paging' do
