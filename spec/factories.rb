@@ -18,6 +18,8 @@ FactoryGirl.define do
   factory :nba2016_game do
     home
     away
+    home_score nil
+    away_score nil
     time { Time.zone.now }
   end
 end
