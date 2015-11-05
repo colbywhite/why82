@@ -7,8 +7,6 @@ Rake::VersionTask.new do |task|
 end
 
 namespace :db do
-  task reseed: %w(db:drop db:create db:migrate seed:migrate db:count)
-
   task count: :environment do
     puts "There are #{Team.count} teams in the DB"
     puts "There are #{Game.count} games in the DB"
@@ -21,4 +19,8 @@ task :test_db_setup do
   Rake::Task['db:drop'].invoke
 end
 
-task spec: :test_db_setup
+task spec: [:test_db_setup, 'db:create']
+
+task log: :environment do
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+end

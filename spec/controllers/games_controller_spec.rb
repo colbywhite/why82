@@ -6,11 +6,16 @@ RSpec.describe GamesController do
     assigns(:all)
   end
 
+  before :each do
+    @season = create(:season)
+    @game_table = season_to_game_sym @season
+  end
+
   describe 'GET index paging' do
     before :each do
       # create two full pages worth of games and a third page with only one game
       @page_size = Sked::Application.config.games_per_page
-      @games = (0..@page_size * 2).collect { create(:game) }
+      @games = (0..@page_size * 2).collect { create(@game_table) }
       expect(@games.size).to eq(@page_size * 2 + 1)
     end
 
@@ -43,11 +48,11 @@ RSpec.describe GamesController do
       end
       # create three games where team zero is the home team against teams 1-3
       @home_games = (1..3).collect do |i|
-        create(:game, home: @teams[0], away: @teams[i])
+        create(@game_table, home: @teams[0], away: @teams[i])
       end
       # create three games where team four is the away team against teams 5-7
       @away_games = (5..7).collect do |i|
-        create(:game, home: @teams[i], away: @teams[4])
+        create(@game_table, home: @teams[i], away: @teams[4])
       end
     end
 

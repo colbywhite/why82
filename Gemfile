@@ -10,7 +10,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bower-rails', '~> 0.10.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'foreman', '~> 0.78.0'
-gem 'seed_migration'
 gem 'squeel'
 gem 'angular-rails-templates'
 gem 'jquery-rails'
@@ -19,6 +18,7 @@ gem 'local_time'
 gem 'will_paginate'
 gem 'version'
 gem 'simplecov', require: false, group: :test
+gem 'pg'
 
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do
@@ -32,9 +32,10 @@ group :development, :test do
   #   running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'rubocop', require: false
+  gem 'pry'
+  gem 'pry-doc'
 end
 
 group :production do
   gem 'rails_12factor'
-  gem 'pg'
 end

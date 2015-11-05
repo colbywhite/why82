@@ -39,7 +39,7 @@ class GamesController < ApplicationController
   end
 
   def fetch_games(home_teams, away_teams, page_num)
-    games = Game.eager_load_teams.paginate(page: page_num).order(:time)
+    games = Nba2016Game.eager_load_teams.paginate(page: page_num).order(:time)
     games = games.where { home_id >> home_teams } if home_teams.count > 0
     games = games.where { away_id >> away_teams } if away_teams.count > 0
     games
