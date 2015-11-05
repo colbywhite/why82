@@ -4,6 +4,7 @@ controllers.controller("GamesController", ['$scope', '$rootScope', '$location', 
   ($scope, $rootScope, $location, $routeParams, Game, ParamParser)->
     $rootScope.away_teams = ParamParser.parseAway($routeParams)
     $rootScope.home_teams = ParamParser.parseHome($routeParams)
+    $scope.current_page = 1
 
     $scope.permalink = () ->
       hLength = $rootScope.home_teams.length
@@ -20,14 +21,21 @@ controllers.controller("GamesController", ['$scope', '$rootScope', '$location', 
       else  # both
         "#{path}?#{homeString}&#{awayString}"
 
-    resultCallback = (results) ->
-      $scope.count = results.length
-      $scope.games = results
+    $scope.goToPage = (page) ->
+      $rootScope.refreshGames(page)
 
-    $rootScope.refreshGames = () ->
+    resultCallback = (results) ->
+      console.log(results.data)
+      $scope.count = results.data.length
+      $scope.games = results.data
+      $scope.paging = results.paging
+      $scope.current_page = results.paging.current
+
+    $rootScope.refreshGames = (page=1) ->
       params = {}
       params['home_teams[]'] = $scope.home_teams if $scope.home_teams
       params['away_teams[]'] = $scope.away_teams if $scope.away_teams
+      params['page'] = page
       Game.query(params, resultCallback)
 
     $scope.games = []

@@ -1,9 +1,15 @@
 class Team < ActiveRecord::Base
-  has_many :home_games, class_name: 'Game', foreign_key: :home_id
-  has_many :away_games, class_name: 'Game', foreign_key: :away_id
+  has_and_belongs_to_many :seasons
 
-  def games
-    Game.by_team id
+  def games(season)
+    season.game_class.by_team(id)
+  end
+
+  def record(season)
+    record_class = season.record_class
+    record = record_class.find_by(team_id: id)
+    record = record_class.empty_record id if record.nil?
+    record
   end
 
   def logo

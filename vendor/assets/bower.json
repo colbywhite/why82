@@ -6,6 +6,7 @@
     "bootstrap-sass-official": "latest",
     "angular-flash": "latest",
     "angular-resource": "latest",
-    "angular-mocks": "latest"
+    "angular-mocks": "latest",
+    "angular-paging": "2.0.0"
   }
 }
