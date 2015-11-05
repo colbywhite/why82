@@ -5,9 +5,11 @@ AllCops:
     - 'codeship-*.rb'
     - 'config.ru'
     - 'Gemfile'
+    - 'lib/tasks/*.rake'
   Exclude:
     - 'bin/*'
     - 'app/helpers/sql_helper.rb'
+    - 'lib/tasks/nba.rake'
 Rails/HasAndBelongsToMany:
   Enabled: false
 Documentation:
