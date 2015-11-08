@@ -9,15 +9,19 @@ class LoadNbaSeasonJob < ActiveJob::Base
     season = create_season name, short_name
     logger.info "Starting status: #{status_str(season)}"
     games_html = pull_season_html season
+    process_games games_html, season
+    logger.info "Ending status: #{status_str(season)}"
+  end
+
+  def process_games(games_html, season)
     games_html.each_with_index do |game_html, i|
       game_info = parse_game_html game_html, season
       create_game game_info, season
-      if (i+1)%200 == 0
-        logger.info "  Finshed reading #{i+1} games"
+      if (i + 1) % 200 == 0
+        logger.info "  #{i + 1} games processed"
         logger.info "  Status: #{status_str(season)}"
       end
     end
-    logger.info "Ending status: #{status_str(season)}"
   end
 
   def status_str(season)
@@ -34,7 +38,8 @@ class LoadNbaSeasonJob < ActiveJob::Base
   end
 
   def create_team(team_info, season)
-    team = Team.find_or_create_by(name: team_info[:name], abbr: team_info[:abbr])
+    team = Team.find_or_create_by(name: team_info[:name],
+                                  abbr: team_info[:abbr])
     team.seasons += [season]
     team
   end

@@ -20,18 +20,17 @@ module BballRefParser
 
   def parse_team_info(html_game, index)
     name = html_game.xpath(".//td[#{index}]").text
-    abbr = html_game.xpath(".//td[#{index}]/a").attribute('href').value.split('/')[2]
-    score = html_game.xpath(".//td[#{index+1}]").text
+    abbr = html_game.xpath(".//td[#{index}]/a/@href")[0].value.split('/')[2]
+    score = html_game.xpath(".//td[#{index + 1}]").text
     if score.nil? || score.empty?
       score = nil
     else
       score = score.to_i
     end
-    {name: name, abbr: abbr, score: score}
+    { name: name, abbr: abbr, score: score }
   end
 
-
-  def parse_game_html(html, season)
+  def parse_game_html(html, _season)
     game_info = {}
 
     game_info[:time] = parse_time(html)

@@ -21,6 +21,6 @@ class Season < ActiveRecord::Base
   end
 
   def teams
-    Team.joins(:seasons).where(:seasons => {id: id})
+    Team.joins(:seasons).where(seasons: { id: id })
   end
 end
