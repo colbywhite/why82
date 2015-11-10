@@ -14,14 +14,18 @@ module BballRefParser
   end
 
   def pull_season_html(season)
-    url = "#{BASE_URL}/leagues/NBA_#{season.short_name}_games.html"
-    parse_doc(url).xpath "//table[@id='games']/tbody/tr"
+    url = season_url season
+    parse_doc(url).xpath "//table[@id='games']/tbody/tr[not(.//th)]"
+  end
+
+  def season_url(season)
+    "#{BASE_URL}/leagues/NBA_#{season.short_name}_games.html"
   end
 
   def parse_team_info(html_game, index)
-    name = html_game.xpath(".//td[#{index}]").text
+    name = parse_clean_text html_game, ".//td[#{index}]"
     abbr = html_game.xpath(".//td[#{index}]/a/@href")[0].value.split('/')[2]
-    score = html_game.xpath(".//td[#{index + 1}]").text
+    score = parse_clean_text html_game, ".//td[#{index + 1}]"
     if score.nil? || score.empty?
       score = nil
     else
@@ -30,7 +34,7 @@ module BballRefParser
     { name: name, abbr: abbr, score: score }
   end
 
-  def parse_game_html(html, _season)
+  def parse_game_html(html)
     game_info = {}
 
     game_info[:time] = parse_time(html)
@@ -40,14 +44,14 @@ module BballRefParser
     # home team's at index 6
     game_info[:home] = parse_team_info html, 6
 
-    game_info[:extra_time] = html.xpath('.//td[8]').text
+    game_info[:extra_time] = parse_clean_text html, './/td[8]'
     game_info
   end
 
   def parse_time(html)
     # Removes the day of the week from the string (i.e. 'Tue, ')
-    date = html.xpath('.//td[1]').text[5..-1]
-    time = html.xpath('.//td[2]').text
+    date = parse_clean_text(html, './/td[1]')[5..-1]
+    time = parse_clean_text html, './/td[2]'
     Chronic.time_class = DEFAULT_TZ
     Chronic.parse "#{date} #{time}"
   end
@@ -56,5 +60,9 @@ module BballRefParser
     team = Team.find_or_create_by(name: name, abbr: abbr)
     team.seasons += [season]
     team
+  end
+
+  def parse_clean_text(html, xpath_str)
+    html.xpath(xpath_str).text.strip.gsub(/\s+/, ' ')
   end
 end

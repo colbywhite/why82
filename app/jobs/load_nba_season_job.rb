@@ -15,7 +15,7 @@ class LoadNbaSeasonJob < ActiveJob::Base
 
   def process_games(games_html, season)
     games_html.each_with_index do |game_html, i|
-      game_info = parse_game_html game_html, season
+      game_info = parse_game_html game_html
       create_game game_info, season
       if (i + 1) % 200 == 0
         logger.info "  #{i + 1} games processed"
