@@ -62,6 +62,152 @@ ALTER SEQUENCE leagues_id_seq OWNED BY leagues.id;
 
 
 --
+-- Name: nba2015_games; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE nba2015_games (
+    id integer NOT NULL,
+    "time" timestamp without time zone NOT NULL,
+    away_id integer NOT NULL,
+    home_id integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    home_score integer,
+    away_score integer
+);
+
+
+--
+-- Name: nba2015_away_records; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW nba2015_away_records AS
+ SELECT nba2015_games.away_id,
+    count(
+        CASE
+            WHEN (nba2015_games.home_score < nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END) AS wins,
+    count(
+        CASE
+            WHEN (nba2015_games.home_score > nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END) AS losses,
+    count(
+        CASE
+            WHEN (nba2015_games.home_score = nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END) AS ties,
+    round((((count(
+        CASE
+            WHEN (nba2015_games.home_score < nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END))::numeric + ((count(
+        CASE
+            WHEN (nba2015_games.home_score = nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END))::numeric * 0.5)) / (count(*))::numeric), 3) AS percentage
+   FROM nba2015_games
+  WHERE ((nba2015_games.home_score IS NOT NULL) AND (nba2015_games.away_score IS NOT NULL))
+  GROUP BY nba2015_games.away_id
+  ORDER BY round((((count(
+        CASE
+            WHEN (nba2015_games.home_score < nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END))::numeric + ((count(
+        CASE
+            WHEN (nba2015_games.home_score = nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END))::numeric * 0.5)) / (count(*))::numeric), 3) DESC, count(
+        CASE
+            WHEN (nba2015_games.home_score < nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END) DESC;
+
+
+--
+-- Name: nba2015_games_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE nba2015_games_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: nba2015_games_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE nba2015_games_id_seq OWNED BY nba2015_games.id;
+
+
+--
+-- Name: nba2015_home_records; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW nba2015_home_records AS
+ SELECT nba2015_games.home_id,
+    count(
+        CASE
+            WHEN (nba2015_games.home_score > nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END) AS wins,
+    count(
+        CASE
+            WHEN (nba2015_games.home_score < nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END) AS losses,
+    count(
+        CASE
+            WHEN (nba2015_games.home_score = nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END) AS ties,
+    round((((count(
+        CASE
+            WHEN (nba2015_games.home_score > nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END))::numeric + ((count(
+        CASE
+            WHEN (nba2015_games.home_score = nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END))::numeric * 0.5)) / (count(*))::numeric), 3) AS percentage
+   FROM nba2015_games
+  WHERE ((nba2015_games.home_score IS NOT NULL) AND (nba2015_games.away_score IS NOT NULL))
+  GROUP BY nba2015_games.home_id
+  ORDER BY round((((count(
+        CASE
+            WHEN (nba2015_games.home_score > nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END))::numeric + ((count(
+        CASE
+            WHEN (nba2015_games.home_score = nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END))::numeric * 0.5)) / (count(*))::numeric), 3) DESC, count(
+        CASE
+            WHEN (nba2015_games.home_score > nba2015_games.away_score) THEN 1
+            ELSE NULL::integer
+        END) DESC;
+
+
+--
+-- Name: nba2015_records; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW nba2015_records AS
+ SELECT COALESCE(home.home_id, away.away_id) AS team_id,
+    (COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)) AS wins,
+    (COALESCE(home.losses, (0)::bigint) + COALESCE(away.losses, (0)::bigint)) AS losses,
+    (COALESCE(home.ties, (0)::bigint) + COALESCE(away.ties, (0)::bigint)) AS ties,
+    round(((((COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)))::numeric + (((COALESCE(home.ties, (0)::bigint) + COALESCE(away.ties, (0)::bigint)))::numeric * 0.5)) / ((((((COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)) + COALESCE(home.losses, (0)::bigint)) + COALESCE(away.losses, (0)::bigint)) + COALESCE(home.ties, (0)::bigint)) + COALESCE(away.ties, (0)::bigint)))::numeric), 3) AS percentage
+   FROM (nba2015_home_records home
+     FULL JOIN nba2015_away_records away ON ((home.home_id = away.away_id)))
+  ORDER BY round(((((COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)))::numeric + (((COALESCE(home.ties, (0)::bigint) + COALESCE(away.ties, (0)::bigint)))::numeric * 0.5)) / ((((((COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)) + COALESCE(home.losses, (0)::bigint)) + COALESCE(away.losses, (0)::bigint)) + COALESCE(home.ties, (0)::bigint)) + COALESCE(away.ties, (0)::bigint)))::numeric), 3) DESC, (COALESCE(home.wins, (0)::bigint) + COALESCE(away.wins, (0)::bigint)) DESC;
+
+
+--
 -- Name: nba2016_games; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -302,6 +448,13 @@ ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY nba2015_games ALTER COLUMN id SET DEFAULT nextval('nba2015_games_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY nba2016_games ALTER COLUMN id SET DEFAULT nextval('nba2016_games_id_seq'::regclass);
 
 
@@ -325,6 +478,14 @@ ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regcl
 
 ALTER TABLE ONLY leagues
     ADD CONSTRAINT leagues_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nba2015_games_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY nba2015_games
+    ADD CONSTRAINT nba2015_games_pkey PRIMARY KEY (id);
 
 
 --
@@ -356,6 +517,34 @@ ALTER TABLE ONLY teams
 --
 
 CREATE INDEX index_leagues_on_abbr ON leagues USING btree (abbr);
+
+
+--
+-- Name: index_nba2015_games_on_away_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_nba2015_games_on_away_id ON nba2015_games USING btree (away_id);
+
+
+--
+-- Name: index_nba2015_games_on_away_score; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_nba2015_games_on_away_score ON nba2015_games USING btree (away_score);
+
+
+--
+-- Name: index_nba2015_games_on_home_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_nba2015_games_on_home_id ON nba2015_games USING btree (home_id);
+
+
+--
+-- Name: index_nba2015_games_on_home_score; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_nba2015_games_on_home_score ON nba2015_games USING btree (home_score);
 
 
 --
@@ -436,6 +625,14 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
+-- Name: fk_rails_363c36507a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY nba2015_games
+    ADD CONSTRAINT fk_rails_363c36507a FOREIGN KEY (home_id) REFERENCES teams(id);
+
+
+--
 -- Name: fk_rails_392438f149; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -449,6 +646,14 @@ ALTER TABLE ONLY seasons_teams
 
 ALTER TABLE ONLY nba2016_games
     ADD CONSTRAINT fk_rails_7930902be5 FOREIGN KEY (away_id) REFERENCES teams(id);
+
+
+--
+-- Name: fk_rails_8694486807; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY nba2015_games
+    ADD CONSTRAINT fk_rails_8694486807 FOREIGN KEY (away_id) REFERENCES teams(id);
 
 
 --
@@ -488,4 +693,8 @@ INSERT INTO schema_migrations (version) VALUES ('20151025222221');
 INSERT INTO schema_migrations (version) VALUES ('20151025231506');
 
 INSERT INTO schema_migrations (version) VALUES ('20151026031042');
+
+INSERT INTO schema_migrations (version) VALUES ('20151107185354');
+
+INSERT INTO schema_migrations (version) VALUES ('20151107185523');
 
