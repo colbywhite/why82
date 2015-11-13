@@ -1,18 +1,12 @@
 require 'spec_helper'
 
 describe Season do
-  def create_team_in_season(name, season)
-    team = create(:team, name: name)
-    team.seasons += [season]
-    team
-  end
-
   before :each do
     # create 2 games, 2 teams for the season
     @season = create(:season, name: '2016')
     @game_table = season_to_game_sym @season
-    @spurs = create_team_in_season 'Spurs', @season
-    @rockets = create_team_in_season 'Rockets', @season
+    @spurs = create(:team, name: 'Spurs')
+    @rockets = create(:team, name: 'Rockets')
     @gameone = create(@game_table, home: @spurs, away: @rockets)
     @gametwo = create(@game_table, away: @spurs, home: @rockets)
   end

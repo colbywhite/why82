@@ -19,8 +19,6 @@ gem 'will_paginate'
 gem 'version'
 gem 'simplecov', require: false, group: :test
 gem 'pg'
-gem 'nokogiri', '~>1.6'
-gem 'chronic'
 
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do

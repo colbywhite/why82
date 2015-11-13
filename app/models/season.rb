@@ -21,6 +21,9 @@ class Season < ActiveRecord::Base
   end
 
   def teams
-    Team.joins(:seasons).where(seasons: { id: id })
+    homes = game_class.select('home_id as id').group(:home_id)
+    aways = game_class.select('away_id as id').group(:away_id)
+    unique_ids = (homes | aways).collect(&:id)
+    Team.find(unique_ids)
   end
 end
