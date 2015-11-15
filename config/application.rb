@@ -37,5 +37,6 @@ module Sked
     config.assets.precompile << /.*.(?:eot|svg|ttf|woff)$/
     config.games_per_page = 100
     config.active_record.schema_format = :sql
+    config.parsehub_api_key = ENV['PARSEHUB_API_KEY']
   end
 end

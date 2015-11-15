@@ -8,8 +8,10 @@ end
 
 namespace :db do
   task count: :environment do
-    puts "There are #{Team.count} teams in the DB"
-    puts "There are #{Game.count} games in the DB"
+    puts "There are #{Season.count} seasons in the DB"
+    season_2016 = Season.find_by short_name: '2016'
+    puts "There are #{season_2016.games.count} games in the DB for 2016"
+    puts "There are #{season_2016.teams.count} games in the DB for 2016"
   end
 end
 

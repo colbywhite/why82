@@ -41,4 +41,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   config.games_per_page = 5
+  config.active_job.queue_adapter = :test
+
+  # Ensures we are actually using the API in tests
+  config.parsehub_api_key = nil
 end
