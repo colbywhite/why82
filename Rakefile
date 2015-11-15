@@ -13,6 +13,12 @@ namespace :db do
     puts "There are #{season_2016.games.count} games in the DB for 2016"
     puts "There are #{season_2016.teams.count} teams in the DB for 2016"
   end
+
+  namespace :log do
+    task info: :environment do
+      ActiveRecord::Base.logger.level = 1
+    end
+  end
 end
 
 task :test_db_setup do
@@ -22,7 +28,3 @@ task :test_db_setup do
 end
 
 task spec: [:test_db_setup, 'db:create']
-
-task log: :environment do
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
-end
