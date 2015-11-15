@@ -14,6 +14,7 @@ RSpec.describe Team do
       expect(spurs_games.size).to eq(10)
     end
   end
+
   describe '#record' do
     before :each do
       @season = create(:season)
@@ -51,6 +52,33 @@ RSpec.describe Team do
 
       assert_record_equals @spurs.record(@season), 5, 1, 1, to_bigd('5.5', 7)
       assert_record_equals @rockets.record(@season), 1, 5, 1, to_bigd('1.5', 7)
+    end
+  end
+
+  describe '#logo' do
+    subject(:job) { LoadNbaSeasonJob.perform_later 'Reg', '2015' }
+
+    before :each do
+      # parse a month of the season so we can make assertions on the
+      # teams created as a result
+      allow(job).to receive(:season_url) do |season|
+        "spec/resources/#{season.short_name}_one_incomplete_month.json"
+      end
+      allow(job).to receive(:pull_season_json) do |season|
+        url = job.season_url season
+        JSON.parse(File.read(url))['games']
+      end
+      @season = create(:season, short_name: '2015')
+      Chronic.time_class = Time.find_zone('Eastern Time (US & Canada)')
+      job.perform 'Test', '2015'
+    end
+
+    it 'should be present for every team' do
+      Team.all.map do |team|
+        filename = team.logo.split('/')[-1]
+        local_path = File.join 'app/assets/images/logos', filename
+        expect(File).to exist(local_path)
+      end
     end
   end
 end
