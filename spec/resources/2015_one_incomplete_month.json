@@ -1,0 +1,252 @@
+{
+  "games": [
+    {
+      "home_abbr": "LAL",
+      "home_score": 90,
+      "home": "Los Angeles Lakers",
+      "away_abbr": "HOU",
+      "away_score": 108,
+      "away": "Houston Rockets",
+      "eastern_date": "Tue, Oct 28, 2014",
+      "eastern_time": "10:30 pm"
+    },
+    {
+      "home_abbr": "NOP",
+      "home_score": 101,
+      "home": "New Orleans Pelicans",
+      "away_abbr": "ORL",
+      "away_score": 84,
+      "away": "Orlando Magic",
+      "eastern_date": "Tue, Oct 28, 2014",
+      "eastern_time": "8:00 pm"
+    },
+    {
+      "home_abbr": "SAS",
+      "home_score": 101,
+      "home": "San Antonio Spurs",
+      "away_abbr": "DAL",
+      "away_score": 100,
+      "away": "Dallas Mavericks",
+      "eastern_date": "Tue, Oct 28, 2014",
+      "eastern_time": "8:00 pm"
+    },
+    {
+      "home_abbr": "BOS",
+      "home_score": 121,
+      "home": "Boston Celtics",
+      "away_abbr": "BRK",
+      "away_score": 105,
+      "away": "Brooklyn Nets",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "7:30 pm"
+    },
+    {
+      "home_abbr": "CHO",
+      "home_score": 108,
+      "home": "Charlotte Hornets",
+      "away_abbr": "MIL",
+      "away_score": 106,
+      "away": "Milwaukee Bucks",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "7:00 pm"
+    },
+    {
+      "home_abbr": "DEN",
+      "home_score": 89,
+      "home": "Denver Nuggets",
+      "away_abbr": "DET",
+      "away_score": 79,
+      "away": "Detroit Pistons",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "9:00 pm"
+    },
+    {
+      "home_abbr": "IND",
+      "home_score": 103,
+      "home": "Indiana Pacers",
+      "away_abbr": "PHI",
+      "away_score": 91,
+      "away": "Philadelphia 76ers",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "7:00 pm"
+    },
+    {
+      "home_abbr": "MEM",
+      "home_score": 105,
+      "home": "Memphis Grizzlies",
+      "away_abbr": "MIN",
+      "away_score": 101,
+      "away": "Minnesota Timberwolves",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "8:00 pm"
+    },
+    {
+      "home_abbr": "MIA",
+      "home_score": 107,
+      "home": "Miami Heat",
+      "away_abbr": "WAS",
+      "away_score": 95,
+      "away": "Washington Wizards",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "7:30 pm"
+    },
+    {
+      "home_abbr": "NYK",
+      "home_score": 80,
+      "home": "New York Knicks",
+      "away_abbr": "CHI",
+      "away_score": 104,
+      "away": "Chicago Bulls",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "8:00 pm"
+    },
+    {
+      "home_abbr": "PHO",
+      "home_score": 119,
+      "home": "Phoenix Suns",
+      "away_abbr": "LAL",
+      "away_score": 99,
+      "away": "Los Angeles Lakers",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "10:00 pm"
+    },
+    {
+      "home_abbr": "POR",
+      "home_score": 106,
+      "home": "Portland Trail Blazers",
+      "away_abbr": "OKC",
+      "away_score": 89,
+      "away": "Oklahoma City Thunder",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "10:30 pm"
+    },
+    {
+      "home_abbr": "SAC",
+      "home_score": 77,
+      "home": "Sacramento Kings",
+      "away_abbr": "GSW",
+      "away_score": 95,
+      "away": "Golden State Warriors",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "10:00 pm"
+    },
+    {
+      "home_abbr": "TOR",
+      "home_score": 109,
+      "home": "Toronto Raptors",
+      "away_abbr": "ATL",
+      "away_score": 102,
+      "away": "Atlanta Hawks",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "7:30 pm"
+    },
+    {
+      "home_abbr": "UTA",
+      "home_score": 93,
+      "home": "Utah Jazz",
+      "away_abbr": "HOU",
+      "away_score": 104,
+      "away": "Houston Rockets",
+      "eastern_date": "Wed, Oct 29, 2014",
+      "eastern_time": "9:00 pm"
+    },
+    {
+      "home_abbr": "CLE",
+      "home_score": 90,
+      "home": "Cleveland Cavaliers",
+      "away_abbr": "NYK",
+      "away_score": 95,
+      "away": "New York Knicks",
+      "eastern_date": "Thu, Oct 30, 2014",
+      "eastern_time": "8:00 pm"
+    },
+    {
+      "home_abbr": "DAL",
+      "home_score": 120,
+      "home": "Dallas Mavericks",
+      "away_abbr": "UTA",
+      "away_score": 102,
+      "away": "Utah Jazz",
+      "eastern_date": "Thu, Oct 30, 2014",
+      "eastern_time": "8:30 pm"
+    },
+    {
+      "home_abbr": "LAC",
+      "home_score": 93,
+      "home": "Los Angeles Clippers",
+      "away_abbr": "OKC",
+      "away_score": 90,
+      "away": "Oklahoma City Thunder",
+      "eastern_date": "Thu, Oct 30, 2014",
+      "eastern_time": "10:30 pm"
+    },
+    {
+      "home_abbr": "MIN",
+      "home_score": 97,
+      "home": "Minnesota Timberwolves",
+      "away_abbr": "DET",
+      "away_score": 91,
+      "away": "Detroit Pistons",
+      "eastern_date": "Thu, Oct 30, 2014",
+      "eastern_time": "8:00 pm"
+    },
+    {
+      "home_abbr": "ORL",
+      "home_score": 98,
+      "home": "Orlando Magic",
+      "away_abbr": "WAS",
+      "away_score": 105,
+      "away": "Washington Wizards",
+      "eastern_date": "Thu, Oct 30, 2014",
+      "eastern_time": "7:00 pm"
+    },
+    {
+      "home_abbr": "CHI",
+      "home": "Chicago Bulls",
+      "away_abbr": "CLE",
+      "away": "Cleveland Cavaliers",
+      "eastern_date": "Fri, Oct 31, 2014",
+      "eastern_time": "8:00 pm"
+    },
+    {
+      "home_abbr": "IND",
+      "home": "Indiana Pacers",
+      "away_abbr": "MEM",
+      "away": "Memphis Grizzlies",
+      "eastern_date": "Fri, Oct 31, 2014",
+      "eastern_time": "7:00 pm"
+    },
+    {
+      "home_abbr": "LAL",
+      "home": "Los Angeles Lakers",
+      "away_abbr": "LAC",
+      "away": "Los Angeles Clippers",
+      "eastern_date": "Fri, Oct 31, 2014",
+      "eastern_time": "10:30 pm"
+    },
+    {
+      "home_abbr": "MIL",
+      "home": "Milwaukee Bucks",
+      "away_abbr": "PHI",
+      "away": "Philadelphia 76ers",
+      "eastern_date": "Fri, Oct 31, 2014",
+      "eastern_time": "8:30 pm"
+    },
+    {
+      "home_abbr": "PHO",
+      "home": "Phoenix Suns",
+      "away_abbr": "SAS",
+      "away": "San Antonio Spurs",
+      "eastern_date": "Fri, Oct 31, 2014",
+      "eastern_time": "10:00 pm"
+    },
+    {
+      "home_abbr": "SAC",
+      "home": "Sacramento Kings",
+      "away_abbr": "POR",
+      "away": "Portland Trail Blazers",
+      "eastern_date": "Fri, Oct 31, 2014",
+      "eastern_time": "10:00 pm"
+    }
+  ]
+}
