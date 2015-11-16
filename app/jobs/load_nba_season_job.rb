@@ -1,3 +1,5 @@
+require 'exceptions'
+
 class LoadNbaSeasonJob < ActiveJob::Base
   include ParseHubParser
   queue_as :default
@@ -5,12 +7,15 @@ class LoadNbaSeasonJob < ActiveJob::Base
   LEAGUE_ABBR = 'NBA'
 
   def perform(name, short_name)
-    logger.info "Loading #{LEAGUE_ABBR} season #{short_name}"
-    season = create_season name, short_name
-    logger.info "Starting status: #{status_str(season)}"
-    games_json = pull_season_json season
-    process_games games_json, season
-    logger.info "Ending status: #{status_str(season)}"
+    ActiveRecord::Base.transaction do
+      logger.info "Loading #{LEAGUE_ABBR} season #{short_name}"
+      season = create_season name, short_name
+      logger.info "Starting status: #{status_str(season)}"
+      games_json = pull_season_json season
+      process_games games_json, season
+      logger.info "Ending status: #{status_str(season)}"
+      validate_season season
+    end
   end
 
   def process_games(games_json, season)
@@ -25,6 +30,11 @@ class LoadNbaSeasonJob < ActiveJob::Base
 
   def status_str(season)
     "#{season.games.count} games & #{season.teams.count} teams"
+  end
+
+  def validate_season(season)
+    Exceptions::TooManyGamesException.raise_if season.games.count
+    Exceptions::TooManyTeamsException.raise_if season.teams.count
   end
 
   def league

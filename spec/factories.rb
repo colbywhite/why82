@@ -22,4 +22,12 @@ FactoryGirl.define do
     away_score nil
     time { Time.zone.now }
   end
+
+  factory :nba2015_game do
+    home
+    away
+    home_score nil
+    away_score nil
+    time { Time.zone.now }
+  end
 end
