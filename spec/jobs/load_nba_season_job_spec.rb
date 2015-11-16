@@ -135,14 +135,12 @@ RSpec.describe LoadNbaSeasonJob do
 
   describe '#create_game' do
     before :each do
-      @game_json = {
-        ParseHubParser::HOME_ABBR => 'SAC',
-        ParseHubParser::HOME => 'Sacramento Kings',
-        ParseHubParser::AWAY_ABBR => 'POR',
-        ParseHubParser::AWAY => 'Portland Trail Blazers',
-        ParseHubParser::EASTERN_DATE => 'Fri, Oct 31, 2014',
-        ParseHubParser::EASTERN_TIME => '10:00 pm'
-      }
+      @game_json = { ParseHubParser::HOME_ABBR => 'SAC',
+                     ParseHubParser::HOME => 'Sacramento Kings',
+                     ParseHubParser::AWAY_ABBR => 'POR',
+                     ParseHubParser::AWAY => 'Portland Trail Blazers',
+                     ParseHubParser::EASTERN_DATE => 'Fri, Oct 31, 2014',
+                     ParseHubParser::EASTERN_TIME => '10:00 pm' }
       @season = create(:season)
     end
 
