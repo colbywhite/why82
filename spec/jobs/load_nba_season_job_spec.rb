@@ -71,10 +71,6 @@ RSpec.describe LoadNbaSeasonJob do
                        short_name: '2015', name: 'Test', league: job.league)
       game_sym = season_to_game_sym @season
       @pre_seed_game = create(game_sym)
-      # use the full season to get all of the games
-      allow(job).to receive(:season_url) do |season|
-        "spec/resources/#{season.short_name}_full.json"
-      end
 
       expect do
         job.perform 'Test', '2015'

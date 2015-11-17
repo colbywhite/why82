@@ -1,6 +1,6 @@
 module Exceptions
   class TooManyGamesException < StandardError
-    MAX_GAMES_IN_SEASON = 1230
+    MAX_GAMES_IN_SEASON = Sked::Application.config.max_games_in_season
 
     def initialize(num_games)
       super("Too many games detected (#{num_games} > #{MAX_GAMES_IN_SEASON})")
@@ -14,7 +14,7 @@ module Exceptions
   end
 
   class TooManyTeamsException < StandardError
-    MAX_TEAMS_IN_SEASON = 30
+    MAX_TEAMS_IN_SEASON = Sked::Application.config.max_teams_in_season
 
     def initialize(num_teams)
       super("Too many teams detected (#{num_teams} > #{MAX_TEAMS_IN_SEASON})")

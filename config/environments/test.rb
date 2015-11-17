@@ -42,6 +42,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.games_per_page = 5
   config.active_job.queue_adapter = :test
+  config.max_games_in_season = 26
 
   # Ensures we are actually using the API in tests
   config.parsehub_api_key = nil

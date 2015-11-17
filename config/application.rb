@@ -38,5 +38,7 @@ module Sked
     config.games_per_page = 100
     config.active_record.schema_format = :sql
     config.parsehub_api_key = ENV['PARSEHUB_API_KEY']
+    config.max_games_in_season = 1230
+    config.max_teams_in_season = 30
   end
 end
