@@ -39,8 +39,9 @@ RSpec.describe LoadNbaSeasonJob do
 
     it 'should update scores on second call' do
       job.perform 'Test', '2015'
-      expect(num_incomplete_games('Test', '2015')).to eq(6)
-      expect(num_complete_games('Test', '2015')).to eq(20)
+      test_season = get_season 'Test', '2015'
+      expect(test_season.incomplete_games.count).to eq(6)
+      expect(test_season.complete_games.count).to eq(20)
 
       # use the complete month to get full scores
       allow(job).to receive(:season_url) do |season|
@@ -48,8 +49,9 @@ RSpec.describe LoadNbaSeasonJob do
       end
 
       job.perform 'Test', '2015'
-      expect(num_incomplete_games('Test', '2015')).to eq(0)
-      expect(num_complete_games('Test', '2015')).to eq(26)
+      test_season = get_season 'Test', '2015'
+      expect(test_season.incomplete_games.count).to eq(0)
+      expect(test_season.complete_games.count).to eq(26)
     end
 
     it 'should rollback if too many teams' do
@@ -80,25 +82,11 @@ RSpec.describe LoadNbaSeasonJob do
       expect(@season.games.count).to eq(1)
     end
 
-    def get_games(name, short_name)
-      Season.where(short_name: short_name, name: name).first.games
+    def get_season(name, short_name)
+      seasons = Season.where(short_name: short_name, name: name)
+      expect(seasons.count).to eq(1)
+      seasons.first
     end
-
-    def num_incomplete_games(name, short_name)
-      get_games(name, short_name).where(home_score: nil, away_score: nil).count
-    end
-
-    # rubocop doesn't understand the squeel syntax at all
-    # rubocop:disable BlockEndNewline, NonNilCheck
-    # rubocop:disable MultilineOperationIndentation, MultilineBlockLayout
-    # rubocop:disable BlockDelimiters
-    def num_complete_games(name, short_name)
-      get_games(name, short_name).where { (home_score != nil) &
-          (away_score != nil) }.count
-    end
-    # rubocop:enable BlockEndNewline, NonNilCheck
-    # rubocop:enable MultilineOperationIndentation, MultilineBlockLayout
-    # rubocop:enable BlockDelimiters
   end
 
   describe '#create_season' do

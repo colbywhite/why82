@@ -11,6 +11,22 @@ class Season < ActiveRecord::Base
     game_class.all
   end
 
+  def incomplete_games
+    games.where(home_score: nil, away_score: nil)
+  end
+
+  # rubocop doesn't understand the squeel syntax at all
+  # rubocop:disable BlockEndNewline, NonNilCheck
+  # rubocop:disable MultilineOperationIndentation, MultilineBlockLayout
+  # rubocop:disable BlockDelimiters
+  def complete_games
+    games.where { (home_score != nil) &
+        (away_score != nil) }
+  end
+  # rubocop:enable BlockEndNewline, NonNilCheck
+  # rubocop:enable MultilineOperationIndentation, MultilineBlockLayout
+  # rubocop:enable BlockDelimiters
+
   def record_class
     league = 'nba'
     Object.const_get "#{league.camelcase}#{short_name.camelcase}Record"
