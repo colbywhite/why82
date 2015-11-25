@@ -2,8 +2,7 @@
 # via parsehub.com. Every season will have parsehub project that has been
 # created for it
 module ParseHubParser
-  PARSEHUB_API_KEY = Sked::Application.config.parsehub_api_key
-  BASE_URL = 'https://www.parsehub.com/api/v2'
+  include ParseHubInfo
   SEASON_PROJECTS = { '2015' => 'tx4aJc83Ap-7hlfh0IsUgEP8',
                       '2016' => 'tc6QcxGUigYpEELchlkmh3_8' }
   DEFAULT_TZ = ActiveSupport::TimeZone['Eastern Time (US & Canada)']

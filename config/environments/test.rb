@@ -46,4 +46,11 @@ Rails.application.configure do
 
   # Ensures we are actually using the API in tests
   config.parsehub_api_key = nil
+
+  # set both to .25 second interval and 1 second timeout
+  # to make the tests quick
+  config.initial_poll_interval = 0.25
+  config.initial_poll_timeout = 1
+  config.secondary_poll_interval = 0.25
+  config.secondary_poll_timeout = 1
 end
