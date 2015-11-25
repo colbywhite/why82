@@ -70,7 +70,7 @@ RSpec.describe Team do
       end
       @season = create(:season, short_name: '2015')
       Chronic.time_class = Time.find_zone('Eastern Time (US & Canada)')
-      job.perform 'Test', '2015'
+      job.process_season 'Test', '2015'
     end
 
     it 'should be present for every team' do

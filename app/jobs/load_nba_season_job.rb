@@ -2,11 +2,17 @@ require 'exceptions'
 
 class LoadNbaSeasonJob < ActiveJob::Base
   include ParseHubParser
+  include ParseHubRunner
   queue_as :default
   LEAGUE_NAME = 'National Basketball Association'
   LEAGUE_ABBR = 'NBA'
 
   def perform(name, short_name)
+    start_run_and_wait SEASON_PROJECTS[short_name]
+    process_season name, short_name
+  end
+
+  def process_season(name, short_name)
     ActiveRecord::Base.transaction do
       logger.info "Loading #{LEAGUE_ABBR} season #{short_name}"
       season = create_season name, short_name

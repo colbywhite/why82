@@ -40,5 +40,14 @@ module Sked
     config.parsehub_api_key = ENV['PARSEHUB_API_KEY']
     config.max_games_in_season = 1230
     config.max_teams_in_season = 30
+
+    # 15 seconds
+    config.initial_poll_interval = 15
+    # 5 minutes
+    config.initial_poll_timeout = 5 * 60
+    # 3.5 minutes
+    config.secondary_poll_interval = (3 * 60) + 30
+    # 25 minutes
+    config.secondary_poll_timeout = 25 * 60
   end
 end
