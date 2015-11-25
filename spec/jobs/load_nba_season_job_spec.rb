@@ -26,9 +26,9 @@ RSpec.describe LoadNbaSeasonJob do
     end
   end
 
-  describe '#perform' do
+  describe '#process_season' do
     it 'should load the whole season' do
-      job.perform 'Test', '2015'
+      job.process_season 'Test', '2015'
       seasons = Season.where short_name: '2015', name: 'Test'
       expect(seasons.count).to eq(1)
       games = seasons.first.games
@@ -38,7 +38,7 @@ RSpec.describe LoadNbaSeasonJob do
     end
 
     it 'should update scores on second call' do
-      job.perform 'Test', '2015'
+      job.process_season 'Test', '2015'
       test_season = get_season 'Test', '2015'
       expect(test_season.incomplete_games.count).to eq(6)
       expect(test_season.complete_games.count).to eq(20)
@@ -48,7 +48,7 @@ RSpec.describe LoadNbaSeasonJob do
         "spec/resources/#{season.short_name}_one_complete_month.json"
       end
 
-      job.perform 'Test', '2015'
+      job.process_season 'Test', '2015'
       test_season = get_season 'Test', '2015'
       expect(test_season.incomplete_games.count).to eq(0)
       expect(test_season.complete_games.count).to eq(26)
@@ -61,7 +61,7 @@ RSpec.describe LoadNbaSeasonJob do
       @pre_seed_team.seasons = [@season]
 
       expect do
-        job.perform 'Test', '2015'
+        job.process_season 'Test', '2015'
       end.to raise_error(Exceptions::TooManyTeamsException)
       expect(@season.teams.count).to eq(1)
     end
@@ -73,7 +73,7 @@ RSpec.describe LoadNbaSeasonJob do
       @pre_seed_game = create(game_sym)
 
       expect do
-        job.perform 'Test', '2015'
+        job.process_season 'Test', '2015'
       end.to raise_error(Exceptions::TooManyGamesException)
       expect(@season.games.count).to eq(1)
     end
