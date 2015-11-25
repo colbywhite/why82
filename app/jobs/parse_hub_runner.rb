@@ -34,7 +34,7 @@ module ParseHubRunner
                             INITIAL_POLL_INTERVAL, run_token
   rescue WaitUtil::TimeoutError
     logger.warn 'The job did not finish within '\
-                "the first #{INITIAL_POLL_INTERVAL} seconds"
+                "the first #{INITIAL_POLL_TIMEOUT} seconds"
     logger.warn 'Continuing to wait, but polling at a slower rate.'
     poll_run_until_finished SECONDARY_POLL_TIMEOUT,
                             SECONDARY_POLL_INTERVAL, run_token
