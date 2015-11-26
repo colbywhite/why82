@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe ParseHubParser do
-  let(:dummy_class) { Class.new.include ParseHubParser }
+RSpec.describe ParseHub::Parser do
+  let(:dummy_class) { Class.new.include ParseHub::Parser }
   let(:parser) { dummy_class.new }
 
   before :each do
@@ -25,15 +25,15 @@ RSpec.describe ParseHubParser do
 
   describe '#build_time' do
     it 'should correctly handle EDT time zone' do
-      game = { ParseHubParser::EASTERN_DATE => 'Wed, Apr 15, 2015',
-               ParseHubParser::EASTERN_TIME => '7:00 pm' }
+      game = { ParseHub::Parser::EASTERN_DATE => 'Wed, Apr 15, 2015',
+               ParseHub::Parser::EASTERN_TIME => '7:00 pm' }
       time = parser.build_time game
       expect(time.to_json).to eq('"2015-04-15T19:00:00.000-04:00"')
     end
 
     it 'should correctly handle EST time zone' do
-      game = { ParseHubParser::EASTERN_DATE => 'Fri, Nov 13, 2014',
-               ParseHubParser::EASTERN_TIME => '10:30 pm' }
+      game = { ParseHub::Parser::EASTERN_DATE => 'Fri, Nov 13, 2014',
+               ParseHub::Parser::EASTERN_TIME => '10:30 pm' }
       time = parser.build_time game
       expect(time.to_json).to eq('"2014-11-13T22:30:00.000-05:00"')
     end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe ParseHubRunner do
-  let(:dummy_class) { Class.new.include ParseHubRunner }
+RSpec.describe ParseHub::Runner do
+  let(:dummy_class) { Class.new.include ParseHub::Runner }
   let(:runner) { dummy_class.new }
 
   before :each do

@@ -1,8 +1,6 @@
-require 'exceptions'
-
 class LoadNbaSeasonJob < ActiveJob::Base
-  include ParseHubParser
-  include ParseHubRunner
+  include ParseHub::Parser
+  include ParseHub::Runner
   queue_as :default
   LEAGUE_NAME = 'National Basketball Association'
   LEAGUE_ABBR = 'NBA'

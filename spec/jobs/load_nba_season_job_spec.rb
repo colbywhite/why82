@@ -119,12 +119,12 @@ RSpec.describe LoadNbaSeasonJob do
 
   describe '#create_game' do
     before :each do
-      @game_json = { ParseHubParser::HOME_ABBR => 'SAC',
-                     ParseHubParser::HOME => 'Sacramento Kings',
-                     ParseHubParser::AWAY_ABBR => 'POR',
-                     ParseHubParser::AWAY => 'Portland Trail Blazers',
-                     ParseHubParser::EASTERN_DATE => 'Fri, Oct 31, 2014',
-                     ParseHubParser::EASTERN_TIME => '10:00 pm' }
+      @game_json = { LoadNbaSeasonJob::HOME_ABBR => 'SAC',
+                     LoadNbaSeasonJob::HOME => 'Sacramento Kings',
+                     LoadNbaSeasonJob::AWAY_ABBR => 'POR',
+                     LoadNbaSeasonJob::AWAY => 'Portland Trail Blazers',
+                     LoadNbaSeasonJob::EASTERN_DATE => 'Fri, Oct 31, 2014',
+                     LoadNbaSeasonJob::EASTERN_TIME => '10:00 pm' }
       @season = create(:season)
     end
 
@@ -138,8 +138,8 @@ RSpec.describe LoadNbaSeasonJob do
       job.create_game @game_json, @season
       games = @season.game_class.where(home_score: nil, away_score: nil)
       expect(games.count).to eq(1)
-      @game_json[ParseHubParser::HOME_SCORE] = 20
-      @game_json[ParseHubParser::AWAY_SCORE] = 30
+      @game_json[LoadNbaSeasonJob::HOME_SCORE] = 20
+      @game_json[LoadNbaSeasonJob::AWAY_SCORE] = 30
       job.create_game @game_json, @season
       games = @season.game_class.where(home_score: nil, away_score: nil)
       expect(games.count).to eq(0)
