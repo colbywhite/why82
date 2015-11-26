@@ -23,6 +23,8 @@ gem 'rest-client'
 gem 'chronic'
 gem 'waitutil'
 gem 'rails_param'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do
