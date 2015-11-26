@@ -8,9 +8,7 @@ given by the user in the form of what teams they are interested in.
 
 More leagues/criteria will come in the future. 
 
-The app is currently deployed as a free heroku app via 
-https://damp-badlands-4590.herokuapp.com. Free heroku apps 
-go to sleep when not in use. 
+The app is currently deployed to https://damp-badlands-4590.herokuapp.com.
 
 ## Build
 
