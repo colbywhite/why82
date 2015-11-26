@@ -9,7 +9,7 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'app/helpers/sql_helper.rb'
-    - 'lib/tasks/nba.rake'
+    - 'lib/tasks/dev.rake'
 Rails/HasAndBelongsToMany:
   Enabled: false
 Documentation:
