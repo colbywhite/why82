@@ -22,6 +22,7 @@ gem 'pg'
 gem 'rest-client'
 gem 'chronic'
 gem 'waitutil'
+gem 'rails_param'
 
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do
