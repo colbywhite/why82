@@ -1,11 +1,18 @@
-class LoadNbaSeasonJob < ActiveJob::Base
+class UpdateSeason
   include ParseHub::Parser
   include ParseHub::Runner
-  queue_as :default
+
+  attr_reader :name, :short_name
+
   LEAGUE_NAME = 'National Basketball Association'
   LEAGUE_ABBR = 'NBA'
 
-  def perform(name, short_name)
+  def initialize(name, short_name)
+    @name = name
+    @short_name = short_name
+  end
+
+  def perform
     start_run_and_wait SEASON_PROJECTS[short_name]
     process_season name, short_name
   end

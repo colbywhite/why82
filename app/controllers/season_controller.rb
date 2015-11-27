@@ -7,8 +7,9 @@ class SeasonController < ApplicationController
   def update
     param! :name, String, required: true
     param! :short_name, String, required: true
-    LoadNbaSeasonJob.perform_later params[:name],
-                                   params[:short_name]
+
+    job = UpdateSeason.new params[:name], params[:short_name]
+    Delayed::Job.enqueue job
     head :no_content
   end
 end
