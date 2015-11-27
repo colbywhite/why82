@@ -56,7 +56,7 @@ RSpec.describe Team do
   end
 
   describe '#logo' do
-    subject(:job) { LoadNbaSeasonJob.perform_later 'Reg', '2015' }
+    subject(:job) { UpdateSeason.new 'Reg', '2015' }
 
     before :each do
       # parse a month of the season so we can make assertions on the

@@ -1,13 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe SeasonController do
-  include ActiveJob::TestHelper
-
-  after :each do
-    clear_enqueued_jobs
-    clear_performed_jobs
-  end
-
   describe 'POST' do
     describe 'param validation' do
       it 'should reject if there are no params' do
@@ -32,12 +25,17 @@ RSpec.describe SeasonController do
     end
 
     describe 'queue logic' do
+      before(:each) do
+        Delayed::Job.destroy_all
+      end
+
       it 'should enqueue one job' do
         post :update, short_name: 'test', name: 'TEST'
-        expect(enqueued_jobs.size).to eq 1
-        job = enqueued_jobs.first
-        expect(job[:job]).to eq(LoadNbaSeasonJob)
-        expect(job[:args]).to eq(%w(TEST test))
+        expect(Delayed::Job.count).to eq 1
+        job = YAML.load Delayed::Job.first.handler
+        expect(job.class).to eq(UpdateSeason)
+        expect(job.name).to eq('TEST')
+        expect(job.short_name).to eq('test')
       end
     end
   end
