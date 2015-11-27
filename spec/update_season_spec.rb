@@ -1,8 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe LoadNbaSeasonJob do
-  include ActiveJob::TestHelper
-  subject(:job) { described_class.perform_later 'Reg', '2015' }
+RSpec.describe UpdateSeason do
+  subject(:job) { UpdateSeason.new 'Reg', '2015' }
 
   before :each do
     allow(job).to receive(:season_url) do |season|
@@ -11,18 +10,6 @@ RSpec.describe LoadNbaSeasonJob do
     allow(job).to receive(:pull_season_json) do |season|
       url = job.season_url season
       JSON.parse(File.read(url))['games']
-    end
-  end
-
-  after :each do
-    clear_enqueued_jobs
-    clear_performed_jobs
-  end
-
-  describe '#perform_later' do
-    it 'should enqueue a job' do
-      job
-      expect(enqueued_jobs.size).to eq 1
     end
   end
 
@@ -91,8 +78,8 @@ RSpec.describe LoadNbaSeasonJob do
       seasons = Season.where name: 'Test Season', short_name: '2016'
       expect(seasons.count).to eq(1)
       league = seasons.first.league
-      expect(league.name).to eq(LoadNbaSeasonJob::LEAGUE_NAME)
-      expect(league.abbr).to eq(LoadNbaSeasonJob::LEAGUE_ABBR)
+      expect(league.name).to eq(UpdateSeason::LEAGUE_NAME)
+      expect(league.abbr).to eq(UpdateSeason::LEAGUE_ABBR)
     end
 
     it 'should not create duplicate seasons/leagues' do
@@ -100,8 +87,8 @@ RSpec.describe LoadNbaSeasonJob do
       job.create_season 'Test Season', '2016'
       seasons = Season.where name: 'Test Season', short_name: '2016'
       expect(seasons.count).to eq(1)
-      leagues = League.where name: LoadNbaSeasonJob::LEAGUE_NAME,
-                             abbr: LoadNbaSeasonJob::LEAGUE_ABBR
+      leagues = League.where name: UpdateSeason::LEAGUE_NAME,
+                             abbr: UpdateSeason::LEAGUE_ABBR
       expect(leagues.count).to eq(1)
     end
   end
@@ -119,12 +106,12 @@ RSpec.describe LoadNbaSeasonJob do
 
   describe '#create_game' do
     before :each do
-      @game_json = { LoadNbaSeasonJob::HOME_ABBR => 'SAC',
-                     LoadNbaSeasonJob::HOME => 'Sacramento Kings',
-                     LoadNbaSeasonJob::AWAY_ABBR => 'POR',
-                     LoadNbaSeasonJob::AWAY => 'Portland Trail Blazers',
-                     LoadNbaSeasonJob::EASTERN_DATE => 'Fri, Oct 31, 2014',
-                     LoadNbaSeasonJob::EASTERN_TIME => '10:00 pm' }
+      @game_json = { UpdateSeason::HOME_ABBR => 'SAC',
+                     UpdateSeason::HOME => 'Sacramento Kings',
+                     UpdateSeason::AWAY_ABBR => 'POR',
+                     UpdateSeason::AWAY => 'Portland Trail Blazers',
+                     UpdateSeason::EASTERN_DATE => 'Fri, Oct 31, 2014',
+                     UpdateSeason::EASTERN_TIME => '10:00 pm' }
       @season = create(:season)
     end
 
@@ -138,8 +125,8 @@ RSpec.describe LoadNbaSeasonJob do
       job.create_game @game_json, @season
       games = @season.game_class.where(home_score: nil, away_score: nil)
       expect(games.count).to eq(1)
-      @game_json[LoadNbaSeasonJob::HOME_SCORE] = 20
-      @game_json[LoadNbaSeasonJob::AWAY_SCORE] = 30
+      @game_json[UpdateSeason::HOME_SCORE] = 20
+      @game_json[UpdateSeason::AWAY_SCORE] = 30
       job.create_game @game_json, @season
       games = @season.game_class.where(home_score: nil, away_score: nil)
       expect(games.count).to eq(0)
