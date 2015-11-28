@@ -27,6 +27,14 @@ class Season < ActiveRecord::Base
   # rubocop:enable MultilineOperationIndentation, MultilineBlockLayout
   # rubocop:enable BlockDelimiters
 
+  def last_complete_game
+    complete_games.order(:time).last
+  end
+
+  def first_incomplete_game
+    incomplete_games.order(:time).first
+  end
+
   def record_class
     league = 'nba'
     Object.const_get "#{league.camelcase}#{short_name.camelcase}Record"
