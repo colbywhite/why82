@@ -11,6 +11,18 @@ class Season < ActiveRecord::Base
     game_class.all
   end
 
+  def games_between_lists(start_time, end_time, list_one, list_two)
+    games.eager_load_teams.inbetween_times(start_time, end_time).between_lists list_one, list_two
+  end
+
+  def games_including_any_team(start_time, end_time, teams)
+    games.eager_load_teams.inbetween_times(start_time, end_time).include_any_team teams
+  end
+
+  def games_between_any_team(start_time, end_time, teams)
+    games.eager_load_teams.inbetween_times(start_time, end_time).between_any_team teams
+  end
+
   def incomplete_games
     games.where(home_score: nil, away_score: nil)
   end
