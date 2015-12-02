@@ -19,12 +19,6 @@ namespace :db do
     puts "    First incomplete game: #{first_incomplete_date}"
     puts "There are #{season_2016.teams.count} teams in the DB for 2016"
   end
-
-  namespace :log do
-    task info: :environment do
-      ActiveRecord::Base.logger.level = 1
-    end
-  end
 end
 
 task :test_db_setup do
