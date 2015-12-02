@@ -27,17 +27,11 @@ class Season < ActiveRecord::Base
     games.where(home_score: nil, away_score: nil)
   end
 
-  # rubocop doesn't understand the squeel syntax at all
-  # rubocop:disable BlockEndNewline, NonNilCheck
-  # rubocop:disable MultilineOperationIndentation, MultilineBlockLayout
-  # rubocop:disable BlockDelimiters
+  # rubocop:disable NonNilCheck
   def complete_games
-    games.where { (home_score != nil) &
-        (away_score != nil) }
+    games.where { (home_score != nil) & (away_score != nil) }
   end
-  # rubocop:enable BlockEndNewline, NonNilCheck
-  # rubocop:enable MultilineOperationIndentation, MultilineBlockLayout
-  # rubocop:enable BlockDelimiters
+  # rubocop:enable NonNilCheck
 
   def last_complete_game
     complete_games.order(:time).last
