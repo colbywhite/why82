@@ -7,4 +7,16 @@ module Record
   def total_games
     wins + losses + ties
   end
+
+  def at_least(percent)
+    where { percentage >= percent }
+  end
+
+  def less_than(percent)
+    where { percentage < percent }
+  end
+
+  def in_between(low_end_percent, high_end_percent)
+    at_least(high_end_percent).less_than(low_end_percent)
+  end
 end

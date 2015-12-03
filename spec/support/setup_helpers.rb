@@ -24,19 +24,37 @@ module SetupHelpers
     season.game_class.name.underscore.to_sym
   end
 
-  # rubocop:disable Metrics/AbcSize
-  def assert_record_equals(record, wins, losses, ties, percentage)
-    expect(record.wins).to eq(wins)
-    expect(record.losses).to eq(losses)
-    expect(record.ties).to eq(ties)
-    expect(record.percentage).to eq(percentage)
-    expect(record.total_games).to eq(wins + losses + ties)
-  end
-  # rubocop:enable Metrics/AbcSize
-
   def to_bigd(numerator, denominator, decimal_places = 3)
     decimal = BigDecimal.new(numerator.to_s) / BigDecimal.new(denominator.to_s)
     decimal.round(decimal_places)
+  end
+
+  def give_team_record(game_table, team, wins, percentage)
+    (1..wins).each do
+      create_game_with_score(game_table, team, 100,
+                             create(:team), 50)
+    end
+    losses = losses_to_give_percentage wins, percentage
+    (1..losses).each do
+      create_game_with_score(game_table, team, 50,
+                             create(:team), 100)
+    end
+  end
+
+  def losses_to_give_percentage(wins, desired_percentage)
+    if desired_percentage <= 0
+      0
+    else
+      ((wins * (1.0 - desired_percentage)) / desired_percentage).floor
+    end
+  end
+
+  def create_round_robin_games(game_table, game_date, *teams)
+    teams[0..-2].each_with_index do |home, index|
+      teams[index + 1..-1].each do |away|
+        create(game_table, home: home, away: away, time: game_date)
+      end
+    end
   end
 end
 

@@ -11,7 +11,5 @@ Rails.application.config.assets.version = '1.0'
 #   are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-# rubocop:disable Metrics/LineLength
 Rails.application.config.assets.precompile +=
     %w( bootstrap-sass-official/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2 )
-# rubocop:enable Metrics/LineLength

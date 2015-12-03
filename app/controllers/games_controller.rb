@@ -14,6 +14,51 @@ class GamesController < ApplicationController
     end
   end
 
+  def graded
+    validate_graded_params
+
+    season = params[:season]
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    tiers = TeamFilter::Record.tiers season
+
+    a_games, b_games, c_games, d_games = get_graded_games season, start_date, end_date, tiers
+    render_graded_games a_games, b_games, c_games, d_games
+  end
+
+  private
+
+  def render_graded_games(a_games, b_games, c_games, d_games)
+    render json: { a: a_games.as_json(game_json_options),
+                   b: b_games.as_json(game_json_options),
+                   c: c_games.as_json(game_json_options),
+                   d: d_games.as_json(game_json_options),
+                   params: params }
+  end
+
+  def get_graded_games(season, start_date, end_date, tiers)
+    # A games are 1v1
+    a_games = season.games_between_any_team start_date, end_date, tiers.first
+    # B games are 1v2
+    b_games = season.games_between_lists start_date, end_date, tiers.first, tiers.second
+    # C games are 2v2
+    c_games = season.games_between_any_team start_date, end_date, tiers.second
+    # D games are the rest, which is any game with a 3
+    d_games = season.games_including_any_team start_date, end_date, tiers.third
+
+    [a_games, b_games, c_games, d_games]
+  end
+
+  def validate_graded_params
+    param! :season, String,
+           required: true, transform: ->(sn) { Season.find_by(short_name: sn) }
+    param! :start_date, DateTime,
+           required: true, transform: :beginning_of_day,
+           default: -> { Time.zone.now }
+    param! :end_date, DateTime,
+           required: true, default: -> { params[:start_date].end_of_day }
+  end
+
   def build_paging_metadata(collection)
     { current: collection.current_page, per_page: collection.per_page,
       total: collection.total_entries
