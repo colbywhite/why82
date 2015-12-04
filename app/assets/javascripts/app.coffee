@@ -1,4 +1,4 @@
-receta = angular.module('receta', [
+sked = angular.module('sked', [
   'templates',
   'ngRoute',
   'ngResource',
@@ -9,7 +9,7 @@ receta = angular.module('receta', [
 
 services = angular.module('services', ['ngResource']);
 
-receta.config(['$routeProvider', '$locationProvider',
+sked.config(['$routeProvider', '$locationProvider',
   ($routeProvider, $locationProvider)->
     $routeProvider.when('/',
       templateUrl: 'templates/index.html'
