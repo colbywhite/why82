@@ -20,9 +20,13 @@ module Record
     at_least(high_end_percent).less_than(low_end_percent)
   end
 
+  def percentage_string
+    format('%.3f', percentage.truncate(3))
+  end
+
   # Note: overriding to_s method in an ActiveRecord class breaks rails. Hence why this is to_string.
   # https://rails.lighthouseapp.com/projects/8994/tickets/2742-class-method-to_s-used-instead-of-name
   def to_string
-    "#{wins}-#{losses}-#{ties} (#{percentage})"
+    "#{wins}-#{losses}-#{ties} (#{percentage_string})"
   end
 end
