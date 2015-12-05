@@ -113,7 +113,7 @@ RSpec.describe GamesController do
     end
 
     it 'should grade games based on tiers' do
-      get :graded, start_date: @game_date.iso8601, season: @season.short_name
+      get :graded, start_date: @game_date.iso8601, season: @season.short_name, format: :json
       expect(response.status).to eq(200)
       body = JSON.parse response.body
       a_games = body['a']
