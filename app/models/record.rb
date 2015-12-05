@@ -26,7 +26,11 @@ module Record
 
   # Note: overriding to_s method in an ActiveRecord class breaks rails. Hence why this is to_string.
   # https://rails.lighthouseapp.com/projects/8994/tickets/2742-class-method-to_s-used-instead-of-name
-  def to_string
-    "#{wins}-#{losses}-#{ties} (#{percentage_string})"
+  def to_string(hide_ties = true)
+    if hide_ties
+      "#{wins}-#{losses} (#{percentage_string})"
+    else
+      "#{wins}-#{losses}-#{ties} (#{percentage_string})"
+    end
   end
 end
