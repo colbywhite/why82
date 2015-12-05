@@ -22,6 +22,13 @@ module TeamFilter
       ]
     end
 
+    def self.named_tiers(season, collect_with = :team_id)
+      { 'Tier 1' => tier_one(season, collect_with),
+        'Tier 2' => tier_two(season, collect_with),
+        'Everyone Else' => tier_three(season, collect_with)
+      }
+    end
+
     private
 
     def self.select_records(season)

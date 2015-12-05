@@ -53,4 +53,8 @@ class Season < ActiveRecord::Base
   def teams
     Team.joins(:seasons).where(seasons: { id: id })
   end
+
+  def last_updated_game
+    game_class.order(:updated_at).last
+  end
 end
