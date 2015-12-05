@@ -25,6 +25,7 @@ services.factory('Game', ['$resource',
         query: { method: 'GET', isArray: false }
     })
 ])
+
 services.factory('GradedGame', ['$resource',
   ($resource) ->
     $resource('/games/:season/graded.json', {}, {
@@ -35,6 +36,13 @@ services.factory('GradedGame', ['$resource',
 services.factory('Team', ['$resource',
   ($resource) ->
     $resource('/teams.json')
+])
+
+services.factory('TieredTeams', ['$resource',
+  ($resource) ->
+    $resource('/teams/:season/tiers.json', {}, {
+      query: { method: 'GET', isArray: false }
+    })
 ])
 
 services.factory('ParamParser',

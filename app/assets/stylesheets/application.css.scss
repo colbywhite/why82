@@ -37,9 +37,13 @@ img {
   transform: translateY(-50%);
 }
 
-div.team-name {
+.game div.team-name {
   height: 25px;
   line-height: 25px;
+}
+
+div.team-name {
+  height: 50px
 }
 
 
