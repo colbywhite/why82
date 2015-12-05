@@ -8,7 +8,7 @@ module Game
   end
 
   def inbetween_times(start_time, end_time)
-    where { (time >= start_time) & (time <= end_time) }
+    order(:time).where { (time >= start_time) & (time <= end_time) }
   end
 
   # returns all games where a team from list_one is facing a team from list_two
