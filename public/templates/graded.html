@@ -7,8 +7,25 @@
 
         <div ng-repeat="grade in grades" class="panel panel-default">
             <div class="panel-heading">
-                {{grade.title}}
-                <small>({{grade.games.length}} found)</small>
+                <div class="row">
+
+                    <div class="col-xs-5 col-md-6">
+                        {{grade.title}}
+                    </div>
+                    <div class="col-xs-7 col-md-6 text-right">
+                        <div class="col-xs-12 col-md-12">
+                            <small><i>
+                                {{grade.desc}}
+                            </i></small>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                            <small><i>
+                            {{grade.games.length}} found
+                            </i></small>
+                        </div>
+                    </div>
+                </div>
+                <!--<small>({{grade.games.length}} found)</small>-->
             </div>
             <div class="row panel-body">
                 <div ng-repeat="game in grade.games" class="col-md-4 col-xs-12" style="margin-bottom: 10px;">

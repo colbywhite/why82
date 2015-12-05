@@ -14,10 +14,10 @@ controllers.controller("GradedGamesController", ['$scope', '$rootScope', '$locat
 
     resultCallback = (results) ->
       $scope.grades = [
-        {title: 'A Games', games: results.a},
-        {title: 'B Games', games: results.b},
-        {title: 'C Games', games: results.c},
-        {title: 'D Games', games: results.d}
+        {title: 'A Games', games: results.a, desc: 'Tier 1 vs. Tier 1'},
+        {title: 'B Games', games: results.b, desc: 'Tier 1 vs. Tier 2'},
+        {title: 'C Games', games: results.c, desc: 'Tier 2 vs. Tier 2'},
+        {title: 'D Games', games: results.d, desc: 'Everything else'}
       ]
       $scope.params = results.params
 
