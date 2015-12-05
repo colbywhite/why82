@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <section class="col-md-8 col-xs-12 col-md-offset-2" ng-controller="GradedGamesController">
+        <h3 style="margin-bottom: 20px">
+            Games for {{ simpleDate(params.start_date) }}
+            <small>All times in {{ getTimeZone(params.start_date) }}</small>
+        </h3>
+
+        <div ng-repeat="grade in grades" class="panel panel-default">
+            <div class="panel-heading">
+                {{grade.title}}
+                <small>({{grade.games.length}} found)</small>
+            </div>
+            <div class="row panel-body">
+                <div ng-repeat="game in grade.games" class="col-md-4 col-xs-12" style="margin-bottom: 10px;">
+
+                    <div class="col-md-7 col-xs-7 row game">
+
+                        <div class="col-md-4 col-xs-4">
+                            <img class="" ng-src="{{game.away.logo}}"/>
+                        </div>
+
+                        <div class="team-name col-md-8 col-xs-8">
+                            {{game.away.name.split(' ').pop()}}
+                        </div>
+
+                        <div class="col-md-4 col-xs-4">
+                            <img class="" ng-src="{{game.home.logo}}"/>
+                        </div>
+
+                        <div class="team-name col-md-8 col-xs-8">
+                            {{game.home.name.split(' ').pop()}}
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-xs-5 gametime">
+                        {{simpleTime(game.time, true)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
