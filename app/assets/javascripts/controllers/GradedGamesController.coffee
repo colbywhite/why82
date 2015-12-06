@@ -3,7 +3,7 @@ controllers = angular.module('controllers')
 controllers.controller("GradedGamesController", ['$scope', '$rootScope', '$location', '$routeParams', 'Game'
   ($scope, $rootScope, $location, $routeParams, Game)->
     $scope.simpleTime = (timeStr, shortFormat = true) ->
-      LocalTime.strftime(new Date(timeStr), '%l:%M %p')
+      LocalTime.strftime(new Date(timeStr), '%H:%M')
 
     $scope.simpleDate = (timeStr) ->
       LocalTime.strftime(new Date(timeStr), '%a, %b %d')
