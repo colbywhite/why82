@@ -13,7 +13,7 @@ class UpdateSeason
   end
 
   def perform
-    # start_run_and_wait SEASON_PROJECTS[short_name]
+    start_run_and_wait SEASON_PROJECTS[short_name]
     process_season name, short_name
   end
 
