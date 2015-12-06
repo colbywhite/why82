@@ -1,9 +1,4 @@
 class TeamsController < ApplicationController
-  def index
-    @all = Team.all.order(:abbr)
-    render json: @all.as_json(team_options)
-  end
-
   def tiers
     validate_tiers_params
     season = params[:season]

@@ -11,22 +11,13 @@ services = angular.module('services', ['ngResource']);
 
 sked.config(['$routeProvider', '$locationProvider',
   ($routeProvider, $locationProvider)->
-    $routeProvider.when('/graded',
+    $routeProvider.when('/',
       templateUrl: '/templates/graded.html'
-    ).when('/',
-      templateUrl: '/templates/index.html'
     )
     $locationProvider.html5Mode(true)
 ])
 
 services.factory('Game', ['$resource',
-  ($resource) ->
-    $resource('/games.json', {page: 1}, {
-        query: { method: 'GET', isArray: false }
-    })
-])
-
-services.factory('GradedGame', ['$resource',
   ($resource) ->
     $resource('/games/:season/graded.json', {}, {
       query: { method: 'GET', isArray: false }
@@ -34,11 +25,6 @@ services.factory('GradedGame', ['$resource',
 ])
 
 services.factory('Team', ['$resource',
-  ($resource) ->
-    $resource('/teams.json')
-])
-
-services.factory('TieredTeams', ['$resource',
   ($resource) ->
     $resource('/teams/:season/tiers.json', {}, {
       query: { method: 'GET', isArray: false }

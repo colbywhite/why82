@@ -1,7 +1,7 @@
 controllers = angular.module('controllers')
 
-controllers.controller("GradedGamesController", ['$scope', '$rootScope', '$location', '$routeParams', 'GradedGame'
-  ($scope, $rootScope, $location, $routeParams, GradedGame)->
+controllers.controller("GradedGamesController", ['$scope', '$rootScope', '$location', '$routeParams', 'Game'
+  ($scope, $rootScope, $location, $routeParams, Game)->
     $scope.simpleTime = (timeStr, shortFormat = true) ->
       LocalTime.strftime(new Date(timeStr), '%l:%M %p')
 
@@ -21,5 +21,5 @@ controllers.controller("GradedGamesController", ['$scope', '$rootScope', '$locat
       ]
       $scope.params = results.params
 
-    GradedGame.query({season: '2016'}, resultCallback)
+    Game.query({season: '2016'}, resultCallback)
 ])
