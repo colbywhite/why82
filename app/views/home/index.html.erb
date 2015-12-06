@@ -1,16 +1,22 @@
-<div class="page-header">
-    <h1><%= link_to 'Filterable NBA Schedule', root_path%></h1>
-    <h1><small>v<%= Configuration::VERSION %></small></h1>
-    <p class="lead">Use the team filters to filter the NBA schedule to pick games between teams you care about.
-        You can filter based on whether or not the team is playing at
-        home (<i class="fa fa-home"></i>)
-        and/or away (<i class="fa fa-road"></i>).
-    </p>
-</div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <%= link_to('Why82?', root_path, class: 'navbar-brand') %>
+        </div>
+    </div>
+</nav>
 
-<div ng-app="receta">
+<div ng-app="sked">
     <div class="view-container">
         <div ng-view class="view-frame animate-view"></div>
+    </div>
+</div>
+
+<div class="navbar navbar-default">
+    <div class="container-fluid">
+        <p class="navbar-text navbar-right">
+            v<%= Configuration::VERSION %>
+        </p>
     </div>
 </div>
 

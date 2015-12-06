@@ -15,4 +15,10 @@ class Team < ActiveRecord::Base
   def logo
     ActionController::Base.helpers.asset_path("logos/#{abbr.downcase}.png")
   end
+
+  def as_json(opts = {})
+    json = super(opts)
+    json['record'] = record(opts[:season]).to_string if opts[:season]
+    json
+  end
 end

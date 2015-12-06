@@ -1,4 +1,4 @@
-receta = angular.module('receta', [
+sked = angular.module('sked', [
   'templates',
   'ngRoute',
   'ngResource',
@@ -9,24 +9,26 @@ receta = angular.module('receta', [
 
 services = angular.module('services', ['ngResource']);
 
-receta.config(['$routeProvider', '$locationProvider',
+sked.config(['$routeProvider', '$locationProvider',
   ($routeProvider, $locationProvider)->
     $routeProvider.when('/',
-      templateUrl: 'templates/index.html'
+      templateUrl: '/templates/graded.html'
     )
     $locationProvider.html5Mode(true)
 ])
 
 services.factory('Game', ['$resource',
   ($resource) ->
-    $resource('/games.json', {page: 1}, {
-        query: { method: 'GET', isArray: false }
+    $resource('/games/:season/graded.json', {}, {
+      query: { method: 'GET', isArray: false }
     })
 ])
 
 services.factory('Team', ['$resource',
   ($resource) ->
-    $resource('/teams.json')
+    $resource('/teams/:season/tiers.json', {}, {
+      query: { method: 'GET', isArray: false }
+    })
 ])
 
 services.factory('ParamParser',

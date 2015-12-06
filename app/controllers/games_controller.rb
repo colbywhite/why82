@@ -1,19 +1,6 @@
 class GamesController < ApplicationController
   include GamesHelper
 
-  def index
-    home_teams, away_teams = parse_teams_from_params
-    @all = fetch_games home_teams, away_teams, params[:page]
-    paging = build_paging_metadata @all
-    respond_to do |format|
-      # return 200 to prevent loading nonexistent html file
-      format.html { render nothing: true }
-      format.json do
-        render json: { paging: paging, data: @all.as_json(game_json_options) }
-      end
-    end
-  end
-
   def graded
     validate_graded_params
 
@@ -29,11 +16,16 @@ class GamesController < ApplicationController
   private
 
   def render_graded_games(a_games, b_games, c_games, d_games)
-    render json: { a: a_games.as_json(game_json_options),
-                   b: b_games.as_json(game_json_options),
-                   c: c_games.as_json(game_json_options),
-                   d: d_games.as_json(game_json_options),
-                   params: params }
+    respond_to do |format|
+      format.html { render :graded }
+      format.json do
+        render json: { a: a_games.as_json(game_json_options),
+                       b: b_games.as_json(game_json_options),
+                       c: c_games.as_json(game_json_options),
+                       d: d_games.as_json(game_json_options),
+                       params: params }
+      end
+    end
   end
 
   def get_graded_games(season, start_date, end_date, tiers)

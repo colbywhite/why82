@@ -23,7 +23,51 @@
   color: $headings-color
 }
 
-img.logo {
+img {
   width: 25px;
   height: 25px;
+  margin: 0 auto;
+}
+
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.game div.team-name {
+  height: 25px;
+  line-height: 25px;
+}
+
+div.team-name {
+  height: 50px
+}
+
+
+.bord {
+  border: 1px dashed deeppink;
+}
+
+.bord-green {
+  @extend .bord;
+  border: 1px dashed green;
+}
+
+.bord-blue {
+  @extend .bord;
+  border: 1px dashed blue;
+}
+
+.game {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.gametime {
+  @extend .game;
+  margin-left: 10px;
+  line-height: 50px;
 }
