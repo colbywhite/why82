@@ -1,36 +1,4 @@
 <div class="container-fluid">
-    <section class="col-md-4" ng-controller="TieredTeamsController">
-        <div class="col-md-8 col-md-offset-2">
-            <h3>
-                Tiers
-                <br />
-                <small>Updated {{updated}}</small>
-            </h3>
-            <div ng-repeat="(tier, teams) in tiers">
-                <div ng-if="tier.includes('Tier')" class="panel panel-default">
-                    <div class="panel-heading">
-                        {{tier}}
-                    </div>
-
-                    <div class="panel-body">
-                        <div ng-repeat="team in teams" class="row" style="margin-bottom: 5px">
-                            <div class="col-md-4 col-xs-4 team-name">
-                                <!-- spacer -->
-                                <div class="col-md-12 col-xs-12" style="height: 5px"></div>
-                                <img class="" ng-src="{{team.logo}}"/>
-                            </div>
-                            <div class="col-md-8 col-xs-8 team-name">
-                                {{team.name.split(' ').pop()}}
-                                <br/>
-                                {{team.record}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="col-md-8 col-xs-12" ng-controller="GradedGamesController">
         <h3 style="margin-bottom: 20px">
             Games for {{simpleDate(params.start_date)}}
@@ -53,7 +21,7 @@
                         </div>
                         <div class="col-xs-12 col-md-12">
                             <small><i>
-                            {{grade.games.length}} found
+                                {{grade.games.length}} found
                             </i></small>
                         </div>
                     </div>
@@ -89,5 +57,37 @@
             </div>
         </div>
 
+    </section>
+
+    <section class="col-md-4" ng-controller="TieredTeamsController">
+        <div class="col-md-8 col-md-offset-2">
+            <h3>
+                Tiers
+                <br />
+                <small>Updated {{updated}}</small>
+            </h3>
+            <div ng-repeat="(tier, teams) in tiers">
+                <div ng-if="tier.includes('Tier')" class="panel panel-default">
+                    <div class="panel-heading">
+                        {{tier}}
+                    </div>
+
+                    <div class="panel-body">
+                        <div ng-repeat="team in teams" class="row" style="margin-bottom: 5px">
+                            <div class="col-md-4 col-xs-4 team-name">
+                                <!-- spacer -->
+                                <div class="col-md-12 col-xs-12" style="height: 5px"></div>
+                                <img class="" ng-src="{{team.logo}}"/>
+                            </div>
+                            <div class="col-md-8 col-xs-8 team-name">
+                                {{team.name.split(' ').pop()}}
+                                <br/>
+                                {{team.record}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
