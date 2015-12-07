@@ -1,23 +1,5 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <%= link_to('Why82?', root_path, class: 'navbar-brand') %>
-        </div>
-    </div>
-</nav>
-
 <div ng-app="sked">
     <div class="view-container">
         <div ng-view class="view-frame animate-view"></div>
     </div>
 </div>
-
-<div class="navbar navbar-default">
-    <div class="container-fluid">
-        <p class="navbar-text navbar-right">
-            v<%= Configuration::VERSION %>
-        </p>
-    </div>
-</div>
-
-

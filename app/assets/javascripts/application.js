@@ -6,5 +6,6 @@
 //= require angular-rails-templates
 //= require angular-flash/dist/angular-flash
 //= require local_time
+//= require bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js
 //= require_tree .
 
