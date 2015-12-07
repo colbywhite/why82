@@ -1,0 +1,67 @@
+<div class="col-md-8 col-xs-12 col-md-offset-2">
+
+    <div class="page-header">
+        <h1>"82 games is way too many"</h1>
+    </div>
+
+    <p>
+        This site was born out of that sentiment.
+    </p>
+
+    <p>
+        There are too many NBA games (1230 in total) and there's no way anybody can watch them all.
+        Instead, this project aims to narrow down the long schedule into the handful of games that are likely to be
+        worth your time.
+    </p>
+
+    <p>
+        The algorithm for deciding which games will be good will evolve over time.
+    </p>
+
+    <div class="page-header">
+        <h2>Game Grades</h2>
+    </div>
+    
+    <p>
+        Each day's games are given grades based on the two teams facing each other.
+    <ul>
+        <li>
+            <b>A Games:</b> Tier 1 team vs. Tier 1 team
+        </li>
+        <li>
+            <b>B Games:</b> Tier 1 team vs. Tier 2 team
+        </li>
+        <li>
+            <b>C Games:</b> Tier 2 team vs. Tier 2 team
+        </li>
+        <li>
+            <b>D Games:</b> Everything else
+        </li>
+    </ul>
+    </p>
+
+    <div class="page-header">
+        <h2>Team Tiers</h2>
+    </div>
+
+    <p>
+        The league's teams are split into three tiers based on win-loss record.
+    <ul>
+        <li>
+            <b>Tier 1:</b> Teams with a record greater than or equal to
+            <%= TeamFilter::Record::TIER_ONE_CUTOFF %>
+        </li>
+        <li>
+            <b>Tier 2:</b> Teams with a record greater than or equal to
+            <%= TeamFilter::Record::TIER_TWO_CUTOFF %>
+        </li>
+        <li>
+            <b>Tier 3:</b> Everything else
+        </li>
+    </ul>
+    </p>
+    
+    <p>
+        &nbsp;
+    </p>
+</div>

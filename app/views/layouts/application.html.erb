@@ -23,6 +23,11 @@
             <%= brand_html %>
         </div>
         <div class="navbar-collapse collapse" id="collapsable">
+            <ul class="nav navbar-nav">
+                <li>
+                    <%= link_to('About', about_path) %>
+                </li>
+            </ul>
             <p class="navbar-text navbar-right">
                 v<%= Configuration::VERSION %>
             </p>
