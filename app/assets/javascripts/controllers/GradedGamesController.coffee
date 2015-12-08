@@ -11,6 +11,7 @@ controllers.controller("GradedGamesController", ['$scope', '$rootScope', '$locat
     $scope.getTimeZone = (timeStr) ->
       LocalTime.strftime(new Date(timeStr), '%Z')
 
+    $scope.gamesLoading = true
 
     resultCallback = (results) ->
       $scope.grades = [
@@ -20,6 +21,10 @@ controllers.controller("GradedGamesController", ['$scope', '$rootScope', '$locat
         {title: 'D Games', games: results.d, desc: 'Everything else'}
       ]
       $scope.params = results.params
+      $scope.gamesLoading = false
 
-    Game.query({season: '2016'}, resultCallback)
+    query = () ->
+      Game.query({season: '2016'}, resultCallback)
+
+    setTimeout(query, 100)
 ])
