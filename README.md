@@ -1,14 +1,14 @@
 [ ![Codeship Status for colbywhite/sked](https://codeship.com/projects/b9dbf740-2ff0-0133-67fb-468561e42530/status?branch=master)](https://codeship.com/projects/99538)
 
-# sked web app
+# why82
 
-This is an in-progress web app with the goal of filtering down a sports schedule
-based on criteria. For the first pass, it is NBA focused and the criteria is 
-given by the user in the form of what teams they are interested in. 
+There are too many NBA games (1230 in total) and there's no way anybody can watch them all.
+Instead, this project aims to narrow down the long schedule into the handful of games that are likely to be
+worth your time.
 
 More leagues/criteria will come in the future. 
 
-The app is currently deployed to https://damp-badlands-4590.herokuapp.com.
+The app is currently deployed to http://why82.com
 
 ## Build
 
@@ -42,7 +42,3 @@ The data is static sports data curated from various sources. The results are in
 ### bower
 If you make bower changes via `Bowerfile`, be sure to run `bundle exec rake bower:install`. 
 This will update `vendor/assets/bower_components` as needed.
-
-## TODO
-- come up with a better name than sked!
-
