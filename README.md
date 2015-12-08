@@ -16,7 +16,7 @@ The app is currently deployed to http://why82.com
 # install dependencies
 bundle install      # add "--without production" if you're building for dev
 # clear db and reload seed data
-bundle exec rake db:reseed 
+bundle exec rake db:migrate 
 ```
 
 ## Tests
