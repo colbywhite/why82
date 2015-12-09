@@ -16,16 +16,11 @@ class GamesController < ApplicationController
   private
 
   def render_graded_games(a_games, b_games, c_games, d_games)
-    respond_to do |format|
-      format.html { render :graded }
-      format.json do
-        render json: { a: a_games.as_json(game_json_options),
-                       b: b_games.as_json(game_json_options),
-                       c: c_games.as_json(game_json_options),
-                       d: d_games.as_json(game_json_options),
-                       params: params }
-      end
-    end
+    render json: { a: a_games.as_json(game_json_options),
+                   b: b_games.as_json(game_json_options),
+                   c: c_games.as_json(game_json_options),
+                   d: d_games.as_json(game_json_options),
+                   params: params }
   end
 
   def get_graded_games(season, start_date, end_date, tiers)
