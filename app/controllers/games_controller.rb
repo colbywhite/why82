@@ -28,7 +28,8 @@ class GamesController < ApplicationController
                             b: @b_games.as_json,
                             c: @c_games.as_json,
                             d: @d_games.as_json },
-                   teams: @tier_info,
+                   teams: @tier_info.as_json(season_for_record: @season),
+                   updated: @season.last_updated_game.updated_at,
                    params: params }
   end
 
