@@ -17,16 +17,9 @@ sked.config(['$routeProvider', '$locationProvider',
     $locationProvider.html5Mode(true)
 ])
 
-services.factory('Game', ['$resource',
+services.factory('GameInfo', ['$resource',
   ($resource) ->
     $resource('/games/:season/graded.json', {}, {
-      query: { method: 'GET', isArray: false }
-    })
-])
-
-services.factory('Team', ['$resource',
-  ($resource) ->
-    $resource('/teams/:season/tiers.json', {}, {
       query: { method: 'GET', isArray: false }
     })
 ])

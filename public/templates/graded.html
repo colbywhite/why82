@@ -1,10 +1,10 @@
-<div class="container-fluid">
-    <section class="col-md-8 col-xs-12" ng-controller="GradedGamesController">
-        <h3 ng-show="gamesLoading">
+<div class="container-fluid" ng-controller="GameInfoController">
+    <section class="col-md-8 col-xs-12">
+        <h3 ng-show="infoLoading">
             <i class="fa fa-spinner fa-spin"></i>
         </h3>
 
-        <div ng-show="!gamesLoading">
+        <div ng-show="!infoLoading">
             <h3 style="margin-bottom: 20px">
                 Games for {{simpleDate(params.start_date)}}
                 <br />
@@ -65,13 +65,13 @@
 
     </section>
 
-    <section class="col-md-4 col-xs-12" ng-controller="TieredTeamsController">
+    <section class="col-md-4 col-xs-12">
         <div class="col-md-8 col-md-offset-2 col-xs-12">
-            <h3 ng-show="teamsLoading">
+            <h3 ng-show="infoLoading">
                 <i class="fa fa-spinner fa-spin"></i>
             </h3>
 
-            <div ng-show="!teamsLoading">
+            <div ng-show="!infoLoading">
                 <h3>
                     Tiers
                     <br />
