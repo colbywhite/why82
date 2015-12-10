@@ -1,5 +1,8 @@
 class Team < ActiveRecord::Base
+  include JsonSerializable
   has_and_belongs_to_many :seasons
+
+  DEFAULT_JSON_OPTS = BASE_JSON_OPTS.merge methods: :logo
 
   def games(season)
     season.game_class.by_team(id)
@@ -17,8 +20,8 @@ class Team < ActiveRecord::Base
   end
 
   def as_json(opts = {})
-    json = super(opts)
-    json['record'] = record(opts[:season]).to_string if opts[:season]
+    json = super DEFAULT_JSON_OPTS.merge(opts)
+    json['record'] = record(opts[:season_for_record]).to_string if opts[:season_for_record]
     json
   end
 end

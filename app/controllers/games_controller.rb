@@ -24,10 +24,10 @@ class GamesController < ApplicationController
   private
 
   def render_graded_games
-    render json: { games: { a: @a_games.as_json(game_json_options),
-                            b: @b_games.as_json(game_json_options),
-                            c: @c_games.as_json(game_json_options),
-                            d: @d_games.as_json(game_json_options) },
+    render json: { games: { a: @a_games.as_json,
+                            b: @b_games.as_json,
+                            c: @c_games.as_json,
+                            d: @d_games.as_json },
                    teams: @tier_info,
                    params: params }
   end
