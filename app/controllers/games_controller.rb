@@ -1,31 +1,34 @@
 class GamesController < ApplicationController
-  include GamesHelper
+  def info
+    validate_info_params
 
-  def graded
-    validate_graded_params
-
-    season = params[:season]
+    @season = params[:season]
     start_date = params[:start_date]
     end_date = params[:end_date]
-    tiers = TeamFilter::Record.tiers season
+    @tier_info = TeamFilter::Record.named_tiers @season, :team
 
-    a_games, b_games, c_games, d_games = get_graded_games season, start_date, end_date, tiers
-    render_graded_games a_games, b_games, c_games, d_games
+    tier_ids = get_ids_from_tier_info @tier_info
+
+    @a_games, @b_games, @c_games, @d_games = get_graded_games @season, start_date, end_date, tier_ids
+    render_graded_games
+  end
+
+  def get_ids_from_tier_info(tiers)
+    (1..3).collect do |tier|
+      tiers[tier.to_s].collect(&:id)
+    end
   end
 
   private
 
-  def render_graded_games(a_games, b_games, c_games, d_games)
-    respond_to do |format|
-      format.html { render :graded }
-      format.json do
-        render json: { a: a_games.as_json(game_json_options),
-                       b: b_games.as_json(game_json_options),
-                       c: c_games.as_json(game_json_options),
-                       d: d_games.as_json(game_json_options),
-                       params: params }
-      end
-    end
+  def render_graded_games
+    render json: { games: { a: @a_games.as_json,
+                            b: @b_games.as_json,
+                            c: @c_games.as_json,
+                            d: @d_games.as_json },
+                   teams: @tier_info.as_json(season_for_record: @season),
+                   updated: @season.last_updated_game.updated_at,
+                   params: params }
   end
 
   def get_graded_games(season, start_date, end_date, tiers)
@@ -41,7 +44,7 @@ class GamesController < ApplicationController
     [a_games, b_games, c_games, d_games]
   end
 
-  def validate_graded_params
+  def validate_info_params
     param! :season, String,
            required: true, transform: ->(sn) { Season.find_by(short_name: sn) }
     param! :start_date, DateTime,
