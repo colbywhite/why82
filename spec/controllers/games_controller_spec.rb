@@ -6,7 +6,7 @@ RSpec.describe GamesController do
     @game_table = season_to_game_sym @season
   end
 
-  describe 'GET #graded' do
+  describe 'GET #info' do
     before(:each) do
       #   create two 1s, two 2s, two 3s
       @first_tier_1 = create(:team, name: 'First Tier 1')
@@ -38,8 +38,8 @@ RSpec.describe GamesController do
                                @first_tier_3, @second_tier_3
     end
 
-    it 'should grade games based on tiers' do
-      get :graded, start_date: @game_date.iso8601, season: @season.short_name, format: :json
+    it 'should grade games based on team tiers' do
+      get :info, start_date: @game_date.iso8601, season: @season.short_name, format: :json
       expect(response.status).to eq(200)
       games = JSON.parse(response.body)['games']
       a_games = games['a']
@@ -61,5 +61,7 @@ RSpec.describe GamesController do
       expect(d_games.size).to eq(9)
       assert_all_games_contain_matching_team d_games, 'Tier 3'
     end
+
+    it 'should return teams based on tiers'
   end
 end

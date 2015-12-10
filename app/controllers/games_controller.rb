@@ -1,8 +1,6 @@
 class GamesController < ApplicationController
-  include GamesHelper
-
-  def graded
-    validate_graded_params
+  def info
+    validate_info_params
 
     @season = params[:season]
     start_date = params[:start_date]
@@ -46,7 +44,7 @@ class GamesController < ApplicationController
     [a_games, b_games, c_games, d_games]
   end
 
-  def validate_graded_params
+  def validate_info_params
     param! :season, String,
            required: true, transform: ->(sn) { Season.find_by(short_name: sn) }
     param! :start_date, DateTime,

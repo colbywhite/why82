@@ -1,7 +1,7 @@
 controllers = angular.module('controllers')
 
-controllers.controller("GameInfoController", ['$scope', '$rootScope', '$location', '$routeParams', 'GameInfo'
-  ($scope, $rootScope, $location, $routeParams, GameInfo)->
+controllers.controller("GameInfoController", ['$scope', '$rootScope', '$location', '$routeParams', 'Game'
+  ($scope, $rootScope, $location, $routeParams, Game)->
     $scope.simpleTime = (timeStr, shortFormat = true) ->
       LocalTime.strftime(new Date(timeStr), '%H:%M')
 
@@ -26,8 +26,8 @@ controllers.controller("GameInfoController", ['$scope', '$rootScope', '$location
       ]
       $scope.infoLoading = false
 
-    query = () ->
-      GameInfo.query({season: '2016'}, resultCallback)
+    getInfo = () ->
+      Game.info({season: '2016'}, resultCallback)
 
-    setTimeout(query, 100)
+    setTimeout(getInfo, 100)
 ])
