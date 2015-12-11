@@ -11,5 +11,13 @@ module BballRef
     def self.up?
       status == 200
     end
+
+    def status
+      BballRef::Info.status
+    end
+
+    def up?
+      BballRef::Info.up?
+    end
   end
 end
