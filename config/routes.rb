@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   post 'season/update',
        to: 'season#update',
        defaults: { format: 'json' }
+  get 'bballref', to: 'bball_ref#check'
 end
