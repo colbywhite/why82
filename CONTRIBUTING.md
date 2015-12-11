@@ -48,6 +48,14 @@ bundle exec rake db:migrate nba:seed:2016
 
 `nba:seed:2016` takes a while to finish. See #31 as to why and the fix that is in the works.
 
+## Run the App
+
+```bash
+rails server
+```
+
+That will run the app in dev mode and make it available on [localhost:3000](http://localhost:3000)
+
 # Extra Notes
 
 ## Code Style
@@ -66,3 +74,13 @@ File any issues via [GitHub Issues](https://github.com/colbywhite/why82/issues).
 and `codeship-test.rb` are what the CI runs.
 
 Every pushed commit to `master` is deployed to why82.com.
+
+## Bower
+If you make bower changes via `Bowerfile`, be sure to run `bundle exec rake bower:install`. 
+This will update `vendor/assets/bower_components` as needed.
+
+## Tests
+
+```bash
+bundle exec rake spec
+```
