@@ -44,8 +44,11 @@ class UpdateSeason
   end
 
   def validate_season(season)
+    teams = season.teams
+    danger_teams = teams.select { |t| t.games(season).count != 82 }
+    danger_teams.each { |t| logger.warn "#{t.name} has too many games" }
     Exceptions::TooManyGamesException.raise_if season.games.count
-    Exceptions::TooManyTeamsException.raise_if season.teams.count
+    Exceptions::TooManyTeamsException.raise_if teams.count
   end
 
   def league
