@@ -251,6 +251,7 @@ DEPENDENCIES
   jquery-rails
   local_time
   newrelic_rpm
+  nokogiri (~> 1.6)
   pg
   pry
   pry-doc

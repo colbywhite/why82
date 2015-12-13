@@ -1,6 +1,6 @@
 class UpdateSeason
-  include ParseHub::Parser
-  include ParseHub::Runner
+  include BballRef::Parser
+  include ICanHazIp
 
   attr_reader :name, :short_name
 
@@ -12,31 +12,54 @@ class UpdateSeason
     @short_name = short_name
   end
 
-  def perform
-    start_run_and_wait SEASON_PROJECTS[short_name]
-    process_season name, short_name
+  def logger
+    Rails.logger
   end
 
-  def process_season(name, short_name)
+  def perform
+    if BballRef::Checker.check
+      process_season
+    else
+      logger.error 'Aborting UpdateSeason since BballRef cannot be reached'
+    end
+  end
+
+  def process_season
+    season = get_season name, short_name
+    logger.info "Updating #{LEAGUE_ABBR} season #{season.short_name}"
+    games = bball_ref_games season
+
+    # TODO: fail if bballref has a  diff amount if incomplete games than i do
+    # TODO: quit when there are no games left
+    logger.info "Checking #{games.count} of #{season.incomplete_games.count} incomplete games"
+    process_games_in_transaction games, season
+  end
+
+  def process_games_in_transaction(games_json, season)
     ActiveRecord::Base.transaction do
-      logger.info "Loading #{LEAGUE_ABBR} season #{short_name}"
-      season = create_season name, short_name
       logger.info "Starting status: #{status_str(season)}"
-      games_json = pull_season_json season
       process_games games_json, season
-      logger.info "Ending status: #{status_str(season)}"
       validate_season season
+      logger.info "Ending status: #{status_str(season)}"
     end
   end
 
   def process_games(games_json, season)
     games_json.each_with_index do |game_json, i|
-      create_game game_json, season
-      if (i + 1) % 200 == 0
-        logger.info "  #{i + 1} games processed"
-        logger.info "  Status: #{status_str(season)}"
+      game = get_game game_json, season
+      if game
+        game.update home_score: game_json[:home][:score], away_score: game_json[:away][:score]
+      else
+        logger.warn "The game: #{game_json} was not found in the DB. Ignoring"
       end
+      log_on_200th i, season
     end
+  end
+
+  def log_on_200th(i, season)
+    return unless (i + 1) % 200 == 0
+    logger.info "  #{i + 1} games processed"
+    logger.info "  Status: #{status_str(season)}"
   end
 
   def status_str(season)
@@ -52,27 +75,29 @@ class UpdateSeason
   end
 
   def league
-    League.where(name: LEAGUE_NAME, abbr: LEAGUE_ABBR).first_or_create
+    League.where(name: LEAGUE_NAME, abbr: LEAGUE_ABBR).first
   end
 
-  def create_season(name, short_name)
-    Season.where(name: name, short_name: short_name,
-                 league: league).first_or_create
+  def get_season(name, short_name)
+    season = Season.where(name: name, short_name: short_name,
+                          league: league).first
+    fail "Season(name: #{name}, short_name: #{short_name}) does not exist" unless season
+    season
   end
 
-  def create_team(name, abbr, season)
-    team = Team.find_or_create_by(name: name, abbr: abbr)
-    team.seasons += [season]
+  def get_team(team_info, season)
+    team = season.teams.find_by name: team_info[:name], abbr: team_info[:abbr]
+    unless team
+      fail "Team(name: #{team_info[:name]}, abbr: #{team_info[:abbr]}, season: #{season.short_name}) does not exist"
+    end
     team
   end
 
-  def create_game(game_json, season)
-    home = create_team game_json[HOME], game_json[HOME_ABBR], season
-    away = create_team game_json[AWAY], game_json[AWAY_ABBR], season
-    game = season.game_class.find_or_create_by(home: home, away: away,
-                                               time: build_time(game_json))
-    game.home_score = game_json[HOME_SCORE]
-    game.away_score = game_json[AWAY_SCORE]
-    game.save
+  def get_game(game_json, season)
+    home = get_team game_json[:home], season
+    away = get_team game_json[:away], season
+    time = game_json[:time]
+    game = season.game_class.find_by(home: home, away: away, time: time)
+    game
   end
 end
