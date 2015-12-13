@@ -1,137 +1,63 @@
 require 'spec_helper'
 
 RSpec.describe UpdateSeason do
-  subject(:job) { UpdateSeason.new 'Reg', '2015' }
+  subject(:job) { UpdateSeason.new 'Test', '2015' }
 
   before :each do
-    allow(job).to receive(:season_url) do |season|
-      "spec/resources/#{season.short_name}_one_incomplete_month.json"
-    end
-    allow(job).to receive(:pull_season_json) do |season|
-      url = job.season_url season
-      JSON.parse(File.read(url))['games']
+    ActiveRecord::Base.logger.level = 1
+    allow(job).to receive(:parse_doc) do |url|
+      File.open(url) do |f|
+        Nokogiri::HTML f
+      end
     end
   end
 
   describe '#process_season' do
-    it 'should load the whole season' do
-      job.process_season 'Test', '2015'
-      seasons = Season.where short_name: '2015', name: 'Test'
-      expect(seasons.count).to eq(1)
-      games = seasons.first.games
-      expect(games.count).to eq(26)
-      teams = seasons.first.teams
-      expect(teams.count).to eq(30)
-    end
-
-    it 'should update scores on second call' do
-      job.process_season 'Test', '2015'
-      test_season = get_season 'Test', '2015'
-      expect(test_season.incomplete_games.count).to eq(6)
-      expect(test_season.complete_games.count).to eq(20)
-
-      # use the complete month to get full scores
-      allow(job).to receive(:season_url) do |season|
-        "spec/resources/#{season.short_name}_one_complete_month.json"
+    context 'starting with incomplete games' do
+      before :each do
+        setup_oct_29_2015_games
+        allow(job).to(receive(:season_url)) { 'spec/resources/2015/20151030_games.html' }
       end
 
-      job.process_season 'Test', '2015'
-      test_season = get_season 'Test', '2015'
-      expect(test_season.incomplete_games.count).to eq(0)
-      expect(test_season.complete_games.count).to eq(26)
+      # Oct 30 games should be filled in; Oct. 31 games left incomplete
+      it 'should update completed games' do
+        job.process_season
+        season = get_season '2015', 'Test'
+        expect(season.games.count).to eq(26)
+        expect(season.incomplete_games.count).to eq(6)
+        expect(season.complete_games.count).to eq(20)
+        expect(season.teams.count).to eq(30)
+      end
+
+      ## Not sure if this is valid anymore since it's not possible
+      ## for #process_season to create teams anymore
+      it 'should rollback if too many teams' do
+        season = get_season '2015', 'Test'
+        pre_process_team = create(:team)
+        pre_process_team.seasons = [season]
+
+        expect do
+          job.process_season
+        end.to raise_error(Exceptions::TooManyTeamsException)
+      end
+
+      ## Not sure if this is valid anymore since it's not possible
+      ## for #process_season to create games anymore
+      it 'should rollback if too many games' do
+        season = get_season '2015', 'Test'
+        game_sym = season_to_game_sym season
+        create(game_sym)
+
+        expect do
+          job.process_season
+        end.to raise_error(Exceptions::TooManyGamesException)
+      end
     end
 
-    it 'should rollback if too many teams' do
-      @season = create(:season,
-                       short_name: '2015', name: 'Test', league: job.league)
-      @pre_seed_team = create(:team)
-      @pre_seed_team.seasons = [@season]
-
-      expect do
-        job.process_season 'Test', '2015'
-      end.to raise_error(Exceptions::TooManyTeamsException)
-      expect(@season.teams.count).to eq(1)
-    end
-
-    it 'should rollback if too many games' do
-      @season = create(:season,
-                       short_name: '2015', name: 'Test', league: job.league)
-      game_sym = season_to_game_sym @season
-      @pre_seed_game = create(game_sym)
-
-      expect do
-        job.process_season 'Test', '2015'
-      end.to raise_error(Exceptions::TooManyGamesException)
-      expect(@season.games.count).to eq(1)
-    end
-
-    def get_season(name, short_name)
-      seasons = Season.where(short_name: short_name, name: name)
+    def get_season(short_name, name)
+      seasons = Season.where short_name: short_name, name: name
       expect(seasons.count).to eq(1)
       seasons.first
-    end
-  end
-
-  describe '#create_season' do
-    it 'should create a season and league' do
-      job.create_season 'Test Season', '2016'
-      seasons = Season.where name: 'Test Season', short_name: '2016'
-      expect(seasons.count).to eq(1)
-      league = seasons.first.league
-      expect(league.name).to eq(UpdateSeason::LEAGUE_NAME)
-      expect(league.abbr).to eq(UpdateSeason::LEAGUE_ABBR)
-    end
-
-    it 'should not create duplicate seasons/leagues' do
-      job.create_season 'Test Season', '2016'
-      job.create_season 'Test Season', '2016'
-      seasons = Season.where name: 'Test Season', short_name: '2016'
-      expect(seasons.count).to eq(1)
-      leagues = League.where name: UpdateSeason::LEAGUE_NAME,
-                             abbr: UpdateSeason::LEAGUE_ABBR
-      expect(leagues.count).to eq(1)
-    end
-  end
-
-  describe '#create_team' do
-    it 'should not create duplicate teams' do
-      season = create(:season)
-      job.create_team 'Test', 'T', season
-      job.create_team 'Test', 'T', season
-      teams = Team.where name: 'Test', abbr: 'T'
-      expect(teams.count).to eq(1)
-      expect(teams.first.seasons.count).to eq(1)
-    end
-  end
-
-  describe '#create_game' do
-    before :each do
-      @game_json = { UpdateSeason::HOME_ABBR => 'SAC',
-                     UpdateSeason::HOME => 'Sacramento Kings',
-                     UpdateSeason::AWAY_ABBR => 'POR',
-                     UpdateSeason::AWAY => 'Portland Trail Blazers',
-                     UpdateSeason::EASTERN_DATE => 'Fri, Oct 31, 2014',
-                     UpdateSeason::EASTERN_TIME => '10:00 pm' }
-      @season = create(:season)
-    end
-
-    it 'should not create duplicate games' do
-      job.create_game @game_json, @season
-      job.create_game @game_json, @season
-      expect(@season.games.count).to eq(1)
-    end
-
-    it 'should overwrite nil scores' do
-      job.create_game @game_json, @season
-      games = @season.game_class.where(home_score: nil, away_score: nil)
-      expect(games.count).to eq(1)
-      @game_json[UpdateSeason::HOME_SCORE] = 20
-      @game_json[UpdateSeason::AWAY_SCORE] = 30
-      job.create_game @game_json, @season
-      games = @season.game_class.where(home_score: nil, away_score: nil)
-      expect(games.count).to eq(0)
-      games = @season.game_class.where(home_score: 20, away_score: 30)
-      expect(games.count).to eq(1)
     end
   end
 end
