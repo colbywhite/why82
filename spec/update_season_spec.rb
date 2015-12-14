@@ -5,6 +5,7 @@ RSpec.describe UpdateSeason do
 
   before :each do
     ActiveRecord::Base.logger.level = 1
+    @nba2015 = setup_2015_season
     allow(job).to receive(:parse_doc) do |url|
       File.open(url) do |f|
         Nokogiri::HTML f
@@ -15,7 +16,7 @@ RSpec.describe UpdateSeason do
   describe '#process_season' do
     context 'starting with incomplete games' do
       before :each do
-        setup_oct_29_2015_games
+        setup_oct_29_2015_games @nba2015
         allow(job).to(receive(:season_url)) { 'spec/resources/2015/20151030_games.html' }
       end
 
@@ -56,7 +57,7 @@ RSpec.describe UpdateSeason do
 
     context 'when a gametime changes' do
       before :each do
-        setup_oct_29_2015_games
+        setup_oct_29_2015_games @nba2015
         # This file changes the gametime for the CLE@CHI game
         allow(job).to(receive(:season_url)) { 'spec/resources/2015/20151030_games_new_time.html' }
         @chi = Team.find_by abbr: 'CHI', name: 'Chicago Bulls'

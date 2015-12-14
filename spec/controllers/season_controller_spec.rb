@@ -19,6 +19,7 @@ RSpec.describe SeasonController do
       end
 
       it 'should accept request with proper params' do
+        setup_season 'TEST', 'TEST'
         post :update, short_name: 'TEST', name: 'TEST'
         expect(response.status).to eq(204)
       end
@@ -27,6 +28,7 @@ RSpec.describe SeasonController do
     describe 'queue logic' do
       before(:each) do
         Delayed::Job.destroy_all
+        setup_season 'TEST', 'test'
       end
 
       it 'should enqueue one job' do

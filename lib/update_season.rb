@@ -2,7 +2,7 @@ class UpdateSeason
   include BballRef::Parser
   include ICanHazIp
 
-  attr_reader :name, :short_name
+  attr_reader :name, :short_name, :season
 
   LEAGUE_NAME = 'National Basketball Association'
   LEAGUE_ABBR = 'NBA'
@@ -10,6 +10,7 @@ class UpdateSeason
   def initialize(name, short_name)
     @name = name
     @short_name = short_name
+    @season = get_season name, short_name
   end
 
   def logger
@@ -25,43 +26,42 @@ class UpdateSeason
   end
 
   def process_season
-    season = get_season name, short_name
-    logger.info "Updating #{LEAGUE_ABBR} season #{season.short_name}"
-    games = bball_ref_games season
+    logger.info "Updating #{LEAGUE_ABBR} season #{@season.short_name}"
+    games = bball_ref_games @season
 
     # TODO: fail if bballref has a  diff amount if incomplete games than i do
     # TODO: quit when there are no games left
-    logger.info "Checking #{games.count} of #{season.incomplete_games.count} incomplete games"
-    process_games_in_transaction games, season
+    logger.info "Checking #{games.count} of #{@season.incomplete_games.count} incomplete games"
+    process_games_in_transaction games
   end
 
-  def process_games_in_transaction(games_json, season)
+  def process_games_in_transaction(games_json)
     ActiveRecord::Base.transaction do
-      logger.info "Starting status: #{status_str(season)}"
-      process_games games_json, season
-      validate_season season
-      logger.info "Ending status: #{status_str(season)}"
+      logger.info "Starting status: #{status_str}"
+      process_games games_json
+      validate_season
+      logger.info "Ending status: #{status_str}"
     end
   end
 
-  def process_games(games_json, season)
+  def process_games(games_json)
     games_json.each_with_index do |game_json, i|
-      game = get_game game_json, season
+      game = get_game game_json
       if game
         game.update home_score: game_json[:home][:score], away_score: game_json[:away][:score]
       else
-        handle_missing_game game_json, season, games_json
+        logger.warn 'The given game was not found in the DB as is. Looking for one with a different time'
+        logger.warn "game=[#{game_json}"
+        handle_missing_game game_json, games_json
       end
-      log_on_200th i, season
+      log_on_200th i
     end
   end
 
-  def handle_missing_game(game_json, season, games_json)
-    logger.warn 'The given game was not found in the DB as is. Looking for one with a different time'
-    logger.warn "game=[#{game_json}"
+  def handle_missing_game(game_json, games_json)
     home = Team.find_by name: game_json[:home][:name], abbr: game_json[:home][:abbr]
     away = Team.find_by name: game_json[:away][:name], abbr: game_json[:away][:abbr]
-    match_ups = season.games_against home, away
+    match_ups = @season.games_against home, away
     orphan_games = match_ups.reject { |m| game_in_bball_ref? m, games_json }
     unless orphan_games.count == 1
       # If there are two games moved between the same two teams, then I will have two orphans.
@@ -90,45 +90,44 @@ class UpdateSeason
     !found.empty?
   end
 
-  def log_on_200th(i, season)
+  def log_on_200th(i)
     return unless (i + 1) % 200 == 0
     logger.info "  #{i + 1} games processed"
-    logger.info "  Status: #{status_str(season)}"
+    logger.info "  Status: #{status_str}"
   end
 
-  def status_str(season)
-    "#{season.games.count} games & #{season.teams.count} teams"
+  def status_str
+    "#{@season.games.count} games & #{@season.teams.count} teams"
   end
 
-  def validate_season(season)
-    Exceptions::TooManyGamesException.raise_if season.games.count
-    Exceptions::TooManyTeamsException.raise_if season.teams.count
+  def validate_season
+    Exceptions::TooManyGamesException.raise_if @season.games.count
+    Exceptions::TooManyTeamsException.raise_if @season.teams.count
   end
 
   def league
-    League.where(name: LEAGUE_NAME, abbr: LEAGUE_ABBR).first
+    League.find_by name: LEAGUE_NAME, abbr: LEAGUE_ABBR
   end
 
   def get_season(name, short_name)
-    season = Season.where(name: name, short_name: short_name,
-                          league: league).first
+    season = Season.find_by name: name, short_name: short_name, league: league
     fail "Season(name: #{name}, short_name: #{short_name}) does not exist" unless season
     season
   end
 
-  def get_team(team_info, season)
-    team = season.teams.find_by name: team_info[:name], abbr: team_info[:abbr]
+  def get_team(team_info)
+    team = @season.teams.find_by name: team_info[:name], abbr: team_info[:abbr]
     unless team
-      fail "Team(name: #{team_info[:name]}, abbr: #{team_info[:abbr]}, season: #{season.short_name}) does not exist"
+      fail "Team(name: #{team_info[:name]}, abbr: #{team_info[:abbr]}, season: #{@season.short_name}) does not exist"
     end
     team
   end
 
-  def get_game(game_json, season)
-    home = get_team game_json[:home], season
-    away = get_team game_json[:away], season
+  def get_game(game_json)
+    home = get_team game_json[:home]
+    away = get_team game_json[:away]
     time = game_json[:time]
-    game = season.game_class.find_by(home: home, away: away, time: time)
+    game = @season.game_class.find_by(home: home, away: away, time: time)
     game
   end
 end
