@@ -59,21 +59,27 @@ class UpdateSeason
   def handle_missing_game(single_game_info, all_game_info)
     home = get_team single_game_info[:home]
     away = get_team single_game_info[:away]
-    match_ups = @season.games_against home, away
-    orphan_games = match_ups.reject { |m| game_in_bball_ref? m, all_game_info }
-    unless orphan_games.count == 1
-      # If there are two games moved between the same two teams, then I will have two orphans.
-      # In that scenario, I do not know which is which and thus don't know which one to update.
-      # If there are no orphans, I have no game to update. This scenario should never happen
-      orphan_string = orphan_games.collect(&:to_string)
-      fail "Incorrect num of orphans found (#{orphan_games.count} for #{single_game_info}: #{orphan_string}"
-    end
-
-    orphan_game = orphan_games.first
+    orphan_game = get_orphaned_match_up home, away, all_game_info
     logger.warn "Updating both the score and time for #{orphan_game.to_string}"
     update_game orphan_game, single_game_info, true
     orphan_game.reload
     logger.warn "Updated game to: #{orphan_game.to_string}"
+  end
+
+  def get_orphaned_match_up(home, away, all_game_info)
+    match_ups = @season.games_against home, away
+    orphan_games = match_ups.reject { |m| game_in_bball_ref? m, all_game_info }
+    unless orphan_games.count == 1
+      # Two scenarios can lead to here:
+      # 1. two games between the same two teams had there gametimes moved since the last update. This results in two
+      #    orphans. In that scenario, I do not know which is which and thus don't know which one to update.
+      # 2. If there are no orphans, I have no game to update. This scenario should never happen because it should've
+      #    been found via get_game.
+      # Either way, throw an error.
+      orphan_string = orphan_games.collect(&:to_string)
+      fail "Incorrect num of orphans found (#{orphan_games.count} for #{single_game_info}: #{orphan_string}"
+    end
+    orphan_games.first
   end
 
   def update_game(game, game_info, update_time = false)
