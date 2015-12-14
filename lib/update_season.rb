@@ -1,5 +1,6 @@
 class UpdateSeason
   include BballRef::Parser
+  include BballRef::Utils
   include ICanHazIp
   include AccessRailsLogger
 
@@ -74,17 +75,6 @@ class UpdateSeason
                        time: game_json[:time]
     orphan_game.reload
     logger.warn "Updated game to: #{orphan_game.to_string}"
-  end
-
-  def game_in_bball_ref?(game, games_json)
-    home = game.home
-    away = game.away
-    found = games_json.select do |g|
-      g[:home][:abbr] == home.abbr && g[:home][:name] == home.name &&
-      g[:away][:abbr] == away.abbr && g[:away][:name] == away.name &&
-      g[:time] == game.time
-    end
-    !found.empty?
   end
 
   def log_on_200th(i)
