@@ -1,6 +1,7 @@
 class UpdateSeason
   include BballRef::Parser
   include ICanHazIp
+  include AccessRailsLogger
 
   attr_reader :name, :short_name, :season
 
@@ -11,10 +12,6 @@ class UpdateSeason
     @name = name
     @short_name = short_name
     @season = get_season name, short_name
-  end
-
-  def logger
-    Rails.logger
   end
 
   def perform
