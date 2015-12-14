@@ -13,7 +13,7 @@ RSpec.describe UpdateSeason do
     end
   end
 
-  describe '#process_season' do
+  describe '#update_season' do
     context 'starting with incomplete games' do
       before :each do
         setup_oct_29_2015_games @nba2015
@@ -22,7 +22,7 @@ RSpec.describe UpdateSeason do
 
       # Oct 30 games should be filled in; Oct. 31 games left incomplete
       it 'should update completed games' do
-        job.process_season
+        job.update_season
         season = get_season '2015', 'Test'
         expect(season.games.count).to eq(26)
         expect(season.incomplete_games.count).to eq(6)
@@ -38,7 +38,7 @@ RSpec.describe UpdateSeason do
         pre_process_team.seasons = [season]
 
         expect do
-          job.process_season
+          job.update_season
         end.to raise_error(Exceptions::TooManyTeamsException)
       end
 
@@ -50,7 +50,7 @@ RSpec.describe UpdateSeason do
         create(game_sym)
 
         expect do
-          job.process_season
+          job.update_season
         end.to raise_error(Exceptions::TooManyGamesException)
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe UpdateSeason do
       it 'should update to new gametime' do
         season = get_season '2015', 'Test'
         gametime_before = @chi.games(season).joins(:away).find_by(away: @cle).time
-        job.process_season
+        job.update_season
         gametime_after = @chi.games(season).joins(:away).find_by(away: @cle).time
         expect(gametime_before).not_to eq(gametime_after)
         expect(Time.utc(2014, 11, 1, 1)).to eq(gametime_after)

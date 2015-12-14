@@ -4,7 +4,7 @@ class UpdateSeason
   include ICanHazIp
   include AccessRailsLogger
 
-  attr_reader :name, :short_name, :season
+  attr_reader :name, :short_name, :season, :league
 
   LEAGUE_NAME = 'National Basketball Association'
   LEAGUE_ABBR = 'NBA'
@@ -12,37 +12,38 @@ class UpdateSeason
   def initialize(name, short_name)
     @name = name
     @short_name = short_name
+    @league = League.find_by name: LEAGUE_NAME, abbr: LEAGUE_ABBR
     @season = get_season name, short_name
   end
 
   def perform
     if BballRef::Checker.check
-      process_season
+      update_season
     else
       logger.error 'Aborting UpdateSeason since BballRef cannot be reached'
     end
   end
 
-  def process_season
+  def update_season
     logger.info "Updating #{LEAGUE_ABBR} season #{@season.short_name}"
     games = bball_ref_games @season
 
     # TODO: fail if bballref has a  diff amount if incomplete games than i do
     # TODO: quit when there are no games left
     logger.info "Checking #{games.count} of #{@season.incomplete_games.count} incomplete games"
-    process_games_in_transaction games
+    update_games_in_transaction games
   end
 
-  def process_games_in_transaction(games_json)
+  def update_games_in_transaction(games_json)
     ActiveRecord::Base.transaction do
       logger.info "Starting status: #{status_str}"
-      process_games games_json
+      update_games games_json
       validate_season
       logger.info "Ending status: #{status_str}"
     end
   end
 
-  def process_games(games_json)
+  def update_games(games_json)
     games_json.each_with_index do |game_json, i|
       if (game = get_game(game_json)).nil?
         logger.warn "Game not found in the DB as is. Looking for one with a different time. game=[#{game_json}"
@@ -100,12 +101,8 @@ class UpdateSeason
     Exceptions::TooManyTeamsException.raise_if @season.teams.count
   end
 
-  def league
-    League.find_by name: LEAGUE_NAME, abbr: LEAGUE_ABBR
-  end
-
   def get_season(name, short_name)
-    season = Season.find_by name: name, short_name: short_name, league: league
+    season = Season.find_by name: name, short_name: short_name, league: @league
     fail "Season(name: #{name}, short_name: #{short_name}) does not exist" unless season
     season
   end
