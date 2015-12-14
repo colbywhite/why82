@@ -44,15 +44,13 @@ class UpdateSeason
 
   def process_games(games_json)
     games_json.each_with_index do |game_json, i|
-      game = get_game game_json
-      if game
-        update_game game, game_json
-      else
-        logger.warn 'The given game was not found in the DB as is. Looking for one with a different time'
-        logger.warn "game=[#{game_json}"
+      if (game = get_game(game_json)).nil?
+        logger.warn "Game not found in the DB as is. Looking for one with a different time. game=[#{game_json}"
         handle_missing_game game_json, games_json
+      else
+        update_game game, game_json
       end
-      log_on_200th i
+      log_on_200th(i + 1)
     end
   end
 
@@ -88,8 +86,8 @@ class UpdateSeason
   end
 
   def log_on_200th(i)
-    return unless (i + 1) % 200 == 0
-    logger.info "  #{i + 1} games processed"
+    return unless i % 200 == 0
+    logger.info "  #{i} games processed"
     logger.info "  Status: #{status_str}"
   end
 
