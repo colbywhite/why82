@@ -54,6 +54,25 @@ RSpec.describe UpdateSeason do
       end
     end
 
+    context 'when a gametime changes' do
+      before :each do
+        setup_oct_29_2015_games
+        # This file changes the gametime for the CLE@CHI game
+        allow(job).to(receive(:season_url)) { 'spec/resources/2015/20151030_games_new_time.html' }
+        @chi = Team.find_by abbr: 'CHI', name: 'Chicago Bulls'
+        @cle = Team.find_by abbr: 'CLE', name: 'Cleveland Cavaliers'
+      end
+
+      it 'should update to new gametime' do
+        season = get_season '2015', 'Test'
+        gametime_before = @chi.games(season).joins(:away).find_by(away: @cle).time
+        job.process_season
+        gametime_after = @chi.games(season).joins(:away).find_by(away: @cle).time
+        expect(gametime_before).not_to eq(gametime_after)
+        expect(Time.utc(2014, 11, 1, 1)).to eq(gametime_after)
+      end
+    end
+
     def get_season(short_name, name)
       seasons = Season.where short_name: short_name, name: name
       expect(seasons.count).to eq(1)

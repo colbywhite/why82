@@ -11,6 +11,10 @@ class Season < ActiveRecord::Base
     game_class.all
   end
 
+  def games_against(home_team, away_team)
+    games.joins(:away).where(away: away_team, home: home_team)
+  end
+
   def games_between_lists(start_time, end_time, list_one, list_two)
     games.eager_load_teams.inbetween_times(start_time, end_time).between_lists list_one, list_two
   end

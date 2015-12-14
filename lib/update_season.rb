@@ -50,10 +50,44 @@ class UpdateSeason
       if game
         game.update home_score: game_json[:home][:score], away_score: game_json[:away][:score]
       else
-        logger.warn "The game: #{game_json} was not found in the DB. Ignoring"
+        handle_missing_game game_json, season, games_json
       end
       log_on_200th i, season
     end
+  end
+
+  def handle_missing_game(game_json, season, games_json)
+    logger.warn 'The given game was not found in the DB as is. Looking for one with a different time'
+    logger.warn "game=[#{game_json}"
+    home = Team.find_by name: game_json[:home][:name], abbr: game_json[:home][:abbr]
+    away = Team.find_by name: game_json[:away][:name], abbr: game_json[:away][:abbr]
+    match_ups = season.games_against home, away
+    orphan_games = match_ups.reject { |m| game_in_bball_ref? m, games_json }
+    unless orphan_games.count == 1
+      # If there are two games moved between the same two teams, then I will have two orphans.
+      # In that scenario, I do not know which is which and thus don't know which one to update.
+      # If there are no orphans, I have no game to update. This scenario should never happen
+      orphan_string = orphan_games.collect(&:to_string)
+      fail "Incorrect num of orphans found (#{orphan_games.count} for #{game_json}: #{orphan_string}"
+    end
+
+    orphan_game = orphan_games.first
+    logger.warn "Updating both the score and time for #{orphan_game.to_string}"
+    orphan_game.update home_score: game_json[:home][:score], away_score: game_json[:away][:score],
+                       time: game_json[:time]
+    orphan_game.reload
+    logger.warn "Updated game to: #{orphan_game.to_string}"
+  end
+
+  def game_in_bball_ref?(game, games_json)
+    home = game.home
+    away = game.away
+    found = games_json.select do |g|
+      g[:home][:abbr] == home.abbr && g[:home][:name] == home.name &&
+      g[:away][:abbr] == away.abbr && g[:away][:name] == away.name &&
+      g[:time] == game.time
+    end
+    !found.empty?
   end
 
   def log_on_200th(i, season)
@@ -67,11 +101,8 @@ class UpdateSeason
   end
 
   def validate_season(season)
-    teams = season.teams
-    danger_teams = teams.select { |t| t.games(season).count != 82 }
-    danger_teams.each { |t| logger.warn "#{t.name} has too many games" }
     Exceptions::TooManyGamesException.raise_if season.games.count
-    Exceptions::TooManyTeamsException.raise_if teams.count
+    Exceptions::TooManyTeamsException.raise_if season.teams.count
   end
 
   def league
