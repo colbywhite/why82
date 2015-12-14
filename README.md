@@ -10,35 +10,13 @@ More leagues/criteria will come in the future.
 
 The app is currently deployed to http://why82.com
 
-## Build
+## Contributing and Running Locally
 
-```bash
-# install dependencies
-bundle install      # add "--without production" if you're building for dev
-# clear db and reload seed data
-bundle exec rake db:migrate 
-```
-
-## Tests
-
-```bash
-bundle exec rake spec
-```
-
-## Running locally
-
-```bash
-bundle exec rails s
-```
+See `CONTRIBUTING.md` for info on how to run the app locally.
 
 ## App Architecture
 
 The back end is Rails while the front-end is angular. The angular js/coffee can
-be found in `app/assets/javascripts` while the backend is mostly in `app`. 
-
-The data is static sports data curated from various sources. The results are in 
-`db/data`.
-
-### bower
-If you make bower changes via `Bowerfile`, be sure to run `bundle exec rake bower:install`. 
-This will update `vendor/assets/bower_components` as needed.
+be found in `app/assets/javascripts` while the backend is mostly in `app`.
+ 
+Game results are retrieved from basketballreference via a `rake nba:seed:YEAR` command. 
