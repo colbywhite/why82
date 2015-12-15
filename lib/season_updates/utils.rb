@@ -1,4 +1,4 @@
-module BballRef
+module SeasonUpdates
   module Utils
     def game_in_bball_ref?(game, bball_ref_games)
       home = game.home
