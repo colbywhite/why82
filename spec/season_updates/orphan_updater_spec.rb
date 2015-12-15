@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe SeasonUpdates::OrphanUpdater do
-  describe '#update', current: true do
+  describe '#update' do
     let(:updater) { SeasonUpdates::OrphanUpdater.new @season }
 
     def setup_season_with_orphans(num_orphans)
@@ -41,7 +41,7 @@ RSpec.describe SeasonUpdates::OrphanUpdater do
       end
     end
 
-    let(:single_game_info) { @games_info[1] }
+    let(:single_game_info) { @games_info[-1] }
     let(:all_games_info) { @games_info }
 
     context 'when there are multiple orphans' do

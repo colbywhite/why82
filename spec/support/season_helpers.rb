@@ -48,7 +48,7 @@ module SeasonHelpers
   end
 
   def create_n_offsetted_games_in_season(season, num_games, game_details = {}, offset = 1.week)
-    game_details[:time] ||= Time.zone.now
+    game_details[:time] ||= Time.zone.local(2015, 12, 1)
     (0..num_games - 1).collect do |n|
       game_details[:time] = game_details[:time] + (offset * n)
       create_game_in_season season, game_details
