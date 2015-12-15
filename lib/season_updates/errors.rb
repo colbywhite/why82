@@ -17,5 +17,18 @@ module SeasonUpdates
         "Season(#{season.short_name})"
       end
     end
+
+    class ZeroOrMultipleOrphansError < StandardError
+      def initialize(orphans, home_team, away_team)
+        super orphans_to_err_message(orphans, home_team, away_team)
+      end
+
+      private
+
+      def orphans_to_err_message(orphans, home, away)
+        orphan_string = orphans.collect(&:to_string)
+        "Incorrect num of orphans found (#{orphans.count} for #{away}@#{home}: #{orphan_string}"
+      end
+    end
   end
 end

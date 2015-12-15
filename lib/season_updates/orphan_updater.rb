@@ -27,16 +27,14 @@ module SeasonUpdates
     def orphaned_match_up(home, away, all_game_info)
       match_ups = @season.games_against home, away
       orphan_games = match_ups.reject { |m| game_in_bball_ref? m, all_game_info }
-      unless orphan_games.count == 1
-        # Two scenarios can lead to here:
-        # 1. two games between the same two teams had there gametimes moved since the last update. This results in two
-        #    orphans. In that scenario, I do not know which is which and thus don't know which one to update.
-        # 2. If there are no orphans, I have no game to update. This scenario should never happen because it should've
-        #    been found via get_game.
-        # Either way, throw an error.
-        orphan_string = orphan_games.collect(&:to_string)
-        fail "Incorrect num of orphans found (#{orphan_games.count} for #{away}@#{home}: #{orphan_string}"
-      end
+
+      # Two scenarios can lead to an error here:
+      # 1. two games between the same two teams had their game times moved since the last update. This results in two
+      #    orphans. In that scenario, I do not know which is which and thus don't know which one to update.
+      # 2. If there are no orphans, I have no game to update. This scenario should never happen because it should've
+      #    been found via get_game.
+      # Either way, raise an error.
+      fail Errors::ZeroOrMultipleOrphansError.new orphan_games, home, away unless orphan_games.count == 1
       orphan_games.first
     end
   end
