@@ -1,5 +1,3 @@
-require 'open-uri'
-
 # module to contain methods related to parsing
 # basketball-reference.com
 module BballRef
@@ -71,12 +69,6 @@ module BballRef
       time = parse_clean_text html, './/td[2]'
       Chronic.time_class = DEFAULT_TZ
       Chronic.parse "#{date} #{time}"
-    end
-
-    def create_team(name, abbr, season)
-      team = Team.find_or_create_by(name: name, abbr: abbr)
-      team.seasons += [season]
-      team
     end
 
     def parse_clean_text(html, xpath_str)
