@@ -6,9 +6,7 @@ module SeasonUpdates
 
     def team(team_hash)
       team = @season.teams.find_by name: team_hash[:name], abbr: team_hash[:abbr]
-      unless team
-        fail "Team(name: #{team_hash[:name]}, abbr: #{team_hash[:abbr]}, season: #{@season.short_name}) does not exist"
-      end
+      fail SeasonUpdates::Errors::NoTeamFoundError.new team_hash, @season unless team
       team
     end
   end
