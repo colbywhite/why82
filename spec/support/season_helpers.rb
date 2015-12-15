@@ -14,7 +14,7 @@ module SeasonHelpers
   # - a season with the given name/short_name
   # - the 30 NBA teams from the 2015 season
   def setup_season(name, short_name)
-    nba = create :league, name: UpdateSeason::LEAGUE_NAME, abbr: UpdateSeason::LEAGUE_ABBR
+    nba = create :league, name: SeasonUpdates::Updater::LEAGUE_NAME, abbr: SeasonUpdates::Updater::LEAGUE_ABBR
     nba2015 = create :season, name: name, short_name: short_name, league: nba
     teams_file = 'spec/resources/2015/teams.json'
     teams = JSON.parse File.read(teams_file), symbolize_names: true

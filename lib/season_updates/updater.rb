@@ -1,4 +1,5 @@
-class UpdateSeason
+module SeasonUpdates
+  class Updater
   include BballRef::Parser
   include BballRef::Utils
   include ICanHazIp
@@ -121,4 +122,5 @@ class UpdateSeason
     game = @season.game_class.find_by(home: home, away: away, time: time)
     game
   end
+end
 end

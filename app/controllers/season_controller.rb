@@ -8,7 +8,7 @@ class SeasonController < ApplicationController
     param! :name, String, required: true
     param! :short_name, String, required: true
 
-    job = UpdateSeason.new params[:name], params[:short_name]
+    job = SeasonUpdates::Updater.new params[:name], params[:short_name]
     Delayed::Job.enqueue job
     head :no_content
   end

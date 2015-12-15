@@ -35,7 +35,7 @@ RSpec.describe SeasonController do
         post :update, short_name: 'test', name: 'TEST'
         expect(Delayed::Job.count).to eq 1
         job = YAML.load Delayed::Job.first.handler
-        expect(job.class).to eq(UpdateSeason)
+        expect(job.class).to eq(SeasonUpdates::Updater)
         expect(job.name).to eq('TEST')
         expect(job.short_name).to eq('test')
       end

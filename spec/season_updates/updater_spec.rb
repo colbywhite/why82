@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe UpdateSeason do
-  subject(:job) { UpdateSeason.new 'Test', '2015' }
+RSpec.describe SeasonUpdates::Updater do
+  subject(:job) { SeasonUpdates::Updater.new 'Test', '2015' }
 
   before :each do
     ActiveRecord::Base.logger.level = 1
