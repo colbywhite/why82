@@ -26,10 +26,9 @@ class UpdateSeason
 
   def update_season
     logger.info "Updating #{LEAGUE_ABBR} season #{@season.short_name}"
-    games = bball_ref_games @season
+    games = third_party_incomplete_games @season
 
-    # TODO: fail if bballref has a  diff amount if incomplete games than i do
-    # TODO: quit when there are no games left
+    # TODO: fail if bballref has a diff amount of incomplete games than the db
     logger.info "Checking #{games.count} of #{@season.incomplete_games.count} incomplete games"
     update_games_in_transaction games
   end

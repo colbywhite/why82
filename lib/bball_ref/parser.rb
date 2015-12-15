@@ -5,12 +5,33 @@ module BballRef
     BASE_URL = 'http://www.basketball-reference.com'
     DEFAULT_TZ = ActiveSupport::TimeZone['Eastern Time (US & Canada)']
 
-    def bball_ref_games(season)
-      # TODO: fail if there are no incomplete games
+    ##
+    # Returns a season worth of incomplete games from a third party. In this case
+    # the third party is BballRef. The games are returned in Hash form.
+    # An example is:
+    # [
+    #   {
+    #     :time=>Thu, 30 Oct 2014 20:00:00 EDT -04:00,
+    #     :away=>{
+    #       :name=>"New York Knicks",
+    #       :abbr=>"NYK",
+    #       :score=>95
+    #     },
+    #     :home=>{
+    #       :name=>"Cleveland Cavaliers",
+    #       :abbr=>"CLE",
+    #       :score=>90
+    #     },
+    #     :extra_time=>""
+    #   },
+    #   ...
+    # ]
+    def third_party_incomplete_games(season)
+      # TODO: return nothing if there are no incomplete games
       start_date = season.incomplete_games.order(:time).first.time.beginning_of_day
       logger.info "Looking for games after #{start_date}"
-      pull_season_html(season.short_name, start_date).collect do |html|
-        parse_game_html html
+      pull_seasons_game_nodes(season.short_name, start_date).collect do |node|
+        game_node_to_hash node
       end
     end
 
@@ -20,7 +41,10 @@ module BballRef
       end
     end
 
-    def pull_season_html(short_name, start_date = nil)
+    ##
+    # Pulls a season's html page and return a Nokogiri::XML::NodeSet where each
+    # Nokogiri::XML::Node represents a game.
+    def pull_seasons_game_nodes(short_name, start_date = nil)
       url = season_url short_name
       if start_date
         date_string = start_date.strftime '%a, %b %d, %Y'
@@ -41,38 +65,39 @@ module BballRef
       name = parse_clean_text html_game, ".//td[#{index}]"
       abbr = html_game.xpath(".//td[#{index}]/a/@href")[0].value.split('/')[2]
       score = parse_clean_text html_game, ".//td[#{index + 1}]"
-      if score.nil? || score.empty?
-        score = nil
-      else
-        score = score.to_i
-      end
+      score = (score.nil? || score.empty?) ? nil : score.to_i
       { name: name, abbr: abbr, score: score }
     end
 
-    def parse_game_html(html)
+    ##
+    # Converts a Nokogiri::XML::Node to a Hash containing the relevant information
+    # representing a Game.
+    def game_node_to_hash(node)
       game_info = {}
 
-      game_info[:time] = parse_time(html)
+      game_info[:time] = parse_time node
 
       # away team's at index 4
-      game_info[:away] = parse_team_info html, 4
+      game_info[:away] = parse_team_info node, 4
       # home team's at index 6
-      game_info[:home] = parse_team_info html, 6
+      game_info[:home] = parse_team_info node, 6
 
-      game_info[:extra_time] = parse_clean_text html, './/td[8]'
+      game_info[:extra_time] = parse_clean_text node, './/td[8]'
       game_info
     end
 
-    def parse_time(html)
+    def parse_time(node)
       # Removes the day of the week from the string (i.e. 'Tue, ')
-      date = parse_clean_text(html, './/td[1]')[5..-1]
-      time = parse_clean_text html, './/td[2]'
+      date = parse_clean_text(node, './/td[1]')[5..-1]
+      time = parse_clean_text node, './/td[2]'
       Chronic.time_class = DEFAULT_TZ
       Chronic.parse "#{date} #{time}"
     end
 
-    def parse_clean_text(html, xpath_str)
-      html.xpath(xpath_str).text.strip.gsub(/\s+/, ' ')
+    ##
+    # Parses text out of a node while striping out redundant whitespace.
+    def parse_clean_text(node, xpath_str)
+      node.xpath(xpath_str).text.strip.gsub(/\s+/, ' ')
     end
   end
 end
