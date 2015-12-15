@@ -27,7 +27,7 @@ module SeasonUpdates
 
       def orphans_to_err_message(orphans, home, away)
         orphan_string = orphans.collect(&:to_string)
-        "Incorrect num of orphans found (#{orphans.count} for #{away}@#{home}: #{orphan_string}"
+        "Incorrect num of orphans found (#{orphans.count} for #{away.name}@#{home.name}: #{orphan_string}"
       end
     end
   end
