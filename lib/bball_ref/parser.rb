@@ -36,9 +36,8 @@ module BballRef
     end
 
     def parse_doc(url)
-      open(url) do |f|
-        Nokogiri::HTML f
-      end
+      html = RestClient.get(url) { |response| response.to_s }
+      Nokogiri::HTML html
     end
 
     ##
