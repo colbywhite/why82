@@ -88,4 +88,32 @@ RSpec.describe SeasonUpdates::Updater do
       end.to raise_error(SeasonUpdates::Errors::NoSeasonFoundError)
     end
   end
+
+  describe '#perform' do
+    before :each do
+      allow(job).to receive(:update_season).and_return(true)
+    end
+
+    context 'when BballRef is down' do
+      before :each do
+        allow(BballRef::Checker).to receive(:check).and_return(false)
+      end
+
+      it 'should not update season' do
+        job.perform
+        expect(job).not_to have_received(:update_season)
+      end
+    end
+
+    context 'when BballRef is up' do
+      before :each do
+        allow(BballRef::Checker).to receive(:check).and_return(true)
+      end
+
+      it 'should update season' do
+        job.perform
+        expect(job).to have_received(:update_season)
+      end
+    end
+  end
 end
