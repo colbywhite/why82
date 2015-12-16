@@ -26,7 +26,7 @@ module SeasonUpdates
 
     def orphaned_match_up(home, away, all_game_info)
       match_ups = @season.games_against home, away
-      orphan_games = match_ups.reject { |m| game_in_bball_ref? m, all_game_info }
+      orphan_games = match_ups.reject { |m| game_in_third_party_list? m, all_game_info }
 
       # Two scenarios can lead to an error here:
       # 1. two games between the same two teams had their game times moved since the last update. This results in two

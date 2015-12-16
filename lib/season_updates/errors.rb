@@ -1,15 +1,15 @@
 module SeasonUpdates
   module Errors
     class NoTeamFoundError < StandardError
-      def initialize(team_hash, season)
-        super "#{team_to_err_message(team_hash)} does not exist for #{season_to_err_message(season)}"
+      def initialize(team_info, season)
+        super "#{team_to_err_message(team_info)} does not exist for #{season_to_err_message(season)}"
       end
 
       private
 
-      def team_to_err_message(team_hash)
-        return 'Team(nil)' if team_hash.nil?
-        "Team(name: #{team_hash[:name]}, abbr: #{team_hash[:abbr]})"
+      def team_to_err_message(team_info)
+        return 'Team(nil)' if team_info.nil?
+        "Team(name: #{team_info[:name]}, abbr: #{team_info[:abbr]})"
       end
 
       def season_to_err_message(season)

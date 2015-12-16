@@ -1,20 +1,18 @@
 module SeasonUpdates
   module Utils
-    def game_in_bball_ref?(game, bball_ref_games)
-      home = game.home
-      away = game.away
-      found = bball_ref_games.select { |g| equals_bball_ref_game? g, home, away, game.time }
+    def game_in_third_party_list?(game, third_party_games)
+      found = third_party_games.select { |g| info_represents_game? g, game }
       !found.empty?
     end
 
-    def equals_bball_ref_game?(bball_ref_game, home, away, gametime)
-      equals_bball_ref_team?(bball_ref_game, home, :home) &&
-        equals_bball_ref_team?(bball_ref_game, away, :away) &&
-        bball_ref_game[:time] == gametime
+    def info_represents_game?(game_info, game)
+      info_contains_team?(game_info, game.home, :home) &&
+        info_contains_team?(game_info, game.away, :away) &&
+        game_info[:time] == game.time
     end
 
-    def equals_bball_ref_team?(bball_ref_game, team, type)
-      bball_ref_game[type][:abbr] == team.abbr && bball_ref_game[type][:name] == team.name
+    def info_contains_team?(game_info, team, team_type)
+      game_info[team_type][:abbr] == team.abbr && game_info[team_type][:name] == team.name
     end
   end
 end
