@@ -43,7 +43,7 @@ npm install bower -g
 Once everything is installed there are a couple rake tasks to seed the database.
 
 ```bash
-bundle exec rake db:migrate nba:seed:2016
+bundle exec rake db:migrate nba:update
 ```
 
 `nba:seed:2016` takes a while to finish. See #31 as to why and the fix that is in the works.
