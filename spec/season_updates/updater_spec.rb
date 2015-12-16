@@ -80,4 +80,12 @@ RSpec.describe SeasonUpdates::Updater do
       seasons.first
     end
   end
+
+  describe '#get_season' do
+    it 'should throw NoSeasonFoundError' do
+      expect do
+        job.get_season 'Not Found', 'NF'
+      end.to raise_error(SeasonUpdates::Errors::NoSeasonFoundError)
+    end
+  end
 end

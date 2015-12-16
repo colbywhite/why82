@@ -72,7 +72,7 @@ module SeasonUpdates
 
     def get_season(name, short_name)
       season = Season.find_by name: name, short_name: short_name, league: @league
-      fail "Season(name: #{name}, short_name: #{short_name}) does not exist" unless season
+      fail Errors::NoSeasonFoundError.new(name, short_name, @league) unless season
       season
     end
 

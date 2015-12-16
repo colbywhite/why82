@@ -30,5 +30,16 @@ module SeasonUpdates
         "Incorrect num of orphans found (#{orphans.count} for #{away.name}@#{home.name}: #{orphan_string}"
       end
     end
+
+    class NoSeasonFoundError < StandardError
+      def initialize(name, short_name, league)
+        super build_msg(name, short_name, league)
+      end
+
+      def build_msg(name, short_name, league)
+        league_str = (league.nil?) ? 'nil' : league.abbr
+        "Season(name: #{name}, short_name: #{short_name}, league: #{league_str}) does not exist"
+      end
+    end
   end
 end
