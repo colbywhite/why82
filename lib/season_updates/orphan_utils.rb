@@ -1,5 +1,5 @@
 module SeasonUpdates
-  module Utils
+  module OrphanUtils
     def game_in_third_party_list?(game, third_party_games)
       found = third_party_games.select { |g| info_represents_game? g, game }
       !found.empty?

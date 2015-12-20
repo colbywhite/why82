@@ -37,7 +37,7 @@ RSpec.describe SeasonUpdates::OrphanUpdater do
       it 'should throw ZeroOrMultipleOrphansError' do
         expect do
           updater.update single_game_info, all_games_info
-        end.to raise_error(SeasonUpdates::Errors::ZeroOrMultipleOrphansError)
+        end.to raise_error(Errors::ZeroOrMultipleOrphansError)
       end
     end
 

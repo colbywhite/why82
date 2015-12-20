@@ -61,4 +61,8 @@ class Season < ActiveRecord::Base
   def last_updated_game
     game_class.order(:updated_at).last
   end
+
+  def status_string
+    "Season(short_name: #{short_name}, games.count: #{games.count}, teams.count: #{teams.count})"
+  end
 end

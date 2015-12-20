@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-RSpec.describe SeasonUpdates::TeamRetriever do
+RSpec.describe Utils::TeamRetriever do
   describe '#team' do
-    let(:retriever) { SeasonUpdates::TeamRetriever.new @season }
+    let(:retriever) { Utils::TeamRetriever.new @season }
 
     before :each do
       @season = setup_2015_season
@@ -12,7 +12,7 @@ RSpec.describe SeasonUpdates::TeamRetriever do
     it 'should throw NoTeamFoundError' do
       expect do
         retriever.team @team
-      end.to raise_error(SeasonUpdates::Errors::NoTeamFoundError)
+      end.to raise_error(Errors::NoTeamFoundError)
     end
   end
 end

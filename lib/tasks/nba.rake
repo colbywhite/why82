@@ -44,4 +44,19 @@ namespace :nba do
 
   task tier: %w(tier:1 tier:2 tier:3)
   task tiers: :tier
+
+  namespace :seed do
+    task '2016': :environment do
+      name = '2015-16 NBA Regular Season'
+      short_name = '2016'
+      SeasonUpdates::Seeder.new(name, short_name).seed
+    end
+    task '2015': :environment do
+      name = '2014-15 NBA Regular Season'
+      short_name = '2015'
+      SeasonUpdates::Seeder.new(name, short_name).seed
+    end
+  end
+
+  task seed: 'nba:seed:2016'
 end

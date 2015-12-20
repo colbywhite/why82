@@ -1,7 +1,6 @@
 module SeasonUpdates
   class OrphanUpdater
-    include SeasonUpdates::SingleGameUpdater
-    include SeasonUpdates::Utils
+    include SeasonUpdates::OrphanUtils
     include AccessRailsLogger
 
     def initialize(season)
@@ -12,13 +11,13 @@ module SeasonUpdates
       home, away = retrieve_teams single_game_info
       orphan_game = orphaned_match_up home, away, all_game_info
       logger.warn "Updating both the score and time for #{orphan_game.to_string}"
-      SeasonUpdates::SingleGameUpdater.update_score_and_time orphan_game, single_game_info
+      SingleGameUpdater.update_score_and_time orphan_game, single_game_info
       orphan_game.reload
       logger.warn "Updated game to: #{orphan_game.to_string}"
     end
 
     def retrieve_teams(game_info)
-      team_retriever = SeasonUpdates::TeamRetriever.new @season
+      team_retriever = Utils::TeamRetriever.new @season
       home = team_retriever.team game_info[:home]
       away = team_retriever.team game_info[:away]
       [home, away]

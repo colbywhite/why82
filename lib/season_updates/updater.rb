@@ -1,7 +1,7 @@
 module SeasonUpdates
   class Updater
     include SeasonUpdates::SingleGameUpdater
-    include BballRef::Parser
+    include BballRef::GameParser
     include ICanHazIp
     include AccessRailsLogger
 
@@ -77,8 +77,8 @@ module SeasonUpdates
     end
 
     def get_game(game_json)
-      home = SeasonUpdates::TeamRetriever.new(@season).team game_json[:home]
-      away = SeasonUpdates::TeamRetriever.new(@season).team game_json[:away]
+      home = Utils::TeamRetriever.new(@season).team game_json[:home]
+      away = Utils::TeamRetriever.new(@season).team game_json[:away]
       time = game_json[:time]
       game = @season.game_class.find_by home: home, away: away, time: time
       game
