@@ -21,7 +21,7 @@ module SeasonUpdates
       if BballRef::Checker.check
         update_season
       else
-        logger.error 'Aborting UpdateSeason since BballRef cannot be reached'
+        logger.error "Aborting #{self.class.name} since BballRef cannot be reached"
       end
     end
 
@@ -77,8 +77,9 @@ module SeasonUpdates
     end
 
     def get_game(game_json)
-      home = Utils::TeamRetriever.new(@season).team game_json[:home]
-      away = Utils::TeamRetriever.new(@season).team game_json[:away]
+      retriever = Utils::TeamRetriever.new(@season)
+      home = retriever.team game_json[:home]
+      away = retriever.team game_json[:away]
       time = game_json[:time]
       game = @season.game_class.find_by home: home, away: away, time: time
       game

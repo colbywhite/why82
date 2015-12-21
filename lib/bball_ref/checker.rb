@@ -12,12 +12,11 @@ module BballRef
       logger.info "Hitting BballRef from #{ip}"
       up = up?
       log_msg = "BballRef::Info.up?: #{up}"
-      if up
-        logger.info log_msg
-      else
-        logger.error log_msg
-      end
+      up ? logger.info(log_msg) : logger.error(log_msg)
       up
+    rescue SocketError => e
+      logger.error "Can not check BballRef #{e.message}"
+      false
     end
 
     def self.check
