@@ -1,7 +1,7 @@
 # module to contain methods related to parsing teams from
 # basketball-reference.com
 module BballRef
-  class TeamParser
+  module TeamParser
     include BballRef::Parser
 
     def team_url(short_name)

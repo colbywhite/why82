@@ -1,6 +1,7 @@
 module SeasonUpdates
   class Seeder
     include BballRef::GameParser
+    include BballRef::TeamParser
     include AccessRailsLogger
 
     attr_reader :name, :short_name, :season, :league
@@ -12,22 +13,35 @@ module SeasonUpdates
                                          abbr: SeasonUpdates::LEAGUE_ABBR
     end
 
+    def safe_seed
+      if BballRef::Checker.check
+        seed
+      else
+        logger.error "Aborting #{self.class.name} since BballRef cannot be reached"
+      end
+    end
+
     def seed
       @season = Season.find_or_create_by name: name, short_name: short_name,
                                          league: league
       logger.info "Seeding #{season.status_string}"
-      seed_season
+      seed_season_in_transaction
       logger.info "Finished seeding #{season.status_string}"
       season
     end
 
+    def seed_season_in_transaction
+      ActiveRecord::Base.transaction do
+        seed_teams if season.teams.count == 0
+        seed_games if season.games.count == 0
+      end
+    end
+
     def seed_season
-      seed_teams if season.teams.count == 0
-      seed_games if season.games.count == 0
     end
 
     def seed_teams
-      teams_info = BballRef::TeamParser.new.third_party_teams season
+      teams_info = third_party_teams season
       logger.info "Found #{teams_info.count} teams for #{season.short_name}"
       teams_info.collect do |t|
         team = Team.find_or_create_by t

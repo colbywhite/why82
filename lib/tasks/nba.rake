@@ -49,12 +49,12 @@ namespace :nba do
     task '2016': :environment do
       name = '2015-16 NBA Regular Season'
       short_name = '2016'
-      SeasonUpdates::Seeder.new(name, short_name).seed
+      SeasonUpdates::Seeder.new(name, short_name).safe_seed
     end
     task '2015': :environment do
       name = '2014-15 NBA Regular Season'
       short_name = '2015'
-      SeasonUpdates::Seeder.new(name, short_name).seed
+      SeasonUpdates::Seeder.new(name, short_name).safe_seed
     end
   end
 
