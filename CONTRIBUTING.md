@@ -38,15 +38,16 @@ bundle install --without production
 npm install bower -g
 ```
 
-## Setup DB
+## Setup Dev DB
 
 Once everything is installed there are a couple rake tasks to seed the database.
 
 ```bash
-bundle exec rake db:migrate nba:update
+bundle exec rake db:create db:migrate nba:seed
 ```
 
-`nba:seed:2016` takes a while to finish. See #31 as to why and the fix that is in the works.
+The above will seed your de db with a season, 30 teams, and 1230 games. For games that have been played
+at that time, scores will added as well. To update scores later run `nba:update`.
 
 ## Run the App
 
@@ -54,7 +55,7 @@ bundle exec rake db:migrate nba:update
 rails server
 ```
 
-That will run the app in dev mode and make it available on [localhost:3000](http://localhost:3000)
+That will run the app in dev mode and make it available on [localhost:3000](http://localhost:3000).
 
 # Extra Notes
 
