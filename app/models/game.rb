@@ -25,4 +25,8 @@ module Game
   def between_any_team(teams)
     where { (home_id >> teams) & (away_id >> teams) }
   end
+
+  def to_string
+    "#{time}: #{away.name} @ #{home.name}"
+  end
 end

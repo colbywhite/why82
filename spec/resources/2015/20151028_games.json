@@ -1,0 +1,288 @@
+[
+  {
+    "time": "2014-10-28T21:30:00.000-05:00",
+    "home": {
+      "name": "Los Angeles Lakers",
+      "abbr": "LAL"
+    },
+    "away": {
+      "name": "Houston Rockets",
+      "abbr": "HOU"
+    }
+  },
+  {
+    "time": "2014-10-28T19:00:00.000-05:00",
+    "home": {
+      "name": "New Orleans Pelicans",
+      "abbr": "NOP"
+    },
+    "away": {
+      "name": "Orlando Magic",
+      "abbr": "ORL"
+    }
+  },
+  {
+    "time": "2014-10-28T19:00:00.000-05:00",
+    "home": {
+      "name": "San Antonio Spurs",
+      "abbr": "SAS"
+    },
+    "away": {
+      "name": "Dallas Mavericks",
+      "abbr": "DAL"
+    }
+  },
+  {
+    "time": "2014-10-29T18:30:00.000-05:00",
+    "home": {
+      "name": "Boston Celtics",
+      "abbr": "BOS"
+    },
+    "away": {
+      "name": "Brooklyn Nets",
+      "abbr": "BRK"
+    }
+  },
+  {
+    "time": "2014-10-29T18:00:00.000-05:00",
+    "home": {
+      "name": "Charlotte Hornets",
+      "abbr": "CHO"
+    },
+    "away": {
+      "name": "Milwaukee Bucks",
+      "abbr": "MIL"
+    }
+  },
+  {
+    "time": "2014-10-29T20:00:00.000-05:00",
+    "home": {
+      "name": "Denver Nuggets",
+      "abbr": "DEN"
+    },
+    "away": {
+      "name": "Detroit Pistons",
+      "abbr": "DET"
+    }
+  },
+  {
+    "time": "2014-10-29T18:00:00.000-05:00",
+    "home": {
+      "name": "Indiana Pacers",
+      "abbr": "IND"
+    },
+    "away": {
+      "name": "Philadelphia 76ers",
+      "abbr": "PHI"
+    }
+  },
+  {
+    "time": "2014-10-29T19:00:00.000-05:00",
+    "home": {
+      "name": "Memphis Grizzlies",
+      "abbr": "MEM"
+    },
+    "away": {
+      "name": "Minnesota Timberwolves",
+      "abbr": "MIN"
+    }
+  },
+  {
+    "time": "2014-10-29T18:30:00.000-05:00",
+    "home": {
+      "name": "Miami Heat",
+      "abbr": "MIA"
+    },
+    "away": {
+      "name": "Washington Wizards",
+      "abbr": "WAS"
+    }
+  },
+  {
+    "time": "2014-10-29T19:00:00.000-05:00",
+    "home": {
+      "name": "New York Knicks",
+      "abbr": "NYK"
+    },
+    "away": {
+      "name": "Chicago Bulls",
+      "abbr": "CHI"
+    }
+  },
+  {
+    "time": "2014-10-29T21:00:00.000-05:00",
+    "home": {
+      "name": "Phoenix Suns",
+      "abbr": "PHO"
+    },
+    "away": {
+      "name": "Los Angeles Lakers",
+      "abbr": "LAL"
+    }
+  },
+  {
+    "time": "2014-10-29T21:30:00.000-05:00",
+    "home": {
+      "name": "Portland Trail Blazers",
+      "abbr": "POR"
+    },
+    "away": {
+      "name": "Oklahoma City Thunder",
+      "abbr": "OKC"
+    }
+  },
+  {
+    "time": "2014-10-29T21:00:00.000-05:00",
+    "home": {
+      "name": "Sacramento Kings",
+      "abbr": "SAC"
+    },
+    "away": {
+      "name": "Golden State Warriors",
+      "abbr": "GSW"
+    }
+  },
+  {
+    "time": "2014-10-29T18:30:00.000-05:00",
+    "home": {
+      "name": "Toronto Raptors",
+      "abbr": "TOR"
+    },
+    "away": {
+      "name": "Atlanta Hawks",
+      "abbr": "ATL"
+    }
+  },
+  {
+    "time": "2014-10-29T20:00:00.000-05:00",
+    "home": {
+      "name": "Utah Jazz",
+      "abbr": "UTA"
+    },
+    "away": {
+      "name": "Houston Rockets",
+      "abbr": "HOU"
+    }
+  },
+  {
+    "time": "2014-10-30T19:00:00.000-05:00",
+    "home": {
+      "name": "Cleveland Cavaliers",
+      "abbr": "CLE"
+    },
+    "away": {
+      "name": "New York Knicks",
+      "abbr": "NYK"
+    }
+  },
+  {
+    "time": "2014-10-30T19:30:00.000-05:00",
+    "home": {
+      "name": "Dallas Mavericks",
+      "abbr": "DAL"
+    },
+    "away": {
+      "name": "Utah Jazz",
+      "abbr": "UTA"
+    }
+  },
+  {
+    "time": "2014-10-30T21:30:00.000-05:00",
+    "home": {
+      "name": "Los Angeles Clippers",
+      "abbr": "LAC"
+    },
+    "away": {
+      "name": "Oklahoma City Thunder",
+      "abbr": "OKC"
+    }
+  },
+  {
+    "time": "2014-10-30T19:00:00.000-05:00",
+    "home": {
+      "name": "Minnesota Timberwolves",
+      "abbr": "MIN"
+    },
+    "away": {
+      "name": "Detroit Pistons",
+      "abbr": "DET"
+    }
+  },
+  {
+    "time": "2014-10-30T18:00:00.000-05:00",
+    "home": {
+      "name": "Orlando Magic",
+      "abbr": "ORL"
+    },
+    "away": {
+      "name": "Washington Wizards",
+      "abbr": "WAS"
+    }
+  },
+  {
+    "time": "2014-10-31T19:00:00.000-05:00",
+    "home": {
+      "name": "Chicago Bulls",
+      "abbr": "CHI"
+    },
+    "away": {
+      "name": "Cleveland Cavaliers",
+      "abbr": "CLE"
+    }
+  },
+  {
+    "time": "2014-10-31T18:00:00.000-05:00",
+    "home": {
+      "name": "Indiana Pacers",
+      "abbr": "IND"
+    },
+    "away": {
+      "name": "Memphis Grizzlies",
+      "abbr": "MEM"
+    }
+  },
+  {
+    "time": "2014-10-31T21:30:00.000-05:00",
+    "home": {
+      "name": "Los Angeles Lakers",
+      "abbr": "LAL"
+    },
+    "away": {
+      "name": "Los Angeles Clippers",
+      "abbr": "LAC"
+    }
+  },
+  {
+    "time": "2014-10-31T19:30:00.000-05:00",
+    "home": {
+      "name": "Milwaukee Bucks",
+      "abbr": "MIL"
+    },
+    "away": {
+      "name": "Philadelphia 76ers",
+      "abbr": "PHI"
+    }
+  },
+  {
+    "time": "2014-10-31T21:00:00.000-05:00",
+    "home": {
+      "name": "Phoenix Suns",
+      "abbr": "PHO"
+    },
+    "away": {
+      "name": "San Antonio Spurs",
+      "abbr": "SAS"
+    }
+  },
+  {
+    "time": "2014-10-31T21:00:00.000-05:00",
+    "home": {
+      "name": "Sacramento Kings",
+      "abbr": "SAC"
+    },
+    "away": {
+      "name": "Portland Trail Blazers",
+      "abbr": "POR"
+    }
+  }
+]

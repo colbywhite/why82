@@ -1,10 +1,8 @@
 module BballRef
   module Info
-    ROOT = 'http://www.basketball-reference.com'
-
     # rubocop:disable SymbolProc
     def self.status
-      RestClient.get(ROOT) { |response| response.code }
+      RestClient.get(BballRef::BASE_URL) { |response| response.code }
     end
     # rubocop:enable SymbolProc
 

@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Atlanta Hawks",
+    "abbr": "ATL"
+  },
+  {
+    "name": "Detroit Pistons",
+    "abbr": "DET"
+  },
+  {
+    "name": "Chicago Bulls",
+    "abbr": "CHI"
+  },
+  {
+    "name": "Cleveland Cavaliers",
+    "abbr": "CLE"
+  },
+  {
+    "name": "Golden State Warriors",
+    "abbr": "GSW"
+  },
+  {
+    "name": "New Orleans Pelicans",
+    "abbr": "NOP"
+  },
+  {
+    "name": "Boston Celtics",
+    "abbr": "BOS"
+  },
+  {
+    "name": "Philadelphia 76ers",
+    "abbr": "PHI"
+  },
+  {
+    "name": "Brooklyn Nets",
+    "abbr": "BRK"
+  },
+  {
+    "name": "Utah Jazz",
+    "abbr": "UTA"
+  },
+  {
+    "name": "Houston Rockets",
+    "abbr": "HOU"
+  },
+  {
+    "name": "Denver Nuggets",
+    "abbr": "DEN"
+  },
+  {
+    "name": "Los Angeles Lakers",
+    "abbr": "LAL"
+  },
+  {
+    "name": "Minnesota Timberwolves",
+    "abbr": "MIN"
+  },
+  {
+    "name": "Memphis Grizzlies",
+    "abbr": "MEM"
+  },
+  {
+    "name": "Miami Heat",
+    "abbr": "MIA"
+  },
+  {
+    "name": "Charlotte Hornets",
+    "abbr": "CHO"
+  },
+  {
+    "name": "Milwaukee Bucks",
+    "abbr": "MIL"
+  },
+  {
+    "name": "New York Knicks",
+    "abbr": "NYK"
+  },
+  {
+    "name": "Oklahoma City Thunder",
+    "abbr": "OKC"
+  },
+  {
+    "name": "San Antonio Spurs",
+    "abbr": "SAS"
+  },
+  {
+    "name": "Orlando Magic",
+    "abbr": "ORL"
+  },
+  {
+    "name": "Washington Wizards",
+    "abbr": "WAS"
+  },
+  {
+    "name": "Phoenix Suns",
+    "abbr": "PHO"
+  },
+  {
+    "name": "Dallas Mavericks",
+    "abbr": "DAL"
+  },
+  {
+    "name": "Portland Trail Blazers",
+    "abbr": "POR"
+  },
+  {
+    "name": "Sacramento Kings",
+    "abbr": "SAC"
+  },
+  {
+    "name": "Los Angeles Clippers",
+    "abbr": "LAC"
+  },
+  {
+    "name": "Toronto Raptors",
+    "abbr": "TOR"
+  },
+  {
+    "name": "Indiana Pacers",
+    "abbr": "IND"
+  }
+]

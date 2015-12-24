@@ -56,21 +56,9 @@ RSpec.describe Team do
   end
 
   describe '#logo' do
-    subject(:job) { UpdateSeason.new 'Reg', '2015' }
-
     before :each do
-      # parse a month of the season so we can make assertions on the
-      # teams created as a result
-      allow(job).to receive(:season_url) do |season|
-        "spec/resources/#{season.short_name}_one_incomplete_month.json"
-      end
-      allow(job).to receive(:pull_season_json) do |season|
-        url = job.season_url season
-        JSON.parse(File.read(url))['games']
-      end
-      @season = create(:season, short_name: '2015')
-      Chronic.time_class = Time.find_zone('Eastern Time (US & Canada)')
-      job.process_season 'Test', '2015'
+      # add the 30 relevant teams so we can assert we have logos for every one
+      setup_2015_season
     end
 
     it 'should be present for every team' do

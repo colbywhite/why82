@@ -26,6 +26,7 @@ gem 'rails_param'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'newrelic_rpm'
+gem 'nokogiri', '~>1.6'
 
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do
