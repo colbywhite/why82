@@ -44,9 +44,6 @@ Rails.application.configure do
   config.active_job.queue_adapter = :test
   config.max_games_in_season = 26
 
-  # Ensures we are actually using the API in tests
-  config.parsehub_api_key = nil
-
   # set both to .25 second interval and 1 second timeout
   # to make the tests quick
   config.initial_poll_interval = 0.25
