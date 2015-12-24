@@ -34,26 +34,22 @@ module BballRef
     end
 
     def third_party_games(season)
-      third_party_games_from_date season
+      pull_seasons_game_nodes(season.short_name).map(&method(:game_node_to_hash))
     end
 
-    def third_party_games_from_date(season, start_date = nil)
-      pull_seasons_game_nodes(season.short_name, start_date).map(&method(:game_node_to_hash))
+    def third_party_games_from_date(season, start_date)
+      all_games = third_party_games season
+      all_games.find_all do |game|
+        game[:time] >= start_date
+      end
     end
 
     ##
     # Pulls a season's html page and return a Nokogiri::XML::NodeSet where each
-    # Nokogiri::XML::Node represents a game.
-    def pull_seasons_game_nodes(short_name, start_date = nil)
+    # Nokogiri::XML::Element represents a game.
+    def pull_seasons_game_nodes(short_name)
       url = season_url short_name
-      if start_date
-        date_string = start_date.strftime '%a, %b %d, %Y'
-        # rubocop:disable Metrics/LineLength
-        xpath = "//table[@id='games']/tbody/tr[not(.//th) and ./td[contains(.,'#{date_string}')]][1]/preceding-sibling::tr[1]/following-sibling::tr[not(.//th)]"
-        # rubocop:enable Metrics/LineLength
-      else
-        xpath = "//table[@id='games']/tbody/tr[not(.//th)]"
-      end
+      xpath = "//table[@id='games']/tbody/tr[not(.//th)]"
       parse_doc(url).xpath xpath
     end
 
