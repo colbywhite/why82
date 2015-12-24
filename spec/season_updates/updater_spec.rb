@@ -14,7 +14,7 @@ RSpec.describe SeasonUpdates::Updater do
   end
 
   describe '#update_season' do
-    context 'starting with incomplete games' do
+    context 'starting with some incomplete games' do
       before :each do
         setup_oct_29_2015_games @nba2015
         allow(job).to(receive(:season_url)) { 'spec/resources/2015/20151030_games.html' }
@@ -55,6 +55,22 @@ RSpec.describe SeasonUpdates::Updater do
       end
     end
 
+    context 'starting with all incomplete games' do
+      before :each do
+        setup_oct_28_2015_games @nba2015
+        allow(job).to(receive(:season_url)) { 'spec/resources/2015/20151030_games.html' }
+      end
+
+      it 'should update completed games' do
+        job.update_season
+        season = get_season '2015', 'Test'
+        expect(season.games.count).to eq(26)
+        expect(season.incomplete_games.count).to eq(6)
+        expect(season.complete_games.count).to eq(20)
+        expect(season.teams.count).to eq(30)
+      end
+    end
+
     context 'when a gametime changes' do
       before :each do
         setup_oct_29_2015_games @nba2015
@@ -82,10 +98,12 @@ RSpec.describe SeasonUpdates::Updater do
   end
 
   describe '#get_season' do
-    it 'should throw NoSeasonFoundError' do
-      expect do
-        job.get_season 'Not Found', 'NF'
-      end.to raise_error(Errors::NoSeasonFoundError)
+    context 'when no valid season exists' do
+      it 'should throw NoSeasonFoundError' do
+        expect do
+          job.get_season 'Not Found', 'NF'
+        end.to raise_error(Errors::NoSeasonFoundError)
+      end
     end
   end
 

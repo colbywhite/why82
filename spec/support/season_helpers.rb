@@ -26,8 +26,17 @@ module SeasonHelpers
   # This sets up the db as if the 2015-10-29 games were just played.
   # This means all Oct. games have been played except for the last two days.
   def setup_oct_29_2015_games(nba2015 = nil)
+    setup_2015_season_with_games 'spec/resources/2015/20151029_games.json', nba2015
+  end
+
+  ##
+  # This sets up the db as if it was 2015-10-28 and no games have been played.
+  def setup_oct_28_2015_games(nba2015 = nil)
+    setup_2015_season_with_games 'spec/resources/2015/20151028_games.json', nba2015
+  end
+
+  def setup_2015_season_with_games(games_file, nba2015 = nil)
     nba2015 = setup_2015_season unless nba2015
-    games_file = 'spec/resources/2015/20151029_games.json'
     games = JSON.parse File.read(games_file), symbolize_names: true
     games.each do |game|
       game[:home] = nba2015.teams.find_by game[:home]
