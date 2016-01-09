@@ -26,8 +26,20 @@ controllers.controller("GameInfoController", ['$scope', '$rootScope', '$location
       ]
       $scope.infoLoading = false
 
-    getInfo = () ->
-      Game.info({season: '2016'}, resultCallback)
+    getInfo = (date = null) ->
+      Game.info({season: '2016', start_date: date}, resultCallback)
+
+    # TODO: Remove hardcoded dates and determine the next week's dates
+    $scope.next_weeks_days = [
+      new Date(2015, 11, 29), # Dec 29, js months start at 0
+      new Date(2015, 11, 30)  # Dec 30, js months start at 0
+    ]
+
+    $scope.loadDate = (date) ->
+      $scope.infoLoading = true
+      # TODO: Replace toISOString with something that is more timezone aware, i.e. momentjs
+      getInfo(date.toISOString())
+
 
     setTimeout(getInfo, 100)
 ])

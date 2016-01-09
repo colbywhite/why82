@@ -16,10 +16,14 @@
             <ul>
                 <!-- TODO: replace these with ng-repeat -->
                 <li>
-                    <button>Tues, Dec 29</button>
+                    <button ng-click="loadDate(next_weeks_days[0])">
+                        {{ simpleDate(next_weeks_days[0]) }}
+                    </button>
                 </li>
                 <li>
-                    <button>Wed, Dec 30</button>
+                    <button ng-click="loadDate(next_weeks_days[1])">
+                        {{ simpleDate(next_weeks_days[1]) }}
+                    </button>
                 </li>
                 <li>
                     <button>Wed, Dec 30</button>
