@@ -1,0 +1,13 @@
+default: &defaults
+  metrics:
+    - name: TeamFilter::Record
+      weight: 20
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
