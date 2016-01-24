@@ -40,7 +40,7 @@ module Metrics
     end
 
     def get_teams_tier(tiers, team)
-      tiers.select { |_key, value| value.include? team.id }.keys.first.to_i
+      tiers.select { |_key, value| value.include? team }.keys.first.to_i
     end
   end
 end

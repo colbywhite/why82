@@ -15,10 +15,6 @@ module Metrics
 
     private
 
-    def default_collector
-      :id
-    end
-
     def total_games_equals(num_gams)
       season.teams.select { |t| t.games(season).count(:all) == num_gams }
     end

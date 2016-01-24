@@ -14,7 +14,7 @@ class GamesController < ApplicationController
   end
 
   def build_tier_info
-    Metrics::OverallRecord.new(@season, :team).named_tiers
+    Metrics::OverallRecord.new(@season).named_tiers
   end
 
   def get_ids_from_tier_info(tiers)

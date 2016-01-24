@@ -15,10 +15,6 @@ module Metrics
 
     private
 
-    def default_collector
-      :id
-    end
-
     def teams_with_num_wins(num_wins)
       season.teams.select { |t| t.record(season).wins == num_wins }
     end
