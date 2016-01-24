@@ -63,5 +63,9 @@ RSpec.describe Metrics::Calculator do
     it 'should sort result by values' do
       expect(@calculator.calculate_tiers.values).to be_monotonically_increasing
     end
+
+    it 'should calculate only valid tier averages' do
+      expect(@calculator.calculate_tiers.values).to only_contain_values_between(1.0, 3.0)
+    end
   end
 end
