@@ -13,7 +13,7 @@ module Metrics
     def metric_configs
       Calculator.weight_config.collect do |metric_config|
         metric_class = Object.const_get(metric_config['name'])
-        { tiers: metric_class.named_tiers(season),
+        { tiers: metric_class.new(season).named_tiers,
           weight: metric_config['weight'],
           metric: metric_class
         }

@@ -5,12 +5,16 @@ class GamesController < ApplicationController
     @season = params[:season]
     start_date = params[:start_date]
     end_date = params[:end_date]
-    @tier_info = Metrics::OverallRecord.named_tiers @season, :team
+    @tier_info = build_tier_info
 
     tier_ids = get_ids_from_tier_info @tier_info
 
     @a_games, @b_games, @c_games, @d_games = get_graded_games @season, start_date, end_date, tier_ids
     render_graded_games
+  end
+
+  def build_tier_info
+    Metrics::OverallRecord.new(@season, :team).named_tiers
   end
 
   def get_ids_from_tier_info(tiers)
