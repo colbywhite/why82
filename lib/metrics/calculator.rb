@@ -23,7 +23,7 @@ module Metrics
     def calculate_tiers
       metrics = metric_configs
       total_weight = metrics.sum { |m| m[:weight] }
-      calculate_averages metrics, total_weight
+      calculate_averages(metrics, total_weight).sort_by { |_k, v| v }.to_h
     end
 
     def calculate_averages(metrics, total_weight)

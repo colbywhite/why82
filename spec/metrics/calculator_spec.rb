@@ -59,5 +59,9 @@ RSpec.describe Metrics::Calculator do
     it 'should calculate tiers for all 30 teams' do
       expect(@calculator.calculate_tiers.count).to eq(30)
     end
+
+    it 'should sort result by values' do
+      expect(@calculator.calculate_tiers.values).to be_monotonically_increasing
+    end
   end
 end
