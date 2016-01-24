@@ -1,6 +1,6 @@
 default: &defaults
   metrics:
-    - name: TeamFilter::Record
+    - name: Metrics::OverallRecord
       weight: 20
 
 development:

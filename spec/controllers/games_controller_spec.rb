@@ -12,23 +12,23 @@ RSpec.describe GamesController do
       @first_tier_1 = create(:team, name: 'First Tier 1')
       give_team_record @game_table, @first_tier_1, 1, 1
       @second_tier_1 = create(:team, name: 'Second Tier 1')
-      give_team_record @game_table, @second_tier_1, 10, TeamFilter::Record::TIER_ONE_CUTOFF
+      give_team_record @game_table, @second_tier_1, 10, Metrics::OverallRecord::TIER_ONE_CUTOFF
 
       @first_tier_2 = create(:team, name: 'First Tier 2')
       # halfway between tier two and tier one
-      halfway_percentage = TeamFilter::Record::TIER_TWO_CUTOFF +
-                           ((TeamFilter::Record::TIER_ONE_CUTOFF - TeamFilter::Record::TIER_TWO_CUTOFF) / 2)
+      halfway_percentage = Metrics::OverallRecord::TIER_TWO_CUTOFF +
+                           ((Metrics::OverallRecord::TIER_ONE_CUTOFF - Metrics::OverallRecord::TIER_TWO_CUTOFF) / 2)
       give_team_record @game_table, @first_tier_2, 10, halfway_percentage
       @second_tier_2 = create(:team, name: 'Second Tier 2')
-      give_team_record @game_table, @second_tier_2, 10, TeamFilter::Record::TIER_TWO_CUTOFF
+      give_team_record @game_table, @second_tier_2, 10, Metrics::OverallRecord::TIER_TWO_CUTOFF
 
       @first_tier_3 = create(:team, name: 'First Tier 3')
       # halfway between tier one and 0
-      halfway_percentage = TeamFilter::Record::TIER_ONE_CUTOFF / 2
+      halfway_percentage = Metrics::OverallRecord::TIER_ONE_CUTOFF / 2
       give_team_record @game_table, @first_tier_3, 10, halfway_percentage
       @second_tier_3 = create(:team, name: 'Second Tier 3')
       # a third of the way between 0 and
-      third_percentage = TeamFilter::Record::TIER_ONE_CUTOFF / 3
+      third_percentage = Metrics::OverallRecord::TIER_ONE_CUTOFF / 3
       give_team_record @game_table, @second_tier_3, 10, third_percentage
 
       @game_date = Time.zone.local 2014, 12, 2, 19, 0, 0

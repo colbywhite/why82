@@ -1,5 +1,5 @@
-module TeamFilter
-  module Record
+module Metrics
+  module OverallRecord
     TIER_ONE_CUTOFF = 0.65
     TIER_TWO_CUTOFF = 0.55
 
