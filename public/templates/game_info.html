@@ -12,6 +12,16 @@
             <small>All times in {{ getTimeZone(params.start_date) }}</small>
         </h3>
 
+        <div class="date-strip">
+            <ul>
+                <li ng-repeat="date in next_weeks_days">
+                    <button ng-click="loadDate(date)">
+                        {{ simpleDate(date) }}
+                    </button>
+                </li>
+            </ul>
+        </div>
+
         <div ng-repeat="grade in grades" class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">

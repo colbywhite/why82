@@ -3,12 +3,16 @@ controllers = angular.module('controllers')
 controllers.controller("GameInfoController", ['$scope', '$rootScope', '$location', '$routeParams', 'Game'
   ($scope, $rootScope, $location, $routeParams, Game)->
     $scope.simpleTime = (timeStr, shortFormat = true) ->
-      LocalTime.strftime(new Date(timeStr), '%H:%M')
+      moment(timeStr, moment.ISO_8601).format('H:mm')
 
     $scope.simpleDate = (timeStr) ->
-      LocalTime.strftime(new Date(timeStr), '%a, %b %d')
+      moment(timeStr, moment.ISO_8601).format('ddd, MMM D')
 
     $scope.getTimeZone = (timeStr) ->
+      # LocalTime can go from a "-05:00" timezone to "CST" (or "CDT")
+      # but moment cannot.
+      # The reason is the diff between moment#toString and Date#toString.
+      # So we'll use LocalTime here.
       LocalTime.strftime(new Date(timeStr), '%Z')
 
     $scope.infoLoading = true
@@ -26,8 +30,25 @@ controllers.controller("GameInfoController", ['$scope', '$rootScope', '$location
       ]
       $scope.infoLoading = false
 
-    getInfo = () ->
-      Game.info({season: '2016'}, resultCallback)
+    getInfo = (date = null) ->
+      Game.info({season: '2016', start_date: date}, resultCallback)
+
+    # TODO: Make array size dynamic
+    $scope.next_weeks_days = [
+      moment(),
+      moment().add(1, 'days'),
+      moment().add(2, 'days'),
+      moment().add(3, 'days'),
+      moment().add(4, 'days'),
+      moment().add(5, 'days'),
+      moment().add(6, 'days')
+    ]
+
+    $scope.loadDate = (date) ->
+      $scope.infoLoading = true
+      iso8601_string = moment(date).format()
+      getInfo(iso8601_string)
+
 
     setTimeout(getInfo, 100)
 ])

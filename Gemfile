@@ -27,6 +27,8 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'newrelic_rpm'
 gem 'nokogiri', '~>1.6'
+gem 'momentjs-rails'
+gem 'moment_timezone-rails', github: 'viclim/moment_timezone-rails', ref: 'ff37aad2571d4390b236c3762018680645946bb2'
 
 gem 'sqlite3', group: [:development, :test]
 group :development, :test do
