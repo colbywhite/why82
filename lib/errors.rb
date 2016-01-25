@@ -37,7 +37,9 @@ module Errors
 
     def build_msg(name, short_name, league)
       league_str = (league.nil?) ? 'nil' : league.abbr
-      "Season(name: #{name}, short_name: #{short_name}, league: #{league_str}) does not exist"
+      name_str = name || 'nil'
+      short_name_str = short_name || 'nil'
+      "Season(name: #{name_str}, short_name: #{short_name_str}, league: #{league_str}) does not exist"
     end
   end
 end
