@@ -1,5 +1,8 @@
 module Metrics
   class Calculator
+    OVERALL_TIER_ONE_MAX = 5.0 / 3 # 1.666
+    OVERALL_TIER_TWO_MAX = 7.0 / 3 # 2.333
+
     attr_reader :season
 
     def initialize(season)
@@ -20,13 +23,20 @@ module Metrics
       end
     end
 
-    def calculate_tiers
-      metrics = metric_configs
-      total_weight = metrics.sum { |m| m[:weight] }
-      calculate_averages(metrics, total_weight).sort_by { |_k, v| v }.to_h
+    # @return an Array of size three. Each element is an Array of Team. The first element is the teams with an overall
+    # tier of 1, the second have an overall of 2, etc, etc.
+    def overall_tiers
+      averages = calculate_averages
+      overall = []
+      overall.push averages.select { |_k, v| v <= OVERALL_TIER_ONE_MAX }.keys
+      overall.push averages.select { |_k, v| v > OVERALL_TIER_ONE_MAX && v <= OVERALL_TIER_TWO_MAX }.keys
+      overall.push averages.select { |_k, v| v > OVERALL_TIER_TWO_MAX }.keys
+      overall
     end
 
-    def calculate_averages(metrics, total_weight)
+    # @return a Hash where the keys are Team and the values are decimal averages for a team based on the given metrics
+    def calculate_averages
+      metrics, total_weight = calculate_metrics
       teams = season.teams
       averages = teams.collect do |team|
         # for each metric, find which tier the team is and add it to the sum
@@ -37,6 +47,12 @@ module Metrics
         1.0 * sum / total_weight
       end
       Hash[teams.zip averages]
+    end
+
+    def calculate_metrics
+      metrics = metric_configs
+      total_weight = metrics.sum { |m| m[:weight] }
+      [metrics, total_weight]
     end
 
     def get_teams_tier(tiers, team)
