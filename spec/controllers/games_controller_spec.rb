@@ -14,11 +14,15 @@ RSpec.describe GamesController do
   end
 
   describe 'GET #info' do
+    def body
+      get :info, start_date: @game_date.iso8601, season: @season.short_name, format: :json
+      expect(response.status).to eq(200)
+      JSON.parse(response.body)
+    end
+
     context 'game grades' do
       def games
-        get :info, start_date: @game_date.iso8601, season: @season.short_name, format: :json
-        expect(response.status).to eq(200)
-        JSON.parse(response.body)['games']
+        body['games']
       end
 
       it 'should correctly grade \'A\' games' do
@@ -54,7 +58,37 @@ RSpec.describe GamesController do
     end
 
     context 'team tiers' do
-      it 'should correctly tier the teams'
+      def teams
+        body['teams']
+      end
+
+      before :each do
+        # let's make the tiers dead simple to ease the assertions
+        allow(controller).to receive(:overall_tiers) do
+          tier_one = teams_with_abbr %w(NYK)
+          tier_two = teams_with_abbr %w(DAL)
+          tier_three = teams_with_abbr %w(WAS)
+          [tier_one, tier_two, tier_three]
+        end
+      end
+
+      it 'should correctly id tier 1' do
+        tier = teams.first
+        expect(tier.count).to eq(1)
+        expect(tier.first['abbr']).to eq('NYK')
+      end
+
+      it 'should correctly id tier 2' do
+        tier = teams.second
+        expect(tier.count).to eq(1)
+        expect(tier.first['abbr']).to eq('DAL')
+      end
+
+      it 'should correctly id tier 3' do
+        tier = teams.third
+        expect(tier.count).to eq(1)
+        expect(tier.first['abbr']).to eq('WAS')
+      end
     end
   end
 end
