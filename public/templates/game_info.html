@@ -14,37 +14,10 @@
 
         <div class="date-strip">
             <ul>
-                <!-- TODO: replace these with ng-repeat -->
-                <li>
-                    <button ng-click="loadDate(next_weeks_days[0])">
-                        {{ simpleDate(next_weeks_days[0]) }}
+                <li ng-repeat="date in next_weeks_days">
+                    <button ng-click="loadDate(date)">
+                        {{ simpleDate(date) }}
                     </button>
-                </li>
-                <li>
-                    <button ng-click="loadDate(next_weeks_days[1])">
-                        {{ simpleDate(next_weeks_days[1]) }}
-                    </button>
-                </li>
-                <li>
-                    <button>Wed, Dec 30</button>
-                </li>
-                <li>
-                    <button>Wed, Dec 30</button>
-                </li>
-                <li>
-                    <button>Wed, Dec 30</button>
-                </li>
-                <li>
-                    <button>Wed, Dec 30</button>
-                </li>
-                <li>
-                    <button>Wed, Dec 30</button>
-                </li>
-                <li>
-                    <button>Wed, Dec 30</button>
-                </li>
-                <li>
-                    <button>Wed, Dec 30</button>
                 </li>
             </ul>
         </div>

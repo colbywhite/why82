@@ -33,10 +33,15 @@ controllers.controller("GameInfoController", ['$scope', '$rootScope', '$location
     getInfo = (date = null) ->
       Game.info({season: '2016', start_date: date}, resultCallback)
 
-    # TODO: Remove hardcoded dates and determine the next week's dates
+    # TODO: Make array size dynamic
     $scope.next_weeks_days = [
-      moment({y: 2015, M: 11, d: 29}), # Dec 29, js months start at 0
-      moment({y: 2015, M: 11, d: 30}), # Dec 30, js months start at 0
+      moment(),
+      moment().add(1, 'days'),
+      moment().add(2, 'days'),
+      moment().add(3, 'days'),
+      moment().add(4, 'days'),
+      moment().add(5, 'days'),
+      moment().add(6, 'days')
     ]
 
     $scope.loadDate = (date) ->
