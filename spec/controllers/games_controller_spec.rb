@@ -14,43 +14,47 @@ RSpec.describe GamesController do
   end
 
   describe 'GET #info' do
-    def games
-      get :info, start_date: @game_date.iso8601, season: @season.short_name, format: :json
-      expect(response.status).to eq(200)
-      JSON.parse(response.body)['games']
+    context 'game grades' do
+      def games
+        get :info, start_date: @game_date.iso8601, season: @season.short_name, format: :json
+        expect(response.status).to eq(200)
+        JSON.parse(response.body)['games']
+      end
+
+      it 'should correctly grade \'A\' games' do
+        a_games = games['a']
+        expect(a_games.size).to eq(1)
+        expect(a_games.first['home']['abbr']).to eq('CLE')
+        expect(a_games.first['away']['abbr']).to eq('NYK')
+      end
+
+      it 'should correctly grade \'B\' games' do
+        b_games = games['b']
+        expect(b_games.size).to eq(1)
+        expect(b_games.first['home']['abbr']).to eq('DAL')
+        expect(b_games.first['away']['abbr']).to eq('UTA')
+      end
+
+      it 'should correctly grade \'C\' games' do
+        c_games = games['c']
+        expect(c_games.size).to eq(1)
+        expect(c_games.first['home']['abbr']).to eq('LAC')
+        expect(c_games.first['away']['abbr']).to eq('OKC')
+      end
+
+      it 'should correctly grade \'D\' games' do
+        # the sort is to make the later assertion easier
+        d_games = games['d'].sort_by { |g| g['home']['abbr'] }
+        expect(d_games.size).to eq(2)
+        expect(d_games.first['home']['abbr']).to eq('MIN')
+        expect(d_games.first['away']['abbr']).to eq('DET')
+        expect(d_games.second['home']['abbr']).to eq('ORL')
+        expect(d_games.second['away']['abbr']).to eq('WAS')
+      end
     end
 
-    it 'should correctly return \'A\' games' do
-      a_games = games['a']
-      expect(a_games.size).to eq(1)
-      expect(a_games.first['home']['abbr']).to eq('CLE')
-      expect(a_games.first['away']['abbr']).to eq('NYK')
+    context 'team tiers' do
+      it 'should correctly tier the teams'
     end
-
-    it 'should correctly return \'B\' games' do
-      b_games = games['b']
-      expect(b_games.size).to eq(1)
-      expect(b_games.first['home']['abbr']).to eq('DAL')
-      expect(b_games.first['away']['abbr']).to eq('UTA')
-    end
-
-    it 'should correctly return \'C\' games' do
-      c_games = games['c']
-      expect(c_games.size).to eq(1)
-      expect(c_games.first['home']['abbr']).to eq('LAC')
-      expect(c_games.first['away']['abbr']).to eq('OKC')
-    end
-
-    it 'should correctly return \'D\' games' do
-      # the sort is to make the later assertion easier
-      d_games = games['d'].sort_by { |g| g['home']['abbr'] }
-      expect(d_games.size).to eq(2)
-      expect(d_games.first['home']['abbr']).to eq('MIN')
-      expect(d_games.first['away']['abbr']).to eq('DET')
-      expect(d_games.second['home']['abbr']).to eq('ORL')
-      expect(d_games.second['away']['abbr']).to eq('WAS')
-    end
-
-    it 'should return teams based on tiers'
   end
 end
