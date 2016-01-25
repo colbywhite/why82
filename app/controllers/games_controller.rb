@@ -41,7 +41,7 @@ class GamesController < ApplicationController
 
   def validate_info_params
     param! :season, String,
-           required: true, transform: ->(sn) { Season.find_by(short_name: sn) }
+           required: true, transform: ->(sn) { find_season sn }
     param! :start_date, DateTime,
            required: true, transform: :beginning_of_day,
            default: -> { Time.zone.now }
@@ -53,6 +53,12 @@ class GamesController < ApplicationController
     { current: collection.current_page, per_page: collection.per_page,
       total: collection.total_entries
     }
+  end
+
+  def find_season(short_name)
+    season = Season.find_by short_name: short_name
+    fail Errors::NoSeasonFoundError.new(nil, short_name, nil) if season.nil?
+    season
   end
 
   def parse_teams_from_params

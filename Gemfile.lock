@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/viclim/moment_timezone-rails.git
+  revision: ff37aad2571d4390b236c3762018680645946bb2
+  ref: ff37aad2571d4390b236c3762018680645946bb2
+  specs:
+    moment_timezone-rails (0.4.0)
+      momentjs-rails (~> 2.10)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -104,6 +112,8 @@ GEM
     mime-types (2.6.1)
     mini_portile (0.6.2)
     minitest (5.8.0)
+    momentjs-rails (2.11.0)
+      railties (>= 3.1)
     multi_json (1.11.2)
     netrc (0.10.3)
     newrelic_rpm (3.14.0.305)
@@ -250,6 +260,8 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   local_time
+  moment_timezone-rails!
+  momentjs-rails
   newrelic_rpm
   nokogiri (~> 1.6)
   pg
@@ -272,3 +284,6 @@ DEPENDENCIES
   waitutil
   web-console (~> 2.0)
   will_paginate
+
+BUNDLED WITH
+   1.10.6

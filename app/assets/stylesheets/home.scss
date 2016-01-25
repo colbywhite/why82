@@ -18,3 +18,31 @@
 .collapse.in {
   display: inline-block;
 }
+
+.date-strip {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+
+    li {
+      width: 14.3%; // TODO: calculate this dynamically
+      min-width: 100px;
+      display: inline-block;
+      border-right: 1px solid #ddd;
+
+      button{
+        padding: 5px 0;
+        width: 100%;
+        border: none;
+        background: none;
+      }
+    }
+  }
+}
