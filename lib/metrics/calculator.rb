@@ -39,14 +39,17 @@ module Metrics
       metrics, total_weight = calculate_metrics
       teams = season.teams
       averages = teams.collect do |team|
-        # for each metric, find which tier the team is and add it to the sum
-        sum = metrics.sum do |metric|
-          tier = get_teams_tier metric[:tiers], team
-          tier * metric[:weight]
-        end
-        1.0 * sum / total_weight
+        1.0 * weighted_sum(metrics, team) / total_weight
       end
-      Hash[teams.zip averages]
+      Hash[teams.zip averages].sort_by { |_team, avg| avg }.to_h
+    end
+
+    def weighted_sum(metrics, team)
+      # for each metric, find which tier the team is and add it to the sum while factoring in the weight
+      metrics.sum do |metric|
+        tier = get_teams_tier metric[:tiers], team
+        tier * metric[:weight]
+      end
     end
 
     def calculate_metrics

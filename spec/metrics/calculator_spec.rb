@@ -108,5 +108,9 @@ RSpec.describe Metrics::Calculator do
                        "#{team.abbr} has the wrong average. expected: #{expected_averages[team.abbr]}; got: #{avg}"
       end
     end
+
+    it 'should sort result by values' do
+      expect(@calculator.calculate_averages.values).to be_monotonically_increasing
+    end
   end
 end
