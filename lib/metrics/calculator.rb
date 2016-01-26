@@ -16,7 +16,7 @@ module Metrics
     def metric_configs
       Calculator.weight_config.collect do |metric_config|
         metric_class = Object.const_get(metric_config['name'])
-        { tiers: metric_class.new(season).named_tiers,
+        { tiers: metric_class.new(season).tiers,
           weight: metric_config['weight'],
           metric: metric_class
         }
@@ -56,7 +56,8 @@ module Metrics
     end
 
     def get_teams_tier(tiers, team)
-      tiers.select { |_key, value| value.include? team }.keys.first.to_i
+      index = tiers.find_index { |values| values.include? team }
+      index + 1
     end
   end
 end

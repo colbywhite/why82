@@ -34,10 +34,10 @@ RSpec.describe Metrics::Calculator do
     allow(@calculator).to receive(:metric_configs) do
       [
         { metric: Metrics::TotalWins, weight: 20,
-          tiers: Metrics::TotalWins.new(@season).named_tiers
+          tiers: Metrics::TotalWins.new(@season).tiers
         },
         { metric: Metrics::TotalGames, weight: 10,
-          tiers: Metrics::TotalGames.new(@season).named_tiers
+          tiers: Metrics::TotalGames.new(@season).tiers
         }
       ]
     end

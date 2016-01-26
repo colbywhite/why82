@@ -25,12 +25,5 @@ module Metrics
        tier_three
       ]
     end
-
-    def named_tiers
-      { '1' => tier_one,
-        '2' => tier_two,
-        '3' => tier_three
-      }
-    end
   end
 end
