@@ -5,18 +5,13 @@ class GamesController < ApplicationController
     @season = params[:season]
     start_date = params[:start_date]
     end_date = params[:end_date]
-    @tier_info = TeamFilter::Record.named_tiers @season, :team
-
-    tier_ids = get_ids_from_tier_info @tier_info
-
-    @a_games, @b_games, @c_games, @d_games = get_graded_games @season, start_date, end_date, tier_ids
+    @tier_info = overall_tiers
+    @a_games, @b_games, @c_games, @d_games = get_graded_games start_date, end_date, @tier_info
     render_graded_games
   end
 
-  def get_ids_from_tier_info(tiers)
-    (1..3).collect do |tier|
-      tiers[tier.to_s].collect(&:id)
-    end
+  def overall_tiers
+    Metrics::Calculator.new(@season).overall_tiers
   end
 
   private
@@ -31,15 +26,15 @@ class GamesController < ApplicationController
                    params: params }
   end
 
-  def get_graded_games(season, start_date, end_date, tiers)
+  def get_graded_games(start_date, end_date, tiers)
     # A games are 1v1
-    a_games = season.games_between_any_team start_date, end_date, tiers.first
+    a_games = @season.games_between_any_team start_date, end_date, tiers.first
     # B games are 1v2
-    b_games = season.games_between_lists start_date, end_date, tiers.first, tiers.second
+    b_games = @season.games_between_lists start_date, end_date, tiers.first, tiers.second
     # C games are 2v2
-    c_games = season.games_between_any_team start_date, end_date, tiers.second
+    c_games = @season.games_between_any_team start_date, end_date, tiers.second
     # D games are the rest, which is any game with a 3
-    d_games = season.games_including_any_team start_date, end_date, tiers.third
+    d_games = @season.games_including_any_team start_date, end_date, tiers.third
 
     [a_games, b_games, c_games, d_games]
   end

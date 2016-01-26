@@ -1,0 +1,13 @@
+default: &defaults
+  metrics:
+    - name: Metrics::OverallRecord
+      weight: 20
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

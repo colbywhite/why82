@@ -4,6 +4,10 @@ module Record
                                ties: 0, percentage: 0.0
   end
 
+  def team
+    Team.find_by id: team_id
+  end
+
   def total_games
     wins + losses + ties
   end
