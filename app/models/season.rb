@@ -65,4 +65,14 @@ class Season < ActiveRecord::Base
   def status_string
     "Season(short_name: #{short_name}, games.count: #{games.count}, teams.count: #{teams.count})"
   end
+
+  # returns the last 10 completed games in the season for a team
+  def last_ten_complete(team)
+    last_n_complete team, 10
+  end
+
+  # returns the last N completed games in the season for a team
+  def last_n_complete(team, limit)
+    complete_games.include_any_team(team).order(time: :desc).limit(limit)
+  end
 end

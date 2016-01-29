@@ -69,4 +69,85 @@ RSpec.describe Team do
       end
     end
   end
+
+  describe '#last_ten_record' do
+    before :each do
+      @season = setup_2015_season
+      setup_oct_28_2015_games @season
+    end
+
+    context 'no games played' do
+      it 'should return 0-0 records for all teams' do
+        @season.teams.each do |team|
+          expect(team.last_ten_record(@season)).to eq_record(0, 0, 0)
+        end
+      end
+    end
+
+    context 'less than 10 games played' do
+      before :each do
+        # grabbing a CLE game since they don't play LAL
+        cle = @season.teams.find_by abbr: 'CLE'
+        first_game = cle.games(@season).first
+        @winner = first_game.home
+        @loser = first_game.away
+        first_game.home_score = 100
+        first_game.away_score = 90
+        first_game.save
+
+        # using the LAL since they have three games in the data set, which is the most
+        @lal = @season.teams.find_by abbr: 'LAL'
+        games = @lal.games @season
+        # LAL has two home games, so this will give them two wins and a loss
+        games.each do |game|
+          game.home_score = 100
+          game.away_score = 90
+          game.save
+        end
+      end
+
+      it 'should calculate record properly for undefeated' do
+        expect(@winner.last_ten_record(@season)).to eq_record(1, 0, 0)
+      end
+
+      it 'should calculate record properly for winless' do
+        expect(@loser.last_ten_record(@season)).to eq_record(0, 1, 0)
+      end
+
+      it 'should calculate record properly for a team with both wins and losses' do
+        expect(@lal.last_ten_record(@season)).to eq_record(2, 1, 0)
+      end
+    end
+
+    context 'more than 10 games played' do
+      before :each do
+        game_sym = season_to_game_sym @season
+        @team_a = @season.teams.first
+        @team_b = @season.teams.second
+
+        # create 5 games where team_b wins
+        (0..0).to_a.product((1..5).to_a).each do |scores|
+          create_game_with_score game_sym, @team_a, scores.first, @team_b, scores.second
+        end
+        # create 7 games where team_a wins
+        (0..0).to_a.product((1..7).to_a).each do |scores|
+          create_game_with_score game_sym, @team_b, scores.first, @team_a, scores.second
+        end
+        # create 2 more where team_b wins
+        (0..0).to_a.product((1..2).to_a).each do |scores|
+          create_game_with_score game_sym, @team_a, scores.first, @team_b, scores.second
+        end
+        # so team_a should be 7-7, and team_b should 7-7 overall
+        # but in the last ten, team_a should be 7-3 and team_b should be 3-7
+      end
+
+      it 'should calculate record properly for a winning team' do
+        expect(@team_a.last_ten_record(@season)).to eq_record(7, 3, 0)
+      end
+
+      it 'should calculate record properly for a losing team' do
+        expect(@team_b.last_ten_record(@season)).to eq_record(3, 7, 0)
+      end
+    end
+  end
 end
