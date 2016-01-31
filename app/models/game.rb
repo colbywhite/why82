@@ -29,4 +29,24 @@ module Game
   def to_string
     "#{time}: #{away.name} @ #{home.name}"
   end
+
+  def complete?
+    !(home_score.nil? || away_score.nil?)
+  end
+
+  def winner
+    return nil unless complete?
+    if home_score > away_score
+      home
+    elsif away_score > home_score
+      away
+    end
+  end
+
+  def loser
+    calculated_winner = winner
+    return nil if calculated_winner.nil?
+    return away if calculated_winner == home
+    home
+  end
 end

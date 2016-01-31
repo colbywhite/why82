@@ -2,6 +2,8 @@ default: &defaults
   metrics:
     - name: Metrics::OverallRecord
       weight: 20
+    - name: Metrics::LastTenRecord
+      weight: 10
 
 development:
   <<: *defaults
