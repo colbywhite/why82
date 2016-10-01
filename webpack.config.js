@@ -1,8 +1,11 @@
 module.exports = {
-    entry: "./js/why82.jsx",
+    entry: {
+      schedule: "./js/schedule.jsx",
+      tiers: './js/tiers.jsx'
+    },
     output: {
         path: __dirname + '/dist',
-        filename: "bundle.js"
+        filename: "[name].js"
     },
     module: {
         loaders: [
