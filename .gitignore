@@ -3,3 +3,7 @@ bower_components/
 
 # node artifacts
 node_modules/
+npm-debug.log
+
+# webpack artifacts
+dist/
