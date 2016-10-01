@@ -1,0 +1,26 @@
+{
+  "name": "why82",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/why82.js",
+  "scripts": {
+    "start": "./node_modules/.bin/webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colbywhite/why82.git"
+  },
+  "author": "Colby M. White",
+  "license": "CPAL-1.0",
+  "bugs": {
+    "url": "https://github.com/colbywhite/why82/issues"
+  },
+  "homepage": "https://github.com/colbywhite/why82#readme",
+  "dependencies": {
+    "babel-core": "^5.8.38",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1"
+  }
+}

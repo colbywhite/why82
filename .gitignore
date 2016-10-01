@@ -1,0 +1,5 @@
+# bower artifacts
+bower_components/
+
+# node artifacts
+node_modules/
