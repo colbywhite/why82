@@ -17,12 +17,14 @@
     "url": "https://github.com/colbywhite/why82/issues"
   },
   "homepage": "http://why82.com",
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
   "devDependencies": {
     "babel-core": "^6.16.0",
     "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.16.0",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "babel-preset-react": "^6.16.0",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
   }
