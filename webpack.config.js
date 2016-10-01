@@ -1,17 +1,14 @@
 module.exports = {
-    entry: "./js/why82.js",
+    entry: "./js/why82.jsx",
     output: {
         path: __dirname + '/dist',
         filename: "bundle.js"
     },
     module: {
         loaders: [
-            { test: /\.css$/, loader: "style!css" },
             {
-              test: /\.js$/,
-              exclude: /node_modules/,
-              loader: 'babel',
-              query: { presets: ['es2015'] }
+              test: /\.js(x)?$/,
+              loader: 'babel'
             }
         ]
     }
