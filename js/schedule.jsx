@@ -1,3 +1,6 @@
+require('bootstrap/dist/css/bootstrap.css');
+require('../css/bs-callout.css');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery')
@@ -5,9 +8,13 @@ var $ = require('jquery')
 var Game = React.createClass({
   render: function() {
     return (
-      <div>
-        <b>{this.props.grade}</b>:&nbsp;
-        {this.props.away.abbreviated_name} @ {this.props.home.abbreviated_name}
+      <div className="col-md-3 col-xs-3 bs-callout bs-callout-a">
+        <h4>{this.props.grade}</h4>
+        <p>
+          {this.props.away.abbreviated_name}
+          <br />
+          {this.props.home.abbreviated_name}
+        </p>
       </div>
     )
   }
@@ -21,9 +28,9 @@ var SingleDaySchedule = React.createClass({
       );
     });
     return (
-      <div>
-        <h2>{this.props.date}</h2>
-        {gameNodes}
+      <div className="panel panel-default">
+        <div className="panel-heading">{this.props.date}</div>
+        <div className="panel-body row">{gameNodes}</div>
       </div>
     );
   }
@@ -56,10 +63,10 @@ var Schedule = React.createClass({
       }.bind(this));
     };
     return (
-      <div>
-        <h1>Schedule</h1>
+      <section className="col-md-8 col-xs-12">
+        <h3>Schedule</h3>
         {dayNodes}
-      </div>
+      </section>
     );
   }
 });
