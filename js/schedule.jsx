@@ -8,8 +8,8 @@ var $ = require('jquery')
 var Game = React.createClass({
   render: function() {
     return (
-      <div className="col-md-3 col-xs-3 bs-callout bs-callout-a">
-        <h4>{this.props.grade}</h4>
+      <div className={"col-md-3 col-xs-3 bs-callout bs-callout-" + this.props.grade.toLowerCase()}>
+        <h4>{this.props.grade.toUpperCase()}</h4>
         <p>
           {this.props.away.abbreviated_name}
           <br />
