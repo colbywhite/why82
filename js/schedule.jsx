@@ -21,8 +21,17 @@ var Game = React.createClass({
 });
 
 var SingleDaySchedule = React.createClass({
+  sortByGrade: function(gameOne, gameTwo) {
+    if (gameOne.grade > gameTwo.grade) {
+      return 1;
+    }
+    if (gameOne.grade < gameTwo.grade) {
+      return -1;
+    }
+    return 0;
+  },
   render: function() {
-    var gameNodes = this.props.schedule.map(function(game, index) {
+    var gameNodes = this.props.schedule.sort(this.sortByGrade).map(function(game, index) {
       return (
         <Game home={game.home} away={game.away} grade={game.grade} key={index} />
       );
