@@ -1,20 +1,32 @@
 require('bootstrap/dist/css/bootstrap.css');
 require('../css/bs-callout.css');
+require('../css/team-tiers.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery')
+
+var Team = React.createClass({
+  render: function() {
+    return (
+      <p className={'team ' +  this.props.type}>
+        <span className='ranking'>{this.props.team.overall.tier}</span>
+        {this.props.team.abbreviated_name}
+        <span className='record'>
+          ({this.props.team.win_loss.wins}-{this.props.team.win_loss.losses})
+        </span>
+      </p>
+    )
+  }
+});
 
 var Game = React.createClass({
   render: function() {
     return (
       <div className={"col-md-3 col-xs-3 bs-callout bs-callout-" + this.props.grade.toLowerCase()}>
         <h4>{this.props.grade.toUpperCase()}</h4>
-        <p>
-          {this.props.away.abbreviated_name}
-          <br />
-          {this.props.home.abbreviated_name}
-        </p>
+        <Team type='away' team={this.props.away} />
+        <Team type='home' team={this.props.home} />
       </div>
     )
   }

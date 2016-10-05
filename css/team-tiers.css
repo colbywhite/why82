@@ -1,0 +1,17 @@
+span.ranking {
+  font-size: .8em;
+  margin-right: 10px
+}
+
+span.record {
+  font-size: .8em;
+  margin-left: 10px
+}
+
+p.team.away {
+  margin-bottom: 2px
+}
+
+p.team.home {
+  margin-bottom: 0
+}
