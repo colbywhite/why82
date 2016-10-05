@@ -36,7 +36,7 @@ module.exports = {
             }, {
               test: /\.jade$/,
               loader: "jade",
-              query: {pretty: true}
+              query: {pretty: true, globals:'test'}
             }
         ]
     },
@@ -45,6 +45,11 @@ module.exports = {
         chunks: ['schedule'],
         template: 'schedule.jade',
         filename: 'index.html'
+      }),
+      new HtmlWebpackPlugin({
+        chunks: ['tiers'],
+        template: 'tiers.jade',
+        filename: 'tiers.html'
       }),
       new CopyWebpackPlugin([
         { from: 'data', to: 'data' }

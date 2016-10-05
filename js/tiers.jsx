@@ -96,10 +96,10 @@ var TiersTable = React.createClass({
       }.bind(this));
     };
     return (
-      <div>
+      <section className="col-md-8 col-xs-12">
         <h3>Tiers</h3>
         {teamNodes}
-      </div>
+      </section>
     );
   }
 });
