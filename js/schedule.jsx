@@ -84,7 +84,7 @@ var Schedule = React.createClass({
       }.bind(this));
     };
     return (
-      <section className="col-md-8 col-xs-12">
+      <section className="col-md-8 col-md-offset-2 col-xs-12">
         <h3>Schedule</h3>
         {dayNodes}
       </section>

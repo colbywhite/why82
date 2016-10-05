@@ -1,72 +1,72 @@
 require('bootstrap/dist/css/bootstrap.css');
+require('../css/tier-table.css');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery')
 
-var PaceCells = React.createClass({
-  render: function() {
-    return (
-      <section>
-        <div>{this.props.data.tier}</div>
-        <div>{this.props.data.pace}</div>
-      </section>
-    )
-  }
-});
-
-var WinLossCells = React.createClass({
-  render: function() {
-    return (
-      <section>
-        <div>{this.props.data.tier}</div>
-        <div>{this.props.data.wins}</div>
-        <div>{this.props.data.losses}</div>
-        <div>{this.props.data.win_loss_pct}</div>
-      </section>
-    )
-  }
-});
-
-var RatingCells = React.createClass({
-  render: function() {
-    return (
-      <section>
-        <div>{this.props.data.tier}</div>
-        <div>{this.props.data.rating_diff}</div>
-      </section>
-    )
-  }
-});
-
-var OverallCells = React.createClass({
-  render: function() {
-    return (
-      <section>
-        <div>{this.props.data.tier}</div>
-        <div>{this.props.data.avg}</div>
-      </section>
-    )
-  }
-});
-
-var TeamNameCell = React.createClass({
-  render: function() {
-    return (
-      <div>{this.props.abbreviated_name}</div>
-    )
-  }
-});
-
 var TeamRow = React.createClass({
+  getClass: function(tier) {
+    if(tier == 1) {
+      return 'success'
+    }
+    else {
+      return ''
+    }
+  },
   render: function() {
     return (
-      <section>
-        <TeamNameCell abbreviated_name={this.props.abbreviated_name} />
-        <OverallCells data={this.props.data.overall} />
-        <WinLossCells data={this.props.data.win_loss} />
-        <RatingCells data={this.props.data.rating_diff} />
-        <PaceCells data={this.props.data.pace} />
-      </section>
+      <tr>
+        <td>{this.props.abbreviated_name}</td>
+
+        <td className={this.getClass(this.props.data.overall.tier)}>{this.props.data.overall.tier}</td>
+        <td className={this.getClass(this.props.data.overall.tier)}>{this.props.data.overall.avg}</td>
+
+        <td className={this.getClass(this.props.data.win_loss.tier)}>{this.props.data.win_loss.tier}</td>
+        <td className={this.getClass(this.props.data.win_loss.tier)}>{this.props.data.win_loss.wins}</td>
+        <td className={this.getClass(this.props.data.win_loss.tier)}>{this.props.data.win_loss.losses}</td>
+        <td className={this.getClass(this.props.data.win_loss.tier)}>{this.props.data.win_loss.win_loss_pct}</td>
+
+        <td className={this.getClass(this.props.data.rating_diff.tier)}>{this.props.data.rating_diff.tier}</td>
+        <td className={this.getClass(this.props.data.rating_diff.tier)}>{this.props.data.rating_diff.rating_diff}</td>
+
+        <td className={this.getClass(this.props.data.pace.tier)}>{this.props.data.pace.tier}</td>
+        <td className={this.getClass(this.props.data.pace.tier)}>{this.props.data.pace.pace}</td>
+      </tr>
+    );
+  }
+});
+
+var OuterHeaderRow = React.createClass({
+  render: function() {
+    return (
+      <tr>
+        <th>&nbsp;</th>
+        <th colSpan='2'>Overall</th>
+        <th colSpan='4'>Win-Loss</th>
+        <th colSpan='2'>Rating</th>
+        <th colSpan='2'>Pace</th>
+      </tr>
+    );
+  }
+});
+
+var InnerHeaderRow = React.createClass({
+  render: function() {
+    return (
+      <tr>
+        <th className='col-md-2'>&nbsp;</th>
+        <th className='col-md-1'>Tier</th>
+        <th className='col-md-1'>Tier Avg.</th>
+        <th className='col-md-1'>Tier</th>
+        <th className='col-md-1'>Wins</th>
+        <th className='col-md-1'>Losses</th>
+        <th className='col-md-1'>Pct</th>
+        <th className='col-md-1'>Tier</th>
+        <th className='col-md-1'>R. Diff.</th>
+        <th className='col-md-1'>Tier</th>
+        <th className='col-md-1'>Pace</th>
+      </tr>
     );
   }
 });
@@ -89,17 +89,25 @@ var TiersTable = React.createClass({
     });
   },
   render: function() {
-    var teamNodes = <br />;
+    var teamRows = <div />;
     if (!$.isEmptyObject(this.state.data)) {
-      teamNodes = Object.keys(this.state.data).sort().map(function(name, index) {
+      teamRows = Object.keys(this.state.data).sort().map(function(name, index) {
         return <TeamRow key={index} data={this.state.data[name]} abbreviated_name={name} />;
       }.bind(this));
     };
     return (
-      <section className="col-md-8 col-xs-12">
-        <h3>Tiers</h3>
-        {teamNodes}
-      </section>
+      <div className='table-responsive col-md-8 col-md-offset-2'>
+        <h3>Tier Information</h3>
+        <table className="table table-hover table-bordered table-striped tiers-table text-center">
+          <thead>
+            <OuterHeaderRow />
+            <InnerHeaderRow />
+          </thead>
+          <tbody>
+            {teamRows}
+          </tbody>
+        </table>
+      </div>
     );
   }
 });
