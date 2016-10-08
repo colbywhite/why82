@@ -1,0 +1,68 @@
+service: why82
+
+functions: {}
+provider:
+  name: aws
+  runtime: python2.7
+  region: us-west-2
+  timeout: 30
+  stage: dev
+
+package:
+  exclude:
+    - css
+    - data
+    - dist
+    - js
+    - node_modules
+    - .babelrc
+    - .gitignore
+    - LICENSE
+    - package.json
+    - schedule.jade
+    - serverless.yml
+    - tiers.jade
+    - webpack.config.js
+
+resources:
+  Resources:
+    WebBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-${opt:stage, self:provider.stage}
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+    WebBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: WebBucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: Allow Public Access to All Objects
+              Effect: Allow
+              Principal: '*'
+              Action: s3:GetObject
+              Resource:
+                Fn::Join:
+                  - ':::'
+                  -
+                    - arn:aws:s3
+                    - Fn::Join:
+                      - /
+                      -
+                        - Ref: WebBucket
+                        - '*'
+  Outputs:
+     WebBucket:
+       Description: 'The bucket serving the website'
+       Value:
+         Ref: WebBucket
+     URL:
+       Description: 'URL to hit the site'
+       Value:
+        Fn::GetAtt:
+          - WebBucket
+          - WebsiteURL

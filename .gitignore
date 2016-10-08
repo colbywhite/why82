@@ -7,3 +7,6 @@ npm-debug.log
 
 # webpack artifacts
 dist/
+
+# sls artifacts
+.serverless/
