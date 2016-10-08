@@ -10,3 +10,6 @@ dist/
 
 # sls artifacts
 .serverless/
+
+# dotenv
+.env

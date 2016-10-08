@@ -1,3 +1,5 @@
+require('dotenv-safe').load();
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -53,6 +55,12 @@ module.exports = {
       }),
       new CopyWebpackPlugin([
         { from: 'data', to: 'data' }
-      ])
+      ]),
+      new webpack.DefinePlugin({
+        'process.env': {
+          'API_DOMAIN': JSON.stringify(process.env.API_DOMAIN),
+          'SEASON': JSON.stringify(process.env.SEASON)
+        }
+      })
     ]
 };

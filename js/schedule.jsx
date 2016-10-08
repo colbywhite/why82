@@ -4,7 +4,8 @@ require('../css/team-tiers.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var $ = require('jquery')
+var $ = require('jquery');
+const DATA_URL = process.env.API_DOMAIN + '/' + process.env.SEASON + '/';
 
 var Team = React.createClass({
   render: function() {
@@ -93,6 +94,6 @@ var Schedule = React.createClass({
 });
 
 ReactDOM.render(
-  <Schedule url="/data/2016-04-13-schedule.json" />,
+  <Schedule url={DATA_URL + '2016-04-13-schedule.json'} />,
   document.getElementById('content')
 );
