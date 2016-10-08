@@ -55,14 +55,52 @@ resources:
                       -
                         - Ref: WebBucket
                         - '*'
+    CiUser:
+      Type: AWS::IAM::User
+      Properties:
+        Policies:
+          - PolicyName: ${self:service}-cipolicy
+            PolicyDocument:
+              Statement:
+                - Action: s3:PutObject
+                  Effect: Allow
+                  Resource:
+                    - Fn::Join:
+                      - ':::'
+                      -
+                        - arn:aws:s3
+                        - Fn::Join:
+                          - /
+                          -
+                            - Ref: WebBucket
+                            - '*'
+    CiKey:
+      Type: AWS::IAM::AccessKey
+      Properties:
+        UserName:
+          Ref: CiUser
   Outputs:
-     WebBucket:
-       Description: 'The bucket serving the website'
-       Value:
-         Ref: WebBucket
-     URL:
-       Description: 'URL to hit the site'
+    WebBucket:
+      Description: The bucket serving the website
+      Value:
+        Ref: WebBucket
+    URL:
+       Description: URL to hit the site
        Value:
         Fn::GetAtt:
           - WebBucket
           - WebsiteURL
+    CiUser:
+      Description: The user CI will use to do releases
+      Value:
+        Ref: CiUser
+    CiAccessKey:
+      Description: The CI user\'s access key
+      Value:
+        Ref: CiKey
+    CiSecretKey:
+      Description: The CI user\'s secret key
+      Value:
+        Fn::GetAtt:
+          - CiKey
+          - SecretAccessKey
