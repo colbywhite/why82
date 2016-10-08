@@ -7,6 +7,8 @@ provider:
   region: us-west-2
   timeout: 30
   stage: dev
+  dev_name: ${self:service}-${opt:stage, self:provider.stage}
+  prod_name: www.${self:service}.com
 
 package:
   exclude:
@@ -29,7 +31,7 @@ resources:
     WebBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:service}-${opt:stage, self:provider.stage}
+        BucketName: ${self:provider.${opt:stage, self:provider.stage}_name}
         AccessControl: PublicRead
         WebsiteConfiguration:
           IndexDocument: index.html
