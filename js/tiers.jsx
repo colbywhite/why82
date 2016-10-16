@@ -41,7 +41,7 @@ var OuterHeaderRow = React.createClass({
   render: function() {
     return (
       <tr>
-        <th>{'\u00a0'}</th>
+        <th></th>
         <th colSpan='2'>Overall</th>
         <th colSpan='4'>Win-Loss</th>
         <th colSpan='2'>Rating</th>
@@ -55,7 +55,7 @@ var InnerHeaderRow = React.createClass({
   render: function() {
     return (
       <tr>
-        <th className='col-md-2'>{'\u00a0'}</th>
+        <th className='col-md-2'></th>
         <th className='col-md-1'>Tier</th>
         <th className='col-md-1'>Tier Avg.</th>
         <th className='col-md-1'>Tier</th>
