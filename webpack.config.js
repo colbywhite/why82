@@ -2,6 +2,7 @@ require('dotenv-safe').load();
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -19,7 +20,7 @@ module.exports = {
               loader: 'babel'
             }, {
               test: /\.css$/,
-              loader: 'style-loader!css-loader'
+              loader: ExtractTextPlugin.extract("style-loader", "css-loader")
             }, {
               test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
               loader: "file"
@@ -56,6 +57,7 @@ module.exports = {
       new CopyWebpackPlugin([
         { from: 'data', to: 'data' }
       ]),
+      new ExtractTextPlugin("[name].css"),
       new webpack.DefinePlugin({
         'process.env': {
           'API_DOMAIN': JSON.stringify(process.env.API_DOMAIN),
