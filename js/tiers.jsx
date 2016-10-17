@@ -4,6 +4,7 @@ require('../css/tier-table.css');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery')
+const DATA_URL = process.env.API_DOMAIN + '/' + process.env.SEASON + '/';
 
 var TeamRow = React.createClass({
   getClass: function(tier) {
@@ -113,6 +114,6 @@ var TiersTable = React.createClass({
 });
 
 ReactDOM.render(
-  <TiersTable url="/data/2016-04-13-tiers.json" />,
+  <TiersTable url={DATA_URL + '2016-04-13-tiers.json'} />,
   document.getElementById('content')
 );
