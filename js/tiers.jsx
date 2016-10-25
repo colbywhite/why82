@@ -4,7 +4,6 @@ require('../css/tier-table.css');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery')
-const DATA_URL = process.env.API_DOMAIN + '/' + process.env.SEASON + '/';
 
 var TeamRow = React.createClass({
   getClass: function(tier) {
@@ -77,16 +76,40 @@ var TiersTable = React.createClass({
     return {data: {}};
   },
   componentDidMount: function() {
+    // TODO refactor into a common method that uses a promise
     $.ajax({
       url: this.props.url,
-      dataType: 'json',
-      cache: true,
-      success: function(data) {
-        this.setState({data: data});
+      dataType: 'xml',
+      cache: false,
+      success: function(xml) {
+        var relevant_regex = new RegExp('^'+process.env.SEASON + '\\/\\d{4}-\\d{2}-\\d{2}-tiers.json');
+        var relevant_keys = $(xml).find('Contents')
+          .map(function(){
+            return $('Key', this).text();
+          })
+          .filter(function(){
+            return relevant_regex.test(this);
+          });
+        var latest_key = relevant_keys[0];
+        relevant_keys.each(function(){
+          latest_key = this > latest_key ? this : latest_key;
+        })
+        var latest_url = this.props.url + '/' + latest_key;
+        $.ajax({
+          url: latest_url,
+          dataType: 'json',
+          cache: true,
+          success: function(data) {
+            this.setState({data: data});
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error(latest_url, status, err.toString());
+          }
+        });
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }
     });
   },
   render: function() {
@@ -114,6 +137,6 @@ var TiersTable = React.createClass({
 });
 
 ReactDOM.render(
-  <TiersTable url={DATA_URL + '2016-04-13-tiers.json'} />,
+  <TiersTable url={process.env.API_DOMAIN} />,
   document.getElementById('content')
 );
