@@ -120,7 +120,7 @@ var TiersTable = React.createClass({
       }.bind(this));
     };
     return (
-      <div className='table-responsive col-md-8 col-md-offset-2'>
+      <div className='table-responsive col-md-8 col-md-offset-2 col-xs-12'>
         <h3>Tier Information</h3>
         <table className="table table-hover table-bordered table-striped tiers-table text-center">
           <thead>

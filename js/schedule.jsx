@@ -23,7 +23,7 @@ var Team = React.createClass({
 var Game = React.createClass({
   render: function() {
     return (
-      <div className={"col-md-3 col-xs-3 bs-callout bs-callout-" + this.props.grade.toLowerCase()}>
+      <div className={"col-md-3 col-xs-11 bs-callout bs-callout-" + this.props.grade.toLowerCase()}>
         <h4>{this.props.grade.toUpperCase()}</h4>
         <Team type='away' team={this.props.away} />
         <Team type='home' team={this.props.home} />
