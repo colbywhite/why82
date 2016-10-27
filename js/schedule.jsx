@@ -1,6 +1,7 @@
 require('bootstrap/dist/css/bootstrap.css');
 require('../css/bs-callout.css');
 require('../css/team-tiers.css');
+require('../css/game.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -23,10 +24,12 @@ var Team = React.createClass({
 var Game = React.createClass({
   render: function() {
     return (
-      <div className={"col-md-3 col-xs-11 bs-callout bs-callout-" + this.props.grade.toLowerCase()}>
-        <h4>{this.props.grade.toUpperCase()}</h4>
-        <Team type='away' team={this.props.away} />
-        <Team type='home' team={this.props.home} />
+      <div className={"col-md-4 col-xs-12 game"}>
+        <div className={"bs-callout bs-callout-" + this.props.grade.toLowerCase()}>
+          <h4>{this.props.grade.toUpperCase()}</h4>
+          <Team type='away' team={this.props.away} />
+          <Team type='home' team={this.props.home} />
+        </div>
       </div>
     )
   }
