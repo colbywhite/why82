@@ -39,7 +39,7 @@ module.exports = {
             }, {
               test: /\.jade$/,
               loader: "jade",
-              query: {pretty: true, globals:'test'}
+              query: {pretty: false, globals:'test'}
             }
         ]
     },
