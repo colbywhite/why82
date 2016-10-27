@@ -6,6 +6,7 @@ require('../css/game.css');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
+var moment = require('moment');
 
 var Team = React.createClass({
   render: function() {
@@ -45,6 +46,9 @@ var SingleDaySchedule = React.createClass({
     }
     return 0;
   },
+  formatDate: function(dateString) {
+    return moment(dateString).format('ddd, MMM Do, YYYY');
+  },
   render: function() {
     var gameNodes = this.props.schedule.sort(this.sortByGrade).map(function(game, index) {
       return (
@@ -53,7 +57,7 @@ var SingleDaySchedule = React.createClass({
     });
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">{this.props.date}</div>
+        <div className="panel-heading">{this.formatDate(this.props.date)}</div>
         <div className="panel-body row">{gameNodes}</div>
       </div>
     );
