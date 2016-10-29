@@ -1,12 +1,12 @@
 require('bootstrap/dist/css/bootstrap.css');
 require('../css/tier-table.css');
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var $ = require('jquery')
+const React = require('react');
+const ReactDOM = require('react-dom');
+const $ = require('jquery')
 const date_utils = require('./data_utils');
 
-var TeamRow = React.createClass({
+const TeamRow = React.createClass({
   getClass: function(tier) {
     if(tier == 1) {
       return 'success'
@@ -38,7 +38,7 @@ var TeamRow = React.createClass({
   }
 });
 
-var OuterHeaderRow = React.createClass({
+const OuterHeaderRow = React.createClass({
   render: function() {
     return (
       <tr>
@@ -52,7 +52,7 @@ var OuterHeaderRow = React.createClass({
   }
 });
 
-var InnerHeaderRow = React.createClass({
+const InnerHeaderRow = React.createClass({
   render: function() {
     return (
       <tr>
@@ -72,7 +72,7 @@ var InnerHeaderRow = React.createClass({
   }
 });
 
-var TiersTable = React.createClass({
+const TiersTable = React.createClass({
   getInitialState: function() {
     return {data: {}};
   },

@@ -1,7 +1,7 @@
-var $ = require('jquery');
+const $ = require('jquery');
 
 const ajax_error_handler = function(xhr, status, err) {
-  var errorMessage = url + ' returned: ' + status + ': ' + err.toString();
+  const errorMessage = url + ' returned: ' + status + ': ' + err.toString();
   reject(errorMessage);
 };
 

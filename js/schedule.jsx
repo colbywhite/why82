@@ -3,13 +3,13 @@ require('../css/bs-callout.css');
 require('../css/team-tiers.css');
 require('../css/game.css');
 
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 const date_utils = require('./data_utils');
-var $ = require('jquery');
-var moment = require('moment');
+const $ = require('jquery');
+const moment = require('moment');
 
-var Team = React.createClass({
+const Team = React.createClass({
   render: function() {
     return (
       <p className={'team ' +  this.props.type}>
@@ -23,7 +23,7 @@ var Team = React.createClass({
   }
 });
 
-var Game = React.createClass({
+const Game = React.createClass({
   render: function() {
     return (
       <div className={"col-md-4 col-xs-12 game"}>
@@ -37,7 +37,7 @@ var Game = React.createClass({
   }
 });
 
-var SingleDaySchedule = React.createClass({
+const SingleDaySchedule = React.createClass({
   sortByGrade: function(gameOne, gameTwo) {
     if (gameOne.grade > gameTwo.grade) {
       return 1;
@@ -51,7 +51,7 @@ var SingleDaySchedule = React.createClass({
     return moment(dateString).format('ddd, MMM Do, YYYY');
   },
   render: function() {
-    var gameNodes = this.props.schedule.sort(this.sortByGrade).map(function(game, index) {
+    const gameNodes = this.props.schedule.sort(this.sortByGrade).map(function(game, index) {
       return (
         <Game home={game.home} away={game.away} grade={game.grade} key={index} />
       );
@@ -65,7 +65,7 @@ var SingleDaySchedule = React.createClass({
   }
 });
 
-var Schedule = React.createClass({
+const Schedule = React.createClass({
   getInitialState: function() {
     return {data: {}};
   },
