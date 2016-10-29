@@ -1,7 +1,6 @@
 require('dotenv-safe').load();
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -54,9 +53,6 @@ module.exports = {
         template: 'tiers.jade',
         filename: 'tiers.html'
       }),
-      new CopyWebpackPlugin([
-        { from: 'data', to: 'data' }
-      ]),
       new ExtractTextPlugin("[name].css"),
       new webpack.DefinePlugin({
         'process.env': {
