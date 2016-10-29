@@ -26,7 +26,7 @@ const grab_latest_bucket_entry_url = function(bucket_url, season, suffix){
     $.ajax({
       url: bucket_url,
       dataType: 'xml',
-      cache: false,
+      cache: true,
       success: function(list_bucket_result) {
         const latest_key = parse_lastest_bucket_entry(list_bucket_result, season, suffix);
         resolve(bucket_url + '/' + latest_key);
