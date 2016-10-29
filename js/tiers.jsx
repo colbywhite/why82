@@ -20,8 +20,8 @@ const TeamRow = React.createClass({
     return (
       <tr>
         <td>
-          <Logo abbreviation={this.props.abbreviated_name} />
-          {this.props.abbreviated_name}
+          <Logo abbreviation={this.props.data.abbreviated_name} />
+          {this.props.data.short_name}
         </td>
 
         <td className={this.getClass(this.props.data.overall.tier)}>{this.props.data.overall.tier}</td>
@@ -93,7 +93,7 @@ const TiersTable = React.createClass({
     var teamRows = <div />;
     if (!$.isEmptyObject(this.state.data)) {
       teamRows = Object.keys(this.state.data).sort().map(function(name, index) {
-        return <TeamRow key={index} data={this.state.data[name]} abbreviated_name={name} />;
+        return <TeamRow key={index} data={this.state.data[name]} />;
       }.bind(this));
     };
     return (

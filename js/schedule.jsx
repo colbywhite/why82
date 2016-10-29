@@ -16,7 +16,7 @@ const Team = React.createClass({
       <p className={'team ' +  this.props.type}>
         <span className='ranking'>{this.props.team.overall.tier}</span>
         <Logo abbreviation={this.props.team.abbreviated_name} />
-        {this.props.team.abbreviated_name}
+        {this.props.team.short_name}
         <span className='record'>
           ({this.props.team.win_loss.wins}-{this.props.team.win_loss.losses})
         </span>
