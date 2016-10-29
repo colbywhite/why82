@@ -5,6 +5,7 @@ require('../css/game.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+const date_utils = require('./data_utils');
 var $ = require('jquery');
 var moment = require('moment');
 
@@ -69,41 +70,13 @@ var Schedule = React.createClass({
     return {data: {}};
   },
   componentDidMount: function() {
-    // TODO refactor into a common method that uses a promise
-    $.ajax({
-      url: this.props.url,
-      dataType: 'xml',
-      cache: false,
-      success: function(xml) {
-        var relevant_regex = new RegExp('^'+process.env.SEASON + '\\/\\d{4}-\\d{2}-\\d{2}-schedule.json');
-        var relevant_keys = $(xml).find('Contents')
-          .map(function(){
-            return $('Key', this).text();
-          })
-          .filter(function(){
-            return relevant_regex.test(this);
-          });
-        var latest_key = relevant_keys[0];
-        relevant_keys.each(function(){
-          latest_key = this > latest_key ? this : latest_key;
-        })
-        var latest_url = this.props.url + '/' + latest_key;
-        $.ajax({
-          url: latest_url,
-          dataType: 'json',
-          cache: true,
-          success: function(data) {
-            this.setState({data: data});
-          }.bind(this),
-          error: function(xhr, status, err) {
-            console.error(latest_url, status, err.toString());
-          }
-        });
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }
-    });
+    date_utils.grab_latest_schedule_data(this.props.url, process.env.SEASON)
+      .then(function(data){
+        this.setState({data: data});
+      }.bind(this))
+      .catch(function(errorMessage){
+        console.error(errorMessage);
+      });
   },
   render: function() {
     var dayNodes = <br />;
