@@ -42,9 +42,7 @@ const grab_data = function(url) {
       url: url,
       dataType: 'json',
       cache: true,
-      success: function(data) {
-        resolve(data);
-      },
+      success: resolve,
       error: ajax_error_handler
     });
   });
