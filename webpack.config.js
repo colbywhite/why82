@@ -1,5 +1,6 @@
 require('dotenv-safe').load();
 var webpack = require('webpack');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -54,6 +55,9 @@ module.exports = {
         filename: 'tiers.html'
       }),
       new ExtractTextPlugin("[name].css"),
+      new CopyWebpackPlugin([
+        { from: 'img', to: 'img' }
+      ]),
       new webpack.DefinePlugin({
         'process.env': {
           'BUCKET_URL': JSON.stringify(process.env.BUCKET_URL),
