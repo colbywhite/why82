@@ -5,6 +5,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery')
 const date_utils = require('./data_utils');
+const Logo = require('./team_logo');
 
 const TeamRow = React.createClass({
   getClass: function(tier) {
@@ -18,7 +19,10 @@ const TeamRow = React.createClass({
   render: function() {
     return (
       <tr>
-        <td>{this.props.abbreviated_name}</td>
+        <td>
+          <Logo abbreviation={this.props.abbreviated_name} />
+          {this.props.abbreviated_name}
+        </td>
 
         <td className={this.getClass(this.props.data.overall.tier)}>{this.props.data.overall.tier}</td>
         <td className={this.getClass(this.props.data.overall.tier)}>{this.props.data.overall.avg}</td>

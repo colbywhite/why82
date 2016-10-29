@@ -6,6 +6,7 @@ require('../css/game.css');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const date_utils = require('./data_utils');
+const Logo = require('./team_logo');
 const $ = require('jquery');
 const moment = require('moment');
 
@@ -14,7 +15,7 @@ const Team = React.createClass({
     return (
       <p className={'team ' +  this.props.type}>
         <span className='ranking'>{this.props.team.overall.tier}</span>
-        <img className='logo' src={'img/'+this.props.team.abbreviated_name.toLowerCase()+'.png'} />
+        <Logo abbreviation={this.props.team.abbreviated_name} />
         {this.props.team.abbreviated_name}
         <span className='record'>
           ({this.props.team.win_loss.wins}-{this.props.team.win_loss.losses})
