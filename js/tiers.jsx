@@ -77,7 +77,7 @@ var TiersTable = React.createClass({
     return {data: {}};
   },
   componentDidMount: function() {
-    date_utils.grab_latest_tiers_data(this.props.url, process.env.SEASON)
+    date_utils.grab_latest_tiers_data(this.props.bucketUrl, process.env.SEASON)
       .then(function(data){
         this.setState({data: data});
       }.bind(this))
@@ -110,6 +110,6 @@ var TiersTable = React.createClass({
 });
 
 ReactDOM.render(
-  <TiersTable url={process.env.API_DOMAIN} />,
+  <TiersTable bucketUrl={process.env.BUCKET_URL} />,
   document.getElementById('content')
 );

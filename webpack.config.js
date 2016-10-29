@@ -60,7 +60,7 @@ module.exports = {
       new ExtractTextPlugin("[name].css"),
       new webpack.DefinePlugin({
         'process.env': {
-          'API_DOMAIN': JSON.stringify(process.env.API_DOMAIN),
+          'BUCKET_URL': JSON.stringify(process.env.BUCKET_URL),
           'SEASON': JSON.stringify(process.env.SEASON)
         }
       })
