@@ -13,14 +13,24 @@ const moment = require('moment');
 const Team = React.createClass({
   render: function() {
     return (
-      <p className={'team ' +  this.props.type}>
-        <span className='ranking'>{this.props.team.overall.tier}</span>
-        <Logo abbreviation={this.props.team.abbreviated_name} />
-        {this.props.team.short_name}
-        <span className='record'>
-          ({this.props.team.win_loss.wins}-{this.props.team.win_loss.losses})
-        </span>
-      </p>
+      <div className={'team container-fluid ' +  this.props.type}>
+        <div className='row'>
+          <div className='col-md-4 col-xs-4 ranking'>
+            {this.props.team.overall.tier}
+            <Logo abbreviation={this.props.team.abbreviated_name} />
+          </div>
+          <div className='col-md-8 col-xs-8 team-info'>
+            <div className='row'>
+              <div className='col-md-12 col-xs-12'>
+                {this.props.team.short_name}
+              </div>
+              <div className='col-md-12 col-xs-12 record'>
+                ({this.props.team.win_loss.wins}-{this.props.team.win_loss.losses})
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 });

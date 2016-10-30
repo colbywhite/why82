@@ -1,23 +1,23 @@
-span.ranking {
+.ranking {
   font-size: .8em;
-  margin-right: 10px
+  height: 35px;
+  display: flex;
+  align-items: center;
 }
 
-span.record {
+.record {
   font-size: .8em;
-  margin-left: 10px
+  /*margin-left: 10px*/
 }
 
-p.team.away {
-  margin-bottom: 2px
+.team.away {
+  margin-bottom: 10px
 }
 
-p.team.home {
+.team.home {
   margin-bottom: 0
 }
 
-p.team img.logo {
-  width: 25px;
-  height: 25px;
-  margin-right: 10px;
+.team .team-info {
+  margin-left: -20px;
 }
