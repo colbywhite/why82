@@ -1,13 +1,129 @@
 div.game {
-  padding: 0px 5px;
+    margin: 5px;
 }
 
-@media (min-width: 992px) {
-  div.panel-body div.game:nth-child(3n-2) {
-    padding-left: 10px;
+
+/* Flex info*/
+
+div.game, div.gameBody, div.teams, div.team, div.teamData {
+    display: flex;
+}
+
+div.game, div.team {
+    flex-direction: row;
+}
+
+div.gameBody, div.teams, div.teamData {
+    flex-direction: column;
+}
+
+div.teamData {
+    height: 40px;
+}
+
+div.teamDataEntry {
+    height: 17px;
+    line-height: 17px;
+}
+
+div.teamRecord {
+    padding-bottom: 3px;
+}
+
+div.teamName {
+    width: 87px;
+    padding-top: 3px;
+}
+
+div.grade, div.teamLogo {
+    width: 25px;
+}
+
+div.teamLogo, div.tier {
+    height: 40px;
+    line-height: 40px
+}
+
+div.teamLogo {
+    margin-right: 10px;
+}
+
+div.tier {
+    margin-right: 10px;
+}
+
+img.teamLogo {
+    vertical-align: middle;
+    height: 25px;
+    width: 25px;
+}
+
+div.grade {
+    height: 112px;
+    line-height: 112px;
+}
+
+div.gameBody {
+    border: 1px solid #eee;
+    padding: 5px 10px;
+}
+
+div.viewInfo {
+    height: 15px;
+    margin-bottom: 5px;
+}
+
+div.grade, div.tier {
+    text-align: center;
+    vertical-align: middle;
+}
+
+div.teamRecord, div.viewInfo {
+    font-size: 10px;
+}
+
+div.gradeA {
+    background-color: #ce4844;
+}
+
+div.gradeB {
+    background-color: #aa6708;
+}
+
+div.gradeC {
+    background-color: #1b809e;
+}
+
+div.gradeD {
+    background-color: #ccc;
+}
+
+@media (min-width: 595px) {
+    div.rowsOfThree {
+        display: flex;
+        flex-direction: row;
+    }
+
+    section.schedule {
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 594px) {
+  div.game {
+    display: table;
+    width: 97%;
   }
 
-  div.panel-body div.game:nth-child(3n) {
-    padding-right: 10px;
+  div.grade, div.gameBody {
+    display: table-cell;
   }
+
+  div.gameBody {
+    width: auto;
+  }
+
 }
