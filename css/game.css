@@ -5,11 +5,11 @@ div.game {
 
 /* Flex info*/
 
-div.game, div.gameBody, div.teams, div.team, div.teamData {
+div.game, div.gameBody, div.teams, div.team, div.teamData, div.viewInfo {
     display: flex;
 }
 
-div.game, div.team {
+div.game, div.team, div.viewInfo {
     flex-direction: row;
 }
 
@@ -59,8 +59,8 @@ img.teamLogo {
 }
 
 div.grade {
-    height: 112px;
-    line-height: 112px;
+    height: 117px;
+    line-height: 117px;
 }
 
 div.gameBody {
@@ -70,7 +70,8 @@ div.gameBody {
 
 div.viewInfo {
     height: 15px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    vertical-align: middle;
 }
 
 div.grade, div.tier {
@@ -80,6 +81,24 @@ div.grade, div.tier {
 
 div.teamRecord, div.viewInfo {
     font-size: 10px;
+}
+
+div.networkLogo {
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+img.networkLogo {
+  width: auto;
+  vertical-align: middle;
+}
+
+img.networkLogo.espn {
+  max-height: 10px;
+}
+
+img.networkLogo.nbatv {
+  max-height: 20px;
 }
 
 div.gradeA {

@@ -54,6 +54,22 @@ const Team = React.createClass({
   }
 });
 
+const NetworkLogo = React.createClass({
+  render: function() {
+    if (!this.props.name) {
+      return <div />
+    }
+    else {
+      const name = this.props.name.toLowerCase();
+      return (
+        <div className={'networkLogo '+name}>
+          <img className={'networkLogo '+name} src={'img/'+name+'.png'} />
+        </div>
+      )
+    }
+  }
+});
+
 const ViewInfo = React.createClass({
   formatTime: function(dateString) {
     return moment(dateString).tz('America/New_York').format('h:mm a z');
@@ -62,6 +78,7 @@ const ViewInfo = React.createClass({
     return (
       <div className="viewInfo">
         {this.formatTime(this.props.time)}
+        <NetworkLogo name={this.props.tv} />
       </div>
     )
   }
@@ -83,9 +100,9 @@ const Game = React.createClass({
       <div className="game">
         <Grade grade={this.props.game.grade} />
         <div className="gameBody">
-          <ViewInfo time={this.props.game.time} />
           <Team team={this.props.game.away} />
           <Team team={this.props.game.home} />
+          <ViewInfo time={this.props.game.time} tv={this.props.game.nat_tv}/>
         </div>
       </div>
     )
