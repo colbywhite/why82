@@ -101,6 +101,10 @@ img.networkLogo.nbatv {
   max-height: 20px;
 }
 
+img.networkLogo.tnt {
+  max-height: 15px;
+}
+
 div.gradeA {
     background-color: #ce4844;
 }
