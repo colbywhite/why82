@@ -1,0 +1,500 @@
+{
+  "2017-02-16": [
+  {
+    "home":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 2,
+          "WinPct": 0.512,
+          "Wins": 42,
+          "Losses": 40
+        },
+        "offense":
+        {
+          "score": 2,
+          "PtsPerGame": 105.1
+        },
+        "pt_diff":
+        {
+          "score": 0,
+          "PtsPerGame": 105.1,
+          "PtsAgainstPerGame": 105.3,
+          "PtsDiffPerGame": -0.20000000000000284
+        }
+      },
+      "score": 4,
+      "abbreviated_name": "IND",
+      "short_name": "Pacers",
+      "full_name": "Indiana Pacers"
+    },
+    "away":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 3,
+          "WinPct": 0.598,
+          "Wins": 49,
+          "Losses": 33
+        },
+        "offense":
+        {
+          "score": 5,
+          "PtsPerGame": 109.2
+        },
+        "pt_diff":
+        {
+          "score": 1,
+          "PtsPerGame": 109.2,
+          "PtsAgainstPerGame": 107.4,
+          "PtsDiffPerGame": 1.7999999999999972
+        }
+      },
+      "score": 9,
+      "abbreviated_name": "WAS",
+      "short_name": "Wizards",
+      "full_name": "Washington Wizards"
+    },
+    "time": "2017-02-16T19:00:00-05:00",
+    "score": "D"
+  },
+  {
+    "home":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 2,
+          "WinPct": 0.5,
+          "Wins": 41,
+          "Losses": 41
+        },
+        "offense":
+        {
+          "score": 1,
+          "PtsPerGame": 102.9
+        },
+        "pt_diff":
+        {
+          "score": 1,
+          "PtsPerGame": 102.9,
+          "PtsAgainstPerGame": 102.4,
+          "PtsDiffPerGame": 0.5
+        }
+      },
+      "score": 4,
+      "abbreviated_name": "CHI",
+      "short_name": "Bulls",
+      "full_name": "Chicago Bulls"
+    },
+    "away":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 3,
+          "WinPct": 0.646,
+          "Wins": 53,
+          "Losses": 29
+        },
+        "offense":
+        {
+          "score": 5,
+          "PtsPerGame": 108
+        },
+        "pt_diff":
+        {
+          "score": 2,
+          "PtsPerGame": 108,
+          "PtsAgainstPerGame": 105.4,
+          "PtsDiffPerGame": 2.5999999999999943
+        }
+      },
+      "score": 10,
+      "abbreviated_name": "BOS",
+      "short_name": "Celtics",
+      "full_name": "Boston Celtics"
+    },
+    "time": "2017-02-16T20:00:00-05:00",
+    "score": "D"
+  }],
+  "2017-02-23": [
+  {
+    "home":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 1,
+          "WinPct": 0.354,
+          "Wins": 29,
+          "Losses": 53
+        },
+        "offense":
+        {
+          "score": 0,
+          "PtsPerGame": 101.1
+        },
+        "pt_diff":
+        {
+          "score": -3,
+          "PtsPerGame": 101.1,
+          "PtsAgainstPerGame": 107.6,
+          "PtsDiffPerGame": -6.5
+        }
+      },
+      "score": -2,
+      "abbreviated_name": "ORL",
+      "short_name": "Magic",
+      "full_name": "Orlando Magic"
+    },
+    "away":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 2,
+          "WinPct": 0.5,
+          "Wins": 41,
+          "Losses": 41
+        },
+        "offense":
+        {
+          "score": 3,
+          "PtsPerGame": 107.9
+        },
+        "pt_diff":
+        {
+          "score": 0,
+          "PtsPerGame": 107.9,
+          "PtsAgainstPerGame": 108.5,
+          "PtsDiffPerGame": -0.5999999999999943
+        }
+      },
+      "score": 5,
+      "abbreviated_name": "POR",
+      "short_name": "Trail Blazers",
+      "full_name": "Portland Trail Blazers"
+    },
+    "time": "2017-02-23T19:00:00-05:00",
+    "score": "D"
+  },
+  {
+    "home":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 2,
+          "WinPct": 0.451,
+          "Wins": 37,
+          "Losses": 45
+        },
+        "offense":
+        {
+          "score": 0,
+          "PtsPerGame": 101.3
+        },
+        "pt_diff":
+        {
+          "score": 0,
+          "PtsPerGame": 101.3,
+          "PtsAgainstPerGame": 102.5,
+          "PtsDiffPerGame": -1.2000000000000028
+        }
+      },
+      "score": 2,
+      "abbreviated_name": "DET",
+      "short_name": "Pistons",
+      "full_name": "Detroit Pistons"
+    },
+    "away":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 1,
+          "WinPct": 0.439,
+          "Wins": 36,
+          "Losses": 46
+        },
+        "offense":
+        {
+          "score": 2,
+          "PtsPerGame": 104.9
+        },
+        "pt_diff":
+        {
+          "score": 1,
+          "PtsPerGame": 104.9,
+          "PtsAgainstPerGame": 104.7,
+          "PtsDiffPerGame": 0.20000000000000284
+        }
+      },
+      "score": 4,
+      "abbreviated_name": "CHA",
+      "short_name": "Hornets",
+      "full_name": "Charlotte Hornets"
+    },
+    "time": "2017-02-23T19:30:00-05:00",
+    "score": "D"
+  },
+  {
+    "home":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 1,
+          "WinPct": 0.415,
+          "Wins": 34,
+          "Losses": 48
+        },
+        "offense":
+        {
+          "score": 2,
+          "PtsPerGame": 104.3
+        },
+        "pt_diff":
+        {
+          "score": -1,
+          "PtsPerGame": 104.3,
+          "PtsAgainstPerGame": 106.4,
+          "PtsDiffPerGame": -2.1000000000000085
+        }
+      },
+      "score": 2,
+      "abbreviated_name": "NOP",
+      "short_name": "Pelicans",
+      "full_name": "New Orleans Pelicans"
+    },
+    "away":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 5,
+          "WinPct": 0.671,
+          "Wins": 55,
+          "Losses": 27
+        },
+        "offense":
+        {
+          "score": 21,
+          "PtsPerGame": 115.3
+        },
+        "pt_diff":
+        {
+          "score": 3,
+          "PtsPerGame": 115.3,
+          "PtsAgainstPerGame": 109.6,
+          "PtsDiffPerGame": 5.700000000000003
+        }
+      },
+      "score": 29,
+      "abbreviated_name": "HOU",
+      "short_name": "Rockets",
+      "full_name": "Houston Rockets"
+    },
+    "time": "2017-02-23T20:00:00-05:00",
+    "score": "D"
+  },
+  {
+    "home":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 3,
+          "WinPct": 0.622,
+          "Wins": 51,
+          "Losses": 31
+        },
+        "offense":
+        {
+          "score": 8,
+          "PtsPerGame": 110.3
+        },
+        "pt_diff":
+        {
+          "score": 2,
+          "PtsPerGame": 110.3,
+          "PtsAgainstPerGame": 107.2,
+          "PtsDiffPerGame": 3.0999999999999943
+        }
+      },
+      "score": 13,
+      "abbreviated_name": "CLE",
+      "short_name": "Cavaliers",
+      "full_name": "Cleveland Cavaliers"
+    },
+    "away":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 1,
+          "WinPct": 0.378,
+          "Wins": 31,
+          "Losses": 51
+        },
+        "offense":
+        {
+          "score": 2,
+          "PtsPerGame": 104.3
+        },
+        "pt_diff":
+        {
+          "score": -1,
+          "PtsPerGame": 104.3,
+          "PtsAgainstPerGame": 108,
+          "PtsDiffPerGame": -3.700000000000003
+        }
+      },
+      "score": 2,
+      "abbreviated_name": "NYK",
+      "short_name": "Knicks",
+      "full_name": "New York Knicks"
+    },
+    "time": "2017-02-23T20:00:00-05:00",
+    "score": "D"
+  },
+  {
+    "home":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 8,
+          "WinPct": 0.817,
+          "Wins": 67,
+          "Losses": 15
+        },
+        "offense":
+        {
+          "score": 21,
+          "PtsPerGame": 115.9
+        },
+        "pt_diff":
+        {
+          "score": 13,
+          "PtsPerGame": 115.9,
+          "PtsAgainstPerGame": 104.3,
+          "PtsDiffPerGame": 11.600000000000009
+        }
+      },
+      "score": 42,
+      "abbreviated_name": "GSW",
+      "short_name": "Warriors",
+      "full_name": "Golden State Warriors"
+    },
+    "away":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 3,
+          "WinPct": 0.622,
+          "Wins": 51,
+          "Losses": 31
+        },
+        "offense":
+        {
+          "score": 5,
+          "PtsPerGame": 108.7
+        },
+        "pt_diff":
+        {
+          "score": 3,
+          "PtsPerGame": 108.7,
+          "PtsAgainstPerGame": 104.4,
+          "PtsDiffPerGame": 4.299999999999997
+        }
+      },
+      "score": 11,
+      "abbreviated_name": "LAC",
+      "short_name": "Clippers",
+      "full_name": "Los Angeles Clippers"
+    },
+    "time": "2017-02-23T22:30:00-05:00",
+    "score": "A"
+  },
+  {
+    "home":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 1,
+          "WinPct": 0.39,
+          "Wins": 32,
+          "Losses": 50
+        },
+        "offense":
+        {
+          "score": 1,
+          "PtsPerGame": 102.8
+        },
+        "pt_diff":
+        {
+          "score": -1,
+          "PtsPerGame": 102.8,
+          "PtsAgainstPerGame": 106.7,
+          "PtsDiffPerGame": -3.9000000000000057
+        }
+      },
+      "score": 1,
+      "abbreviated_name": "SAC",
+      "short_name": "Kings",
+      "full_name": "Sacramento Kings"
+    },
+    "away":
+    {
+      "metrics":
+      {
+        "win_loss":
+        {
+          "score": 2,
+          "WinPct": 0.488,
+          "Wins": 40,
+          "Losses": 42
+        },
+        "offense":
+        {
+          "score": 8,
+          "PtsPerGame": 111.7
+        },
+        "pt_diff":
+        {
+          "score": 1,
+          "PtsPerGame": 111.7,
+          "PtsAgainstPerGame": 111.2,
+          "PtsDiffPerGame": 0.5
+        }
+      },
+      "score": 11,
+      "abbreviated_name": "DEN",
+      "short_name": "Nuggets",
+      "full_name": "Denver Nuggets"
+    },
+    "time": "2017-02-23T22:30:00-05:00",
+    "score": "D"
+  }]
+}
