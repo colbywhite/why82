@@ -1,0 +1,157 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'S3 Bucket for Website'
+Parameters:
+  SiteName:
+    Description: Name of Website
+    Type: String
+Resources:
+  WebBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Ref: SiteName
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+  LogBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Fn::Join:
+          - '-'
+          -
+            - Ref: SiteName
+            - 'logs'
+  WebBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: WebBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: Allow Public Access to All Objects
+            Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource:
+              Fn::Join:
+                - ':::'
+                -
+                  - arn:aws:s3
+                  - Fn::Join:
+                    - /
+                    -
+                      - Ref: WebBucket
+                      - '*'
+  CloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultRootObject: /index.html
+        Logging:
+          Bucket:
+            Fn::GetAtt:
+              - LogBucket
+              - DomainName
+          Prefix: 'logs'
+        CustomErrorResponses:
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          Compress: true
+          TargetOriginId:
+            Ref: WebBucket
+          ViewerProtocolPolicy: allow-all
+          ForwardedValues:
+            QueryString: true
+          MaxTTL: 60
+          DefaultTTL: 30
+        Origins:
+          - Id:
+              Ref: WebBucket
+            DomainName:
+              Fn::GetAtt:
+                - WebBucket
+                - DomainName
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+  CiUser:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName:
+            Fn::Join:
+              - '-'
+              -
+                - Ref: SiteName
+                - cipolicy
+          PolicyDocument:
+            Statement:
+              - Action:
+                - s3:PutObject
+                - s3:PutObjectAcl
+                Effect: Allow
+                Resource:
+                  - Fn::Join:
+                    - ':::'
+                    -
+                      - arn:aws:s3
+                      - Fn::Join:
+                        - /
+                        -
+                          - Ref: WebBucket
+                          - '*'
+  CiKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName:
+        Ref: CiUser
+Outputs:
+  SiteName:
+    Description: The name of the website
+    Value:
+      Ref: SiteName
+  WebBucket:
+    Description: The bucket serving the website
+    Value:
+      Ref: WebBucket
+  S3URL:
+     Description: URL to the S3 Bucket
+     Value:
+      Fn::GetAtt:
+        - WebBucket
+        - WebsiteURL
+  URL:
+     Description: URL to hit the site
+     Value:
+      Fn::GetAtt:
+        - CloudFront
+        - DomainName
+  CiUser:
+    Description: The CI user that will for doing releases
+    Value:
+      Ref: CiUser
+  CiAccessKey:
+    Description: The CI user's access key
+    Value:
+      Ref: CiKey
+  CiSecretKey:
+    Description: The CI user's secret key
+    Value:
+      Fn::GetAtt:
+        - CiKey
+        - SecretAccessKey
