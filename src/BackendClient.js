@@ -1,13 +1,15 @@
 import axios from 'axios'
 
 class BackendClient {
-  constructor(host) {
+  constructor(host, stage, season) {
     this.host = host
+    this.stage = stage
+    this.season = season
   }
 
   getSchedule() {
     return axios
-      .get(`${this.host}/prod/2017/schedule`)
+      .get(`${this.host}/${this.stage}/${this.season}/schedule`)
       .then((r) => r.data)
   }
 }

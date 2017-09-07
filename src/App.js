@@ -5,7 +5,7 @@ import Schedule from './Schedule';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.client = new BackendClient(props.domain)
+    this.client = new BackendClient(props.domain, props.stage, props.season)
     this.state = {schedule: false}
   }
 
