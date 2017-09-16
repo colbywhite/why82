@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BackendClient from './BackendClient';
 import Schedule from './Schedule';
+import Nav from './Nav';
 
 class App extends Component {
   constructor(props) {
@@ -17,11 +18,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-light bg-light">
-          <a className="navbar-brand" href="/">
-            Why 82? <small>v{process.env.REACT_APP_VERSION || 2018}</small>
-          </a>
-        </nav>
+        <Nav />
         <Schedule schedule={this.state.schedule} />
       </div>
     );
