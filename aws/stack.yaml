@@ -4,6 +4,13 @@ Parameters:
   SiteName:
     Description: Name of Website
     Type: String
+  Domain:
+    Description: Domain of Website
+    Type: String
+    Default: com
+  ACMCertId:
+    Description: Id of ACM certificate
+    Type: String
 Resources:
   WebBucket:
     Type: AWS::S3::Bucket
@@ -49,6 +56,18 @@ Resources:
     Properties:
       DistributionConfig:
         Enabled: true
+        Aliases:
+          - Fn::Join:
+            - '.'
+            -
+              - Ref: SiteName
+              - Ref: Domain
+          - Fn::Join:
+            - '.'
+            -
+              - www
+              - Ref: SiteName
+              - Ref: Domain
         DefaultRootObject: /index.html
         Logging:
           Bucket:
@@ -75,11 +94,27 @@ Resources:
           Compress: true
           TargetOriginId:
             Ref: WebBucket
-          ViewerProtocolPolicy: allow-all
+          ViewerProtocolPolicy: redirect-to-https
           ForwardedValues:
             QueryString: true
           MaxTTL: 60
           DefaultTTL: 30
+        ViewerCertificate:
+          SslSupportMethod: sni-only
+          AcmCertificateArn:
+            Fn::Join:
+              - ':'
+              -
+                - arn
+                - aws
+                - acm
+                - Ref: 'AWS::Region'
+                - Ref: 'AWS::AccountId'
+                - Fn::Join:
+                  - '/'
+                  -
+                    - certificate
+                    - Ref: ACMCertId
         Origins:
           - Id:
               Ref: WebBucket
