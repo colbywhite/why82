@@ -32,7 +32,7 @@ class Schedule extends Component {
     return (
       <div className="p-2 mx-auto row schedule">
         <div className="col-sm-12 col-md-8 mx-auto">
-          <h3>Schedule</h3>
+          <h2>Schedule</h2>
           {panels}
         </div>
       </div>
