@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
-import BackendClient from './BackendClient';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Schedule from './Schedule';
+import About from './About';
 import Nav from './Nav';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.client = new BackendClient(props.domain, props.stage, props.season)
-    this.state = {schedule: false}
-  }
-
-  componentDidMount() {
-    this.client.getSchedule()
-      .then((schedule) => this.setState({schedule: schedule}))
-  }
-
   render() {
     return (
-      <div>
-        <Nav />
-        <Schedule schedule={this.state.schedule} />
-      </div>
+      <BrowserRouter>
+        <div>
+          <Nav />
+          <Route exact path="/" component={Schedule} />
+          <Route path="/about" component={About} />
+        </div>
+      </BrowserRouter>
     );
   }
 }

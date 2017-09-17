@@ -1,14 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
-const domain = process.env.REACT_APP_BACKEND_DOMAIN
-const season = process.env.REACT_APP_SEASON
-const stage = process.env.REACT_APP_STAGE || 'dev'
 ReactDOM.render(
-  <App domain={domain} stage={stage} season={season}/>,
+  <App />,
   document.getElementById('root')
 )
 registerServiceWorker()
