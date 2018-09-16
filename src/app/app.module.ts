@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { DayComponent } from './day/day.component';
 import { GameTableComponent } from './game-table/game-table.component';
+import { TeamComponent } from './team/team.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     DayComponent,
-    GameTableComponent
+    GameTableComponent,
+    TeamComponent
   ],
   imports: [
     BrowserAnimationsModule,

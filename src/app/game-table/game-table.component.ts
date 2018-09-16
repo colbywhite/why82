@@ -16,12 +16,16 @@ import { Game } from '../game.model';
 
       <ng-container matColumnDef="away">
         <th mat-header-cell *matHeaderCellDef>Away</th>
-        <td mat-cell *matCellDef="let g"> {{g.away.short_name}}</td>
+        <td mat-cell *matCellDef="let g">
+          <app-team [team]="g.away"></app-team>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="home">
         <th mat-header-cell *matHeaderCellDef>Home</th>
-        <td mat-cell *matCellDef="let g"> {{g.home.short_name}}</td>
+        <td mat-cell *matCellDef="let g">
+          <app-team [team]="g.home"></app-team>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
