@@ -5,8 +5,14 @@ import { Moment } from 'moment';
 @Component({
   selector: 'app-day',
   template: `
-    <p>{{date | amDateFormat:'ddd MMM Do, YYYY'}}</p>
-    <app-game *ngFor="let g of games" [game]="g"></app-game>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{date | amDateFormat:'ddd MMM Do, YYYY'}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-game-table [games]="games"></app-game-table>
+      </mat-card-content>
+    </mat-card>
   `
 })
 export class DayComponent {

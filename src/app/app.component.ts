@@ -11,6 +11,7 @@ import { Moment } from 'moment';
     <div>
       <app-nav></app-nav>
       <app-day [date]="date" [games]="games"></app-day>
+      <app-day [date]="date" [games]="games"></app-day>
     </div>
   `
 })
