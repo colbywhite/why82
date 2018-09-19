@@ -4,37 +4,39 @@ import { Game } from '../game.model';
 @Component({
   selector: 'app-game-table',
   styles: [
-    'table {width: 100%;}'
+    'table {width: inherit}',
+    'mat-header-cell, mat-cell {justify-content: center}'
   ],
   template: `
-    <table mat-table [dataSource]="games">
+    <mat-table [dataSource]="games">
 
       <ng-container matColumnDef="time">
-        <th mat-header-cell *matHeaderCellDef>Time</th>
-        <td mat-cell *matCellDef="let g"> {{g.time | amDateFormat:'h:mm az'}}</td>
+        <mat-header-cell *matHeaderCellDef><div>Time</div></mat-header-cell>
+        <mat-cell *matCellDef="let g"> {{g.time | amDateFormat:'h:mm az'}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="away">
-        <th mat-header-cell *matHeaderCellDef>Away</th>
-        <td mat-cell *matCellDef="let g">
+        <mat-header-cell *matHeaderCellDef>Away</mat-header-cell>
+        <mat-cell *matCellDef="let g">
           <app-team [team]="g.away"></app-team>
-        </td>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="home">
-        <th mat-header-cell *matHeaderCellDef>Home</th>
-        <td mat-cell *matCellDef="let g">
+        <mat-header-cell *matHeaderCellDef>Home</mat-header-cell>
+        <mat-cell *matCellDef="let g">
           <app-team [team]="g.home"></app-team>
-        </td>
+        </mat-cell>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
   `
 })
 export class GameTableComponent {
   public displayedColumns = ['time', 'away', 'home'];
+
   @Input()
   public games: Game[];
 

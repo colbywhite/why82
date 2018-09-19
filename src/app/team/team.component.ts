@@ -4,12 +4,12 @@ import { Team } from '../game.model';
 @Component({
   selector: 'app-team',
   styles: [
-    'div.fab {width: 1em; height: 100%; border: aqua 1px solid;}'
+    ':host {margin: 0.25em}',
+    'img.logo {width: 50px; height: 50px; margin: 0;}'
   ],
   template: `
-    <div>
-      {{team.short_name}}
-      <div class="fab">{{team.abbreviated_name}}</div>
+    <div class="wrapper">
+      <img class="logo" [src]="iconSrc"/>
     </div>
   `
 })
@@ -20,4 +20,7 @@ export class TeamComponent {
   constructor() {
   }
 
+  public get iconSrc() {
+    return `/assets/icons/${this.team.abbreviated_name.toLowerCase()}.svg`;
+  }
 }

@@ -7,7 +7,9 @@ import { Moment } from 'moment';
   template: `
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{date | amDateFormat:'ddd MMM Do, YYYY'}}</mat-card-title>
+        <mat-card-title>
+          <h3>{{date | amDateFormat:'ddd MMM Do, YYYY'}}</h3>
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <app-game-table [games]="games"></app-game-table>
