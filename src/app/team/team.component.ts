@@ -1,16 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { Team } from '../game.model';
 
+export const TEAM_COMPONENT_HEIGHT_PX = 50;
+export const TEAM_COMPONENT_MARGIN_PX = 5;
+
 @Component({
   selector: 'app-team',
   styles: [
-    ':host {margin: 0.25em}',
-    'img.logo {width: 50px; height: 50px; margin: 0;}'
+    `:host {margin: ${TEAM_COMPONENT_MARGIN_PX}px; height: ${TEAM_COMPONENT_HEIGHT_PX}px;}`,
+    `img.logo {width: ${TEAM_COMPONENT_HEIGHT_PX}px; height: ${TEAM_COMPONENT_HEIGHT_PX}px; margin: 0;}`
   ],
   template: `
-    <div class="wrapper">
-      <img class="logo" [src]="iconSrc"/>
-    </div>
+    <img class="logo" [src]="iconSrc"/>
   `
 })
 export class TeamComponent {
