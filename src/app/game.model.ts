@@ -13,6 +13,10 @@ export interface Game {
   score: string;
 }
 
+export interface Schedule {
+  [key: string]: Game[];
+}
+
 // TODO replace with games from the backend
 export const default_games: Game[] = [
   {
