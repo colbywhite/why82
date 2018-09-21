@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../game.model';
 import { TEAM_COMPONENT_HEIGHT_PX, TEAM_COMPONENT_MARGIN_PX } from '../team/team.component';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { map, startWith } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
 
 const HEADER_HEIGHT_PX = 56;
@@ -86,7 +86,7 @@ export class GameTableComponent implements OnInit {
       const oddGames = allGames.filter((val: Game, index: number) => index % 2 === 1);
       return [evenGames, oddGames];
     }
-  };
+  }
 
   public calcLargestColumnHeight = (gameColumns: Game[][]): string => {
     const lengths: number[] = gameColumns.map((column: Game[]) => column.length);
@@ -95,7 +95,7 @@ export class GameTableComponent implements OnInit {
     const teamRowMargin: number = 2 * TEAM_COMPONENT_MARGIN_PX;
     const teamRowHeight: number = TEAM_COMPONENT_HEIGHT_PX + teamRowMargin + BORDER_HEIGHT_PX;
     const tableHeight: number = headerRowHeight + (largestLength * teamRowHeight);
-    return `${tableHeight}px`
-  };
+    return `${tableHeight}px`;
+  }
 
 }

@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MomentModule } from 'ngx-moment';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
-import { FlexLayoutModule } from "@angular/flex-layout";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
