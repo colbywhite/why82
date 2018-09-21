@@ -11,7 +11,7 @@ const BORDER_HEIGHT_PX = 1;
 @Component({
   selector: 'app-game-table',
   styles: [
-    'table {width: inherit}',
+    'mat-table {width: 100%;}',
     'mat-header-cell, mat-cell {justify-content: center}',
     ':host ::ng-deep figure.mat-figure {align-items: stretch;}'
   ],
