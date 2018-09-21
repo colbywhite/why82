@@ -4,6 +4,9 @@ import { Moment } from 'moment';
 
 @Component({
   selector: 'app-day',
+  styles: [
+    'mat-card {margin: 24px 0}'
+  ],
   template: `
     <mat-card>
       <mat-card-header>
