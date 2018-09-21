@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MomentModule } from 'ngx-moment';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -14,7 +15,6 @@ import { NavComponent } from './nav/nav.component';
 import { DayComponent } from './day/day.component';
 import { GameTableComponent } from './game-table/game-table.component';
 import { TeamComponent } from './team/team.component';
-
 
 @NgModule({
   declarations: [
@@ -32,6 +32,7 @@ import { TeamComponent } from './team/team.component';
     MatCardModule,
     MatGridListModule,
     MatTableModule,
+    MatProgressSpinnerModule,
     FlexLayoutModule,
     MomentModule
   ],

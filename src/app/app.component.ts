@@ -9,10 +9,13 @@ import { Schedule } from './game.model';
 
 @Component({
   selector: 'app-root',
+  styles: [
+    `mat-spinner {margin: 24px auto;}`
+  ],
   template: `
     <div>
       <app-nav></app-nav>
-      <p *ngIf="loading">Loading</p>
+      <mat-spinner *ngIf="loading"></mat-spinner>
       <app-day
         *ngFor="let entries of objectEntries(schedule | async)"
         [date]="getMoment(entries[0])"
