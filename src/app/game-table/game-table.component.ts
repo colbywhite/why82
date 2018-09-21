@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Game } from '../game.model';
 import { TEAM_COMPONENT_HEIGHT_PX, TEAM_COMPONENT_MARGIN_PX } from '../team/team.component';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
 
 const HEADER_HEIGHT_PX = 56;
@@ -16,8 +16,11 @@ const BORDER_HEIGHT_PX = 1;
     ':host ::ng-deep figure.mat-figure {align-items: stretch;}'
   ],
   template: `
-    <mat-grid-list [cols]="(splitGames | async).length" [rowHeight]="largestColumnHeight | async">
-      <mat-grid-tile *ngFor="let column of (splitGames | async)">
+    <mat-grid-list
+      *ngIf="(splitGames | async) as columns"
+      [cols]="columns.length"
+      [rowHeight]="largestColumnHeight | async">
+      <mat-grid-tile *ngFor="let column of columns">
         <mat-table [dataSource]="column">
 
           <ng-container matColumnDef="time">
@@ -70,8 +73,11 @@ export class GameTableComponent implements OnInit {
   public ngOnInit(): void {
     this.splitGames = this.mediaSvc.asObservable()
       .pipe(
+        distinctUntilChanged(),
         map(this.getColumns),
-        map(this.splitIntoColumns.bind(undefined, this.games))
+        distinctUntilChanged(),
+        map(this.splitIntoColumns.bind(undefined, this.games)),
+        startWith([this.games])
       );
     this.largestColumnHeight = this.splitGames.pipe(map(this.calcLargestColumnHeight));
   }

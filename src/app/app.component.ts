@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { Observable } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 import { GamesService } from './games.service';
 import { Schedule } from './game.model';
@@ -10,16 +12,32 @@ import { Schedule } from './game.model';
   template: `
     <div>
       <app-nav></app-nav>
-      <app-day *ngFor="let date of objectKeys(schedule)" [date]="getMoment(date)" [games]="schedule[date]"></app-day>
+      <p *ngIf="loading">Loading</p>
+      <app-day
+        *ngFor="let entries of objectEntries(schedule | async)"
+        [date]="getMoment(entries[0])"
+        [games]="entries[1]">
+      </app-day>
     </div>
   `
 })
-export class AppComponent {
-  public schedule: Schedule;
-  protected objectKeys = Object.keys;
+export class AppComponent implements OnInit {
+  public schedule: Observable<Schedule>;
+  public loading = true;
+  protected objectEntries = Object.entries;
 
   constructor(private gameSvc: GamesService) {
-    this.schedule = this.gameSvc.schedule;
+  }
+
+  public ngOnInit() {
+    this.loading = true;
+    this.schedule = this.gameSvc.schedule.pipe(startWith({} as Schedule));
+    const noop = () => {
+    };
+    const onerror = (err) => {
+      console.error('error getting sked', err);
+    };
+    this.schedule.subscribe(noop, onerror, () => this.loading = false);
   }
 
   protected getMoment(date: string): Moment {

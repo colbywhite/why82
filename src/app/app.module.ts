@@ -7,12 +7,14 @@ import { MomentModule } from 'ngx-moment';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { DayComponent } from './day/day.component';
 import { GameTableComponent } from './game-table/game-table.component';
 import { TeamComponent } from './team/team.component';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { TeamComponent } from './team/team.component';
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    HttpClientModule,
     MatToolbarModule,
     MatCardModule,
     MatGridListModule,
