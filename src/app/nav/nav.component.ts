@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { Constants } from '../constants';
 
 @Component({
   selector: 'app-nav',
@@ -17,7 +17,7 @@ import { environment } from '../../environments/environment';
   `,
 })
 export class NavComponent {
-  public version: string = environment.VERSION;
+  public version: string = Constants.VERSION;
 
   constructor() {
   }
