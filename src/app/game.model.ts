@@ -22,7 +22,8 @@ export interface ColumnedSchedule {
 }
 
 export class Columner {
-  public static splitIntoColumns = (schedule: Schedule, numColumns: number): ColumnedSchedule => {
+  public static splitIntoColumns = (data: [Schedule, number]): ColumnedSchedule => {
+    const [schedule, numColumns] = data;
     return Object.entries(schedule)
       .map((entry: [string, Game[]]) => {
         const [date, games] = entry;
