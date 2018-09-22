@@ -1,40 +1,26 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule } from '@angular/material/card';
-import { MomentModule } from 'ngx-moment';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { DayComponent } from './day/day.component';
-import { GameTableComponent } from './game-table/game-table.component';
-import { TeamComponent } from './team/team.component';
+import { NavModule } from './nav/nav.module';
+import { DayModule } from './day/day.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavComponent,
-    DayComponent,
-    GameTableComponent,
-    TeamComponent
+    AppComponent
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatGridListModule,
-    MatTableModule,
     MatProgressSpinnerModule,
     FlexLayoutModule,
-    MomentModule
+    NavModule,
+    DayModule
   ],
   providers: [],
   bootstrap: [AppComponent]
