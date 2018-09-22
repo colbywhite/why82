@@ -15,14 +15,14 @@ import { Moment } from 'moment';
         </mat-card-title>
       </mat-card-header>
       <mat-card-content *ngIf="games?.length">
-        <app-game-table [games]="games"></app-game-table>
+        <app-game-table [gameColumns]="games"></app-game-table>
       </mat-card-content>
     </mat-card>
   `
 })
 export class DayComponent {
   @Input()
-  public games: Game[];
+  public games: Game[][];
   @Input()
   public date: Moment;
 

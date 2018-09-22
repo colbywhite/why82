@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { Observable } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
-import { GamesService } from './games.service';
-import { Schedule } from './game.model';
+import { Game } from './game.model';
+import { ColumnedScheduleService } from './columned-schedule.service';
 
 @Component({
   selector: 'app-root',
@@ -17,34 +17,30 @@ import { Schedule } from './game.model';
       <app-nav></app-nav>
       <mat-spinner *ngIf="loading"></mat-spinner>
       <app-day
-        *ngFor="let entries of objectEntries(schedule | async)"
-        [date]="getMoment(entries[0])"
-        [games]="entries[1]">
+        *ngFor="let entry of (scheduleEntries | async)"
+        [date]="getMoment(entry[0])"
+        [games]="entry[1]">
       </app-day>
     </div>
   `
 })
 export class AppComponent implements OnInit {
-  public schedule: Observable<Schedule>;
+  public scheduleEntries: Observable<[string, Game[][]][]>;
   public loading = true;
-  protected objectEntries = Object.entries;
 
-  constructor(private gameSvc: GamesService) {
+  constructor(private scheduleService: ColumnedScheduleService) {
   }
 
   public ngOnInit() {
     this.loading = true;
-    this.schedule = this.gameSvc.schedule.pipe(startWith({} as Schedule));
-    const noop = () => {
-    };
-    const onerror = (err) => {
-      console.error('error getting sked', err);
-    };
-    this.schedule.subscribe(noop, onerror, () => this.loading = false);
+    this.scheduleEntries = this.scheduleService.columnedSchedule
+      .pipe(
+        map(Object.entries),
+        tap(() => this.loading = false)
+      );
   }
 
   protected getMoment(date: string): Moment {
     return moment(date);
   }
-
 }

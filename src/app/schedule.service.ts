@@ -8,7 +8,7 @@ import { Constants } from './constants';
 @Injectable({
   providedIn: 'root'
 })
-export class GamesService {
+export class ScheduleService {
   constructor(private http: HttpClient) {
   }
 

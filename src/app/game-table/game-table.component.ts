@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
 import { Game } from '../game.model';
 import { TEAM_COMPONENT_HEIGHT_PX, TEAM_COMPONENT_MARGIN_PX } from '../team/team.component';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
-import { Observable } from 'rxjs/index';
 
 const HEADER_HEIGHT_PX = 56;
 const BORDER_HEIGHT_PX = 1;
@@ -17,10 +15,10 @@ const BORDER_HEIGHT_PX = 1;
   ],
   template: `
     <mat-grid-list
-      *ngIf="(splitGames | async) as columns"
-      [cols]="columns.length"
-      [rowHeight]="largestColumnHeight | async">
-      <mat-grid-tile *ngFor="let column of columns">
+      *ngIf="gameColumns?.length > 0"
+      [cols]="gameColumns.length"
+      [rowHeight]="calcLargestColumnHeight(gameColumns)">
+      <mat-grid-tile *ngFor="let column of gameColumns">
         <mat-table [dataSource]="column">
 
           <ng-container matColumnDef="time">
@@ -51,47 +49,13 @@ const BORDER_HEIGHT_PX = 1;
     </mat-grid-list>
   `
 })
-export class GameTableComponent implements OnInit {
+export class GameTableComponent {
   public displayedColumns = ['time', 'away', 'home'];
-  private grid = new Map([
-    ['xs', 1],
-    ['sm', 2],
-    ['md', 2],
-    ['lg', 2],
-    ['xl', 2]
-  ]);
 
   @Input()
-  public games: Game[];
+  public gameColumns: Game[][];
 
-  protected splitGames: Observable<Game[][]>;
-  protected largestColumnHeight: Observable<string>;
-
-  constructor(private mediaSvc: ObservableMedia) {
-  }
-
-  public ngOnInit(): void {
-    this.splitGames = this.mediaSvc.asObservable()
-      .pipe(
-        distinctUntilChanged(),
-        map(this.getColumns),
-        distinctUntilChanged(),
-        map(this.splitIntoColumns.bind(undefined, this.games)),
-        startWith([this.games])
-      );
-    this.largestColumnHeight = this.splitGames.pipe(map(this.calcLargestColumnHeight));
-  }
-
-  public getColumns = (change: MediaChange): number => this.grid.get(change.mqAlias);
-
-  public splitIntoColumns = (allGames: Game[], numColumns: number): Game[][] => {
-    if (numColumns <= 1) {
-      return [allGames];
-    } else {
-      const evenGames = allGames.filter((val: Game, index: number) => index % 2 === 0);
-      const oddGames = allGames.filter((val: Game, index: number) => index % 2 === 1);
-      return [evenGames, oddGames];
-    }
+  constructor() {
   }
 
   public calcLargestColumnHeight = (gameColumns: Game[][]): string => {
