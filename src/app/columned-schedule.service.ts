@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ScheduleService } from './schedule.service';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { ColumnedSchedule, Columner, Schedule } from './game.model';
+import { ColumnedSchedule, ScheduleSplitter, Schedule } from './game.model';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 
@@ -30,7 +30,7 @@ export class ColumnedScheduleService {
       );
     const schedule: Observable<Schedule> = this.scheduleSvc.schedule;
     return combineLatest(schedule, columns)
-      .pipe(map(Columner.splitIntoColumns));
+      .pipe(map(ScheduleSplitter.splitScheduleIntoColumns));
   }
 
   public getColumns = (change: MediaChange): number => GRID.get(change.mqAlias);

@@ -21,13 +21,13 @@ export interface ColumnedSchedule {
   [key: string]: Game[][];
 }
 
-export class Columner {
-  public static splitIntoColumns = (data: [Schedule, number]): ColumnedSchedule => {
+export class ScheduleSplitter {
+  public static splitScheduleIntoColumns = (data: [Schedule, number]): ColumnedSchedule => {
     const [schedule, numColumns] = data;
     return Object.entries(schedule)
       .map((entry: [string, Game[]]) => {
         const [date, games] = entry;
-        const columns: Game[][] = Columner.splitIntoSubArrays<Game>(games, numColumns);
+        const columns: Game[][] = ScheduleSplitter.splitIntoSubArrays<Game>(games, numColumns);
         return [date, columns] as [string, Game[][]];
       }).reduce((result: ColumnedSchedule, entry: [string, Game[][]]) => {
         const [date, columns] = entry;
