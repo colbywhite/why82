@@ -1,11 +1,19 @@
 language: node_js
 node_js:
-- 6.10.3
+- 8.12.0
+sudo: required
 cache:
   directories:
   - node_modules
+addons:
+  chrome: stable
+before_install:
+- google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+script:
+- npm run lint
+- npm run test:ci
 before_deploy:
-- npm run build
+- npm run build:prod
 deploy:
   provider: s3
   access_key_id: AKIAICW5T2DWBWNRHPEA
@@ -13,7 +21,7 @@ deploy:
   secret_access_key:
     secure: XbRAT/ZyruKM8mI1YyTinTHz7qJ27Ql9djAvXjHqUV+61UcV9QTqbVBqJJH2X2xsgtNBSVqPiebtJLUWx6iOH/2MFOXMjH09Ipl0AZ4EWY2pT6Y6BGKgPsylFdWzPL00dZUFljb4H6XUDXBoiihxVuGAsLUtp7iQZUJH4whCKdzJsEa3XGVDmaKIuDT9AB+8aHFxlo77N1Os78sDXabO7dZmz8yHPUtzZ8TvaBO1uqt/cBIJcsbukxsfAeEdMlrn2v6FxdJJ3wR+s26qfWxkmGmXLb2SyoOdqLMvUUEZvRhsTjnnbc7zi5ZO1IlNu4AFHGzQsvNSgbSs/xbICBiOvf5qlPDfFwzTewCFBlCbOMzJW70OUFfJFQihMpGTislFtvow5JiQUNZsp3cQhg70w2LuJvQ+cU2380bZBKxwcBZH5U74pegvcs8ZvfeG5zCOAvFmVJsTkmHu7A1aW0StSXzeCIyXzOLtuSA5x4FTyoHycIRKhoF7OIKV9uZyfFxRszNYZzL4GkorAXqR+Q5+r3Me7y7/gEfuiePbhlTPTZrIGK6AzkFuurg4K6hBxFqqRnaW1sNnPciIgWLXyG8ow3d7rU8wMefhTSgmuPRfwlrT2L+0UW5piExX7UWyTq/Zeyi73Dd7/7coagrr2xFyehW4qVmZ7WjTh9pJkJtiz5w=
   bucket: why82
-  local-dir: build
+  local-dir: dist
   acl: public_read
   on:
     repo: colbywhite/why82

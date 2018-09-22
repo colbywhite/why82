@@ -1,14 +1,23 @@
+# compiled output
+/dist
+/tmp
+/out-tsc
+
 # dependencies
 /node_modules
 
-# testing
-/coverage
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# production
-/build
-
-# mac
+# System Files
 .DS_Store
+Thumbs.db
 
 # serverless
 /.serverless
@@ -23,3 +32,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+testem.log
+/libpeerconnection.log
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/typings
+
