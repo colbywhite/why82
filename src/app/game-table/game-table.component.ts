@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import * as moment from 'moment-timezone';
 
 import { Game } from '../game.model';
 import { TEAM_COMPONENT_HEIGHT_PX, TEAM_COMPONENT_MARGIN_PX } from '../team/team.component';
@@ -25,7 +26,7 @@ const BORDER_HEIGHT_PX = 1;
             <mat-header-cell *matHeaderCellDef>
               <div>Time</div>
             </mat-header-cell>
-            <mat-cell *matCellDef="let g"> {{g.time | amDateFormat:'h:mm az'}}</mat-cell>
+            <mat-cell *matCellDef="let g"> {{formatTime(g.time)}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="away">
@@ -66,6 +67,10 @@ export class GameTableComponent {
     const teamRowHeight: number = TEAM_COMPONENT_HEIGHT_PX + teamRowMargin + BORDER_HEIGHT_PX;
     const tableHeight: number = headerRowHeight + (largestLength * teamRowHeight);
     return `${tableHeight}px`;
+  }
+
+  protected formatTime(time: string): string {
+    return moment(time).tz('America/New_York').format('h:mm a z');
   }
 
 }
