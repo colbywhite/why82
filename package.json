@@ -1,6 +1,6 @@
 {
   "name": "why82",
-  "version": "2019.1.2",
+  "version": "2019.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
