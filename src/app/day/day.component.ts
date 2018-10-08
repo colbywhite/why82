@@ -22,7 +22,7 @@ import { Moment } from 'moment';
 })
 export class DayComponent {
   @Input()
-  public games: Game[][];
+  public games: Game[];
   @Input()
   public date: Moment;
 

@@ -1,9 +1,37 @@
+export interface WinLossMetric {
+  Losses: number;
+  Wins: number;
+  WinPct: number;
+  score: number;
+}
+
+export interface LastSeasonMetric {
+  score: number;
+}
+
+export interface OffenseMetric {
+  score: number;
+  PtsPerGame: number;
+}
+
+export interface PointDifferenceMetric {
+  score: number;
+  PtsPerGame: number;
+  PtsAgainstPerGame: number;
+  PtsDiffPerGame: number;
+}
+
 export interface Team {
   abbreviated_name: string;
   full_name: string;
   short_name: string;
   score: number;
-  metrics?: any;
+  metrics: {
+    win_loss: WinLossMetric;
+    last_season: LastSeasonMetric;
+    offense: OffenseMetric;
+    pt_diff: PointDifferenceMetric;
+  };
 }
 
 export interface Game {
