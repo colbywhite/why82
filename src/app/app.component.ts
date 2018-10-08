@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { Game } from './game.model';
-import { ColumnedScheduleService } from './columned-schedule.service';
+import { ScheduleService } from './schedule.service';
 
 @Component({
   selector: 'app-root',
@@ -25,15 +25,15 @@ import { ColumnedScheduleService } from './columned-schedule.service';
   `
 })
 export class AppComponent implements OnInit {
-  public scheduleEntries: Observable<[string, Game[][]][]>;
+  public scheduleEntries: Observable<[string, Game[]][]>;
   public loading = true;
 
-  constructor(private scheduleService: ColumnedScheduleService) {
+  constructor(private scheduleService: ScheduleService) {
   }
 
   public ngOnInit() {
     this.loading = true;
-    this.scheduleEntries = this.scheduleService.columnedSchedule
+    this.scheduleEntries = this.scheduleService.schedule
       .pipe(
         map(Object.entries),
         tap(() => this.loading = false)
