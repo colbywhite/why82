@@ -10,7 +10,11 @@ import { Team } from '../game.model';
   template: `
     <div class="my-auto text-center">
       <img class="logo" [src]="iconSrc"/>
-      <div><small>11-11</small></div>
+      <div>
+        <small>
+          {{team.metrics.win_loss.Wins}}-{{team.metrics.win_loss.Losses}}
+        </small>
+      </div>
     </div>
   `
 })
