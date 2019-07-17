@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MomentModule } from 'ngx-moment';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 
 import { DayComponent } from './day.component';
 import { GameTableModule } from '../game-table/game-table.module';
