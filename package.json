@@ -51,7 +51,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/moment-timezone": "0.5.12",
     "@types/node": "^10.14.15",
-    "aws-cf-monitor": "^1.0.4",
+    "aws-cf-monitor": "^2.0.2",
     "cfn-lint": "^1.1.6",
     "codelyzer": "^5.0.1",
     "jasmine-core": "~2.99.1",
