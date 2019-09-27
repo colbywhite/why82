@@ -48,7 +48,7 @@
     "@angular/compiler-cli": "^8.1.1",
     "@angular/language-service": "^8.1.1",
     "@types/jasmine": "~2.8.8",
-    "@types/jasminewd2": "~2.0.3",
+    "@types/jasminewd2": "~2.0.7",
     "@types/moment-timezone": "0.5.12",
     "@types/node": "^10.14.15",
     "aws-cf-monitor": "^1.0.4",
